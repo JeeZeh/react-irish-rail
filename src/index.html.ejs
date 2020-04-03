@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>React - Irish Rail Times</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Dependencies -->
+    <% if (webpackConfig.mode == 'production') { %>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/react/16.13.0/umd/react.production.min.js"
+      integrity="sha256-32Gmw5rBDXyMjg/73FgpukoTZdMrxuYW7tj8adbN8z4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.13.0/umd/react-dom.production.min.js"
+      integrity="sha256-bjQ42ac3EN0GqK40pC9gGi/YixvKyZ24qMP/9HiGW7w="
+      crossorigin="anonymous"
+    ></script>
+    <% } else { %>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/react/16.13.0/umd/react.development.js"
+      integrity="sha256-H6WQKfZMn1zcp7b+2UxB9XxLgiJkTdDJQwSf8Ky08PM="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.13.0/umd/react-dom.development.min.js"
+      integrity="sha256-BF4VRVvJ+w/ZTs7xwyPpv5Tgs+OD8ADlF/xCncv4JsI="
+      crossorigin="anonymous"
+    ></script>
+    <% } %>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  </body>
+</html>
