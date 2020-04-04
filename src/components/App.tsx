@@ -18,6 +18,7 @@ class App extends React.Component<{}, AppState> {
   }
 
   onStationChange = (station: Station) => {
+    console.log(station)
     this.setState({ station });
   };
 
