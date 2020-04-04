@@ -1,14 +1,13 @@
 import * as parser from "fast-xml-parser";
 import * as he from "he";
-import { parse } from "querystring";
 
 export default class IrishRailApi {
   private static CORS = "https://cors-anywhere.herokuapp.com/";
   private static API = "http://api.irishrail.ie/realtime/realtime.asmx/";
-  private static EP_STATIONDATA =
+  private static STATIONDATA =
     "getStationDataByCodeXML_WithNumMins?StationCode=";
-  private static EP_ALLSTATIONS = "getAllStationsXML";
-  private static SFX_NINETYXML = "&NumMins=90&format=xml";
+  private static ALLSTATIONS = "getAllStationsXML";
+  private static NINETYXML = "&NumMins=1200&format=xml";
   private static XML_OPTIONS = {
     attributeNamePrefix: "@_",
     attrNodeName: "attr", //default is 'false'
@@ -28,8 +27,66 @@ export default class IrishRailApi {
     stopNodes: ["parse-me-as-string"],
   };
 
+  private static generateFakeStationData(): Train {
+    let d: Train = {
+      Servertime: new Date(),
+      Traincode: null,
+      Stationfullname: null,
+      Stationcode: null,
+      Querytime: null,
+      Traindate: null,
+      Origin: null,
+      Destination: null,
+      Origintime: null,
+      Destinationtime: null,
+      Status: null,
+      Lastlocation: null,
+      Duein: 0,
+      Late: 0,
+      Exparrival: null,
+      Expdepart: null,
+      Scharrival: null,
+      Schdepart: null,
+      Direction: null,
+      Traintype: null,
+      Locationtype: null,
+    };
+
+    for (const key in d) {
+      if (["Duein", "Late"].includes(key)) {
+        d[key] = 0;
+      } else if (
+        [
+          "Origintime",
+          "Destinationtime",
+          "Exparrival",
+          "Expdepart",
+          "Scharrival",
+          "Schdepart",
+        ].includes(key)
+      ) {
+        d[key] = `${(Math.random() * 24 + 100).toString().substring(1, 3)}:${(
+          Math.random() * 60 +
+          100
+        )
+          .toString()
+          .substring(1, 3)}`;
+      } else {
+        d[key] = Math.random().toString(36).slice(2);
+      }
+    }
+    return d;
+  }
+
   public static parseXmlStationData(xml: string): Train[] {
     const parsedXml = parser.parse(xml, this.XML_OPTIONS);
+    if (!parsedXml.ArrayOfObjStationData) {
+      let fakeData = new Array<Train>();
+      for (let i = 0; i < 10; i++) {
+        fakeData.push(this.generateFakeStationData());
+      }
+      return fakeData;
+    }
     return parsedXml.ArrayOfObjStationData[0].objStationData;
   }
 
@@ -39,13 +96,12 @@ export default class IrishRailApi {
   }
 
   public static async getTrainsForStation(station: Station): Promise<Train[]> {
-    const endpoint = `${this.CORS}${this.API}${this.EP_STATIONDATA}${station.StationCode}${this.SFX_NINETYXML}`;
-    console.log(endpoint);
-
+    const endpoint = `${this.CORS}${this.API}${this.STATIONDATA}${station.StationCode}${this.NINETYXML}`;
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(endpoint);
         const stationData = this.parseXmlStationData(await response.text());
+        console.log(stationData);
         resolve(stationData);
       } catch (error) {
         reject(error);
@@ -54,7 +110,7 @@ export default class IrishRailApi {
   }
 
   public static getStations(): Promise<Station[]> {
-    const endpoint = `${this.CORS}${this.API}${this.EP_ALLSTATIONS}`;
+    const endpoint = `${this.CORS}${this.API}${this.ALLSTATIONS}`;
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(endpoint);
@@ -92,10 +148,10 @@ export interface Train {
 }
 
 export interface Station {
-  StationDesc: string,
-  StationCode: string,
-  StationAlias: string,
-  StationLatitude: number,
-  StationLongitude: number,
-  StationId: number,
+  StationDesc: string;
+  StationCode: string;
+  StationAlias: string;
+  StationLatitude: number;
+  StationLongitude: number;
+  StationId: number;
 }

@@ -13,6 +13,7 @@ module.exports = merge(commonConfig, {
   ],
   devServer: {
     hot: true, // enable HMR on the server
+    open: true,
   },
   devtool: 'cheap-module-eval-source-map',
   plugins: [

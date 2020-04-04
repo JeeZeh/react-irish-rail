@@ -1,36 +1,16 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
 import { Train } from "./IrishRailApi";
-import { TrainColumn } from "./TrainSchedule";
 
-const columns: TrainColumn[] = [
-  {
-    dispName: "Due",
-    propName: "Exparrival",
-  },
-  {
-    dispName: `Departing`,
-    propName: "Expdepart",
-  },
-  {
-    dispName: "From",
-    propName: "Origin",
-  },
-  {
-    dispName: "To",
-    propName: "Destination",
-  },
-  {
-    dispName: "Terminating",
-    propName: "Destinationtime",
-  },
-  {
-    dispName: "Last Seen",
-    propName: "Lastlocation",
-  },
-];
+interface TrainColumn {
+  dispName: string;
+  propName: string;
+}
 
-const ScheduleTable = (props: { trainData: Train[] }) => {
+export interface ScheduleTableProps { trainData: Train[] }
+
+
+const ScheduleTable = (props: ScheduleTableProps) => {
   const { trainData } = props;
 
   const renderTrain = (train: Train) => {
@@ -64,3 +44,30 @@ const ScheduleTable = (props: { trainData: Train[] }) => {
 };
 
 export default hot(module)(ScheduleTable);
+
+const columns: TrainColumn[] = [
+  {
+    dispName: "Due",
+    propName: "Exparrival",
+  },
+  {
+    dispName: `Departing`,
+    propName: "Expdepart",
+  },
+  {
+    dispName: "From",
+    propName: "Origin",
+  },
+  {
+    dispName: "To",
+    propName: "Destination",
+  },
+  {
+    dispName: "Terminating",
+    propName: "Destinationtime",
+  },
+  {
+    dispName: "Last Seen",
+    propName: "Lastlocation",
+  },
+];

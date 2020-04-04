@@ -3,28 +3,21 @@ import { hot } from "react-hot-loader";
 import IrishRailApi, { Train, Station } from "./IrishRailApi";
 import ScheduleTable from "./ScheduleTable";
 
-export interface TrainColumn {
-  dispName: string;
-  propName: string;
+
+export interface TrainScheduleState {
+  error: any;
+  isLoaded: boolean;
+  stationData: Train[];
 }
 
-class TrainSchedule extends React.Component<
-  {},
-  {
-    error: any;
-    isLoaded: boolean;
-    stationData: Train[];
-  }
-> {
-  private station: Station = {
-    StationDesc: "Dublin Connolly",
-    StationAlias: "Connolly",
-    StationLatitude: 53.3531,
-    StationLongitude: -6.24591,
-    StationCode: "CNLLY",
-    StationId: 10,
-  };
+export interface TrainScheduleProps {
+  station: Station;
+}
 
+class ScheduleContainer extends React.Component<
+  TrainScheduleProps,
+  TrainScheduleState
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,7 +28,19 @@ class TrainSchedule extends React.Component<
   }
 
   componentDidMount() {
-    IrishRailApi.getTrainsForStation(this.station)
+    this.fetchStationData();
+  }
+
+  componentDidUpdate(prevProps: TrainScheduleProps) {
+    if (prevProps.station?.StationCode !== this.props.station?.StationCode) {
+      this.fetchStationData();
+    }
+  }
+
+  fetchStationData() {
+    if (!this.props.station) return;
+
+    IrishRailApi.getTrainsForStation(this.props.station)
       .then((r) => this.setState({ isLoaded: true, stationData: r }))
       .catch((error) => this.setState({ isLoaded: true, error }));
   }
@@ -52,14 +57,16 @@ class TrainSchedule extends React.Component<
 
   render() {
     const { error, isLoaded, stationData } = this.state;
-    if (error) return <div>Error: {error.message}</div>;
+    const { station } = this.props;
+    if (!station) return <div></div>;
     if (!isLoaded) return <div>Loading...</div>;
+    if (error) return <div>Error: {error.message}</div>;
 
     return (
       <div className="card border-secondary mb-4">
         <div className="card-body">
           <div className="card-header">
-            {this.station.StationDesc} Train Times
+            {this.props.station.StationDesc} Train Times
           </div>
           <ScheduleTable trainData={stationData} />
         </div>
@@ -68,4 +75,4 @@ class TrainSchedule extends React.Component<
   }
 }
 
-export default hot(module)(TrainSchedule);
+export default hot(module)(ScheduleContainer);
