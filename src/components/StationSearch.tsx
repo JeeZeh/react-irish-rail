@@ -1,6 +1,6 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
-import IrishRailApi, { Station } from "./IrishRailApi";
+import IrishRailApi, { Station } from "../api/IrishRailApi";
 
 export interface StationSearchState {
   isLoaded: boolean;
@@ -9,11 +9,14 @@ export interface StationSearchState {
 }
 
 export interface StationSearchProps {
-  station: Station,
-  onStationChange: (station: Station) => void
+  station: Station;
+  onStationChange: (station: Station) => void;
 }
 
-class StationSearch extends React.Component<StationSearchProps, StationSearchState> {
+class StationSearch extends React.Component<
+  StationSearchProps,
+  StationSearchState
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,7 +38,7 @@ class StationSearch extends React.Component<StationSearchProps, StationSearchSta
     const code = e.target.value;
     let chosenStation = stationList.find((s) => s.StationCode === code);
     if (code) this.props.onStationChange(chosenStation);
-  }
+  };
 
   render() {
     const { isLoaded, stationList, error } = this.state;

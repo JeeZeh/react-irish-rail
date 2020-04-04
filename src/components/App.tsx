@@ -3,7 +3,7 @@ import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
 import ScheduleContainer from "./ScheduleContainer";
 import StationSearch from "./StationSearch";
-import { Station } from "./IrishRailApi";
+import { Station } from "../api/IrishRailApi";
 
 interface AppState {
   station: Station;

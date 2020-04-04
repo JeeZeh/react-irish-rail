@@ -1,14 +1,15 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
-import { Train } from "./IrishRailApi";
+import { Train } from "../api/IrishRailApi";
 
 interface TrainColumn {
   dispName: string;
   propName: string;
 }
 
-export interface ScheduleTableProps { trainData: Train[] }
-
+export interface ScheduleTableProps {
+  trainData: Train[];
+}
 
 const ScheduleTable = (props: ScheduleTableProps) => {
   const { trainData } = props;

@@ -1,8 +1,7 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
-import IrishRailApi, { Train, Station } from "./IrishRailApi";
+import IrishRailApi, { Train, Station } from "../api/IrishRailApi";
 import ScheduleTable from "./ScheduleTable";
-
 
 export interface TrainScheduleState {
   error: any;
