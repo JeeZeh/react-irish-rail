@@ -7,7 +7,6 @@ export interface StationSearchState {
   isLoaded: boolean;
   stationList: Station[];
   fuseMatch: Fuse.FuseResult<Station>[];
-  fuse: Fuse<Station, any>;
   input: string;
   error: any;
 }
@@ -35,44 +34,43 @@ export default class StationSearch extends React.Component<
     keys: ["StationDesc", "StationCode"],
   };
 
+  private fuse;
+
   constructor(props) {
     super(props);
     this.state = {
       isLoaded: false,
       stationList: null,
       fuseMatch: null,
-      fuse: null,
       input: "",
       error: null,
     };
   }
 
-  componentDidMount() {
-    IrishRailApi.getStations()
+  async componentDidMount() {
+    await IrishRailApi.getStations()
       .then((stationList) =>
         this.setState({
           isLoaded: true,
           stationList,
-          fuse: new Fuse(stationList, this.FUSE_OPTIONS),
         })
       )
       .catch((error) => this.setState({ isLoaded: true, error }));
+    this.fuse = new Fuse(this.state.stationList, this.FUSE_OPTIONS);
   }
 
   handleChange = (e) => {
-    const { fuse } = this.state;
     const pattern = e.target.value;
-    this.setState({ input: pattern, fuseMatch: fuse.search(pattern) });
+    this.setState({ input: pattern, fuseMatch: this.fuse.search(pattern) });
   };
 
   handleFuzzySelect = (refIndex: number) => {
-    const { fuse } = this.state;
-    this.setState({ input: "", fuseMatch: fuse.search("") });
+    this.setState({ input: "", fuseMatch: this.fuse.search("") });
     this.props.onStationChange(this.state.stationList[refIndex]);
   };
 
   render() {
-    const { isLoaded, stationList, error } = this.state;
+    const { isLoaded, error } = this.state;
     if (!isLoaded) return <div>loading station select</div>;
     if (error) return <div>Error: {error.message}</div>;
 
