@@ -18,7 +18,7 @@ class App extends React.Component<{}, AppState> {
   }
 
   onStationChange = (station: Station) => {
-    console.log(station)
+    console.log(station);
     this.setState({ station });
   };
 
@@ -27,13 +27,14 @@ class App extends React.Component<{}, AppState> {
       <div className="rail">
         <h1>React - Irish Rail Times</h1>
         <blockquote className="blockquote">
-          <p>The train times for Connolly - and hopefully more soon.</p>
+          <p>The train times for Irish Rail staions</p>
           <footer className="blockquote-footer">
             This app was created using React as a personal learning experience,
-            as a result, it's far more complicated than it needs to be!
+            as a result, it's probably more complicated than it needs to be!
             <br />
-            If the times never load, there may be either no trains available or
-            the API proxy cannot be reached.
+            If the times never load or if the data displayed is gibberish, there
+            may be either no trains available or the API proxy cannot be
+            reached.
           </footer>
         </blockquote>
         <StationSearch

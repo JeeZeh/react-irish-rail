@@ -6,6 +6,7 @@ import { FuseResult } from "fuse.js";
 export interface FuzzyOverlayProps {
   fuzzyList: FuseResult<Station>[];
   width: string;
+  cursor: number;
   onFuzzySelect: (refIndex: number) => void;
 }
 
@@ -19,24 +20,31 @@ export const FuzzyOverlay = (props: FuzzyOverlayProps) => {
     z-index: 1;
     background: white;
     width: ${props.width};
-    border: 1px black solid;    
+    border: 1px rgba(0, 0, 0, 0.2) solid;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
   `;
 
   const FuzzyItem = styled.div`
-    padding: 5px 10px;
+    padding: 10px;
     cursor: pointer;
 
     &:hover {
       background: whitesmoke;
     }
-  `
+  `;
 
-  console.log(props.fuzzyList)
-  if (!props.fuzzyList || props.fuzzyList.length == 0) return <div></div>;
+  if (!props.fuzzyList || props.fuzzyList.length == 0) return null;
   return (
     <Fuzzy>
-      {props.fuzzyList.map((e) => (
-        <FuzzyItem onClick={handleClick} key={e.refIndex} data-index={e.refIndex}>
+      {props.fuzzyList.map((e, i) => (
+        <FuzzyItem
+          onClick={handleClick}
+          key={e.refIndex}
+          data-index={e.refIndex}
+          className={props.cursor === i ? "active" : null}
+        >
           {e.item.StationDesc}
         </FuzzyItem>
       ))}

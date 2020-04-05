@@ -1,6 +1,7 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
 import IrishRailApi, { Train, Station } from "../api/IrishRailApi";
+import styled from "styled-components";
 import ScheduleTable from "./ScheduleTable";
 
 export interface TrainScheduleState {
@@ -54,30 +55,23 @@ class ScheduleContainer extends React.Component<
     return train;
   }
 
+  Card = styled.div`box-shadow: 0 5px 5px rgba(0,0,0,0.2);`
+
   render() {
     const { error, isLoaded, stationData } = this.state;
     const { station } = this.props;
-    if (!station) return <div></div>;
-    if (!isLoaded) return (
-      <div className="card border-secondary mb-4">
-        <div className="card-body">
-          <div className="card-header">
-            {this.props.station.StationDesc} Train Times
-          </div>
-        </div>
-      </div>
-    )
+    if (!station) return null;
     if (error) return <div>Error: {error.message}</div>;
 
     return (
-      <div className="card border-secondary mb-4">
+      <this.Card className="card mb-4">
         <div className="card-body">
           <div className="card-header">
-            {this.props.station.StationDesc} Train Times
+            <h5>{this.props.station.StationDesc} Timetable</h5>
           </div>
-          <ScheduleTable trainData={stationData} />
+          {isLoaded ? <ScheduleTable trainData={stationData} /> : null}
         </div>
-      </div>
+      </this.Card>
     );
   }
 }
