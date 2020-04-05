@@ -19,18 +19,26 @@ export const FuzzyOverlay = (props: FuzzyOverlayProps) => {
     z-index: 1;
     background: white;
     width: ${props.width};
-    padding: 5px;
-    border: 1px black solid;
+    border: 1px black solid;    
   `;
+
+  const FuzzyItem = styled.div`
+    padding: 5px 10px;
+    cursor: pointer;
+
+    &:hover {
+      background: whitesmoke;
+    }
+  `
 
   console.log(props.fuzzyList)
   if (!props.fuzzyList || props.fuzzyList.length == 0) return <div></div>;
   return (
     <Fuzzy>
       {props.fuzzyList.map((e) => (
-        <div onClick={handleClick} key={e.refIndex} data-index={e.refIndex}>
+        <FuzzyItem onClick={handleClick} key={e.refIndex} data-index={e.refIndex}>
           {e.item.StationDesc}
-        </div>
+        </FuzzyItem>
       ))}
     </Fuzzy>
   );

@@ -29,7 +29,7 @@ export default class StationSearch extends React.Component<
     useExtendedSearch: false,
     minMatchCharLength: 1,
     shouldSort: true,
-    threshold: 0.6,
+    threshold: 0.3,
     location: 0,
     distance: 100,
     keys: ["StationDesc", "StationCode"],

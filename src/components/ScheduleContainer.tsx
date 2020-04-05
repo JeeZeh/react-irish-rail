@@ -58,7 +58,15 @@ class ScheduleContainer extends React.Component<
     const { error, isLoaded, stationData } = this.state;
     const { station } = this.props;
     if (!station) return <div></div>;
-    if (!isLoaded) return <div>Loading...</div>;
+    if (!isLoaded) return (
+      <div className="card border-secondary mb-4">
+        <div className="card-body">
+          <div className="card-header">
+            {this.props.station.StationDesc} Train Times
+          </div>
+        </div>
+      </div>
+    )
     if (error) return <div>Error: {error.message}</div>;
 
     return (
