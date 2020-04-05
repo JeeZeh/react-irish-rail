@@ -1,11 +1,11 @@
 import * as React from "react";
-import { hot } from "react-hot-loader";
-import IrishRailApi, { Train, Station } from "../api/IrishRailApi";
-import ScheduleTable from "./ScheduleTable";
+import { Station } from "../api/IrishRailApi";
+import styled from "styled-components";
 import { FuseResult } from "fuse.js";
 
 export interface FuzzyOverlayProps {
   fuzzyList: FuseResult<Station>[];
+  width: string;
   onFuzzySelect: (refIndex: number) => void;
 }
 
@@ -14,16 +14,24 @@ export const FuzzyOverlay = (props: FuzzyOverlayProps) => {
     props.onFuzzySelect(e.target.getAttribute("data-index"));
   };
 
-  if (!props.fuzzyList) return <div>empty</div>;
+  const Fuzzy = styled.div`
+    position: absolute;
+    z-index: 1;
+    background: white;
+    width: ${props.width};
+    padding: 5px;
+    border: 1px black solid;
+  `;
+
+  console.log(props.fuzzyList)
+  if (!props.fuzzyList || props.fuzzyList.length == 0) return <div></div>;
   return (
-    <div>
-      <ul>
-        {props.fuzzyList.map((e) => (
-          <li onClick={handleClick} key={e.refIndex} data-index={e.refIndex}>
-            {e.item.StationDesc}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Fuzzy>
+      {props.fuzzyList.map((e) => (
+        <div onClick={handleClick} key={e.refIndex} data-index={e.refIndex}>
+          {e.item.StationDesc}
+        </div>
+      ))}
+    </Fuzzy>
   );
 };

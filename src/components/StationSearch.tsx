@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as Fuse from "fuse.js/dist/fuse";
 import IrishRailApi, { Station } from "../api/IrishRailApi";
+import styled from "styled-components";
 import { FuzzyOverlay } from "./FuzzyOverlay";
 
 export interface StationSearchState {
@@ -33,6 +34,7 @@ export default class StationSearch extends React.Component<
     distance: 100,
     keys: ["StationDesc", "StationCode"],
   };
+  private width = "400px";
 
   private fuse;
 
@@ -69,14 +71,23 @@ export default class StationSearch extends React.Component<
     this.props.onStationChange(this.state.stationList[refIndex]);
   };
 
+  private Search = styled.div`
+    width: ${this.width};
+    margin-bottom: 20px;
+  `;
+
+  private Input = styled.input`
+    width: 100%;
+  `;
+
   render() {
     const { isLoaded, error } = this.state;
     if (!isLoaded) return <div>loading station select</div>;
     if (error) return <div>Error: {error.message}</div>;
 
     return (
-      <div>
-        <input
+      <this.Search>
+        <this.Input
           onChange={this.handleChange}
           value={this.state.input}
           placeholder="Type a station name"
@@ -84,8 +95,9 @@ export default class StationSearch extends React.Component<
         <FuzzyOverlay
           onFuzzySelect={this.handleFuzzySelect}
           fuzzyList={this.state.fuseMatch}
+          width={this.width}
         />
-      </div>
+      </this.Search>
     );
   }
 }
