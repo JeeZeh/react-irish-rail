@@ -78,7 +78,7 @@ export default class IrishRailApi {
     return d;
   }
 
-  public static parseXmlStationData(xml: string): Train[] {
+  private static parseXmlStationData(xml: string): Train[] {
     const parsedXml = parser.parse(xml, this.XML_OPTIONS);
     if (!parsedXml.ArrayOfObjStationData) {
       let fakeData = new Array<Train>();
@@ -90,7 +90,7 @@ export default class IrishRailApi {
     return parsedXml.ArrayOfObjStationData[0].objStationData;
   }
 
-  public static parseXmlAllStations(xml: string): Station[] {
+  private static parseXmlAllStations(xml: string): Station[] {
     const parsedXml = parser.parse(xml, this.XML_OPTIONS);
     return parsedXml.ArrayOfObjStation[0].objStation;
   }
@@ -100,13 +100,25 @@ export default class IrishRailApi {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(endpoint);
-        const stationData = this.parseXmlStationData(await response.text());
+        const stationData = this.parseXmlStationData(await response.text()).map(
+          this.cleanData
+        );
         console.log(stationData);
         resolve(stationData);
       } catch (error) {
         reject(error);
       }
     });
+  }
+
+  private static cleanData(train: Train) {
+    if (train.Destination === train.Stationfullname) {
+      train.Expdepart = "";
+    }
+    if (train.Origin === train.Stationfullname) {
+      train.Exparrival = "";
+    }
+    return train;
   }
 
   public static getStations(): Promise<Station[]> {

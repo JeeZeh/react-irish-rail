@@ -4,16 +4,21 @@ import "./../assets/scss/App.scss";
 import ScheduleContainer from "./ScheduleContainer";
 import StationSearch from "./StationSearch";
 import { Station } from "../api/IrishRailApi";
+import { SearchParameters } from "./SearchParameters";
 
 interface AppState {
   station: Station;
+  lookahead: number;
 }
 
 class App extends React.Component<{}, AppState> {
+  private lookaheadOptions = [30, 60, 90, 120, 240];
+
   constructor(props) {
     super(props);
     this.state = {
       station: null,
+      lookahead: 90,
     };
   }
 
@@ -22,7 +27,14 @@ class App extends React.Component<{}, AppState> {
     this.setState({ station });
   };
 
+  onLookaheadChange = (lookahead: number) => {
+    console.log(lookahead)
+    this.setState({ lookahead });
+  };
+
   render() {
+    const { lookahead } = this.state;
+
     return (
       <div className="rail">
         <h1>React - Irish Rail Times</h1>
@@ -41,6 +53,12 @@ class App extends React.Component<{}, AppState> {
           station={this.state.station}
           onStationChange={this.onStationChange}
         />
+        <SearchParameters
+          lookaheadOptions={this.lookaheadOptions}
+          lookahead={lookahead}
+          onLookaheadChange={this.onLookaheadChange}
+        />
+
         <ScheduleContainer station={this.state.station} />
       </div>
     );

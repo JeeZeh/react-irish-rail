@@ -3,6 +3,7 @@ import { hot } from "react-hot-loader";
 import IrishRailApi, { Train, Station } from "../api/IrishRailApi";
 import styled from "styled-components";
 import ScheduleTable from "./ScheduleTable";
+import { SearchParameters } from "./SearchParameters";
 
 export interface TrainScheduleState {
   error: any;
@@ -43,16 +44,6 @@ class ScheduleContainer extends React.Component<
     IrishRailApi.getTrainsForStation(this.props.station)
       .then((r) => this.setState({ isLoaded: true, stationData: r }))
       .catch((error) => this.setState({ isLoaded: true, error }));
-  }
-
-  cleanData(train: Train) {
-    if (train.Destination === train.Stationfullname) {
-      train.Expdepart = "";
-    }
-    if (train.Origin === train.Stationfullname) {
-      train.Exparrival = "";
-    }
-    return train;
   }
 
   Card = styled.div`box-shadow: 0 5px 5px rgba(0,0,0,0.2);`
