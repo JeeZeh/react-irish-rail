@@ -15,6 +15,7 @@ export interface StationSearchState {
 
 export interface StationSearchProps {
   station: Station;
+  onSearchReady: () => void;
   onStationChange: (station: Station) => void;
 }
 
@@ -61,29 +62,37 @@ export default class StationSearch extends React.Component<
       )
       .catch((error) => this.setState({ isLoaded: true, error }));
     this.fuse = new Fuse(this.state.stationList, this.FUSE_OPTIONS);
+    this.props.onSearchReady();
   }
 
   handleKeyDown = (e) => {
     const { cursor, fuseMatch } = this.state;
-    // arrow up/down button should select next/previous list element
+    // Up Arrow
     if (e.keyCode === 38 && cursor > 0) {
       this.setState((prevState) => ({
         cursor: prevState.cursor - 1,
       }));
-    } else if (e.keyCode === 13) {
-      this.handleFuzzySelect(this.state.fuseMatch[cursor].refIndex)
-    }
+    } // Down Arrow
     else if (e.keyCode === 40 && cursor < fuseMatch.length - 1) {
       this.setState((prevState) => ({
         cursor: prevState.cursor + 1,
       }));
+    } else if (e.keyCode === 13) {
+      const selection =
+        fuseMatch.length === 1
+          ? fuseMatch[0].refIndex
+          : fuseMatch[cursor].refIndex;
+      this.handleFuzzySelect(selection);
     }
   };
 
-
   handleChange = (e) => {
     const pattern = e.target.value;
-    this.setState({ input: pattern, fuseMatch: this.fuse.search(pattern), cursor: -1 });
+    this.setState({
+      input: pattern,
+      fuseMatch: this.fuse.search(pattern),
+      cursor: -1,
+    });
   };
 
   handleFuzzySelect = (refIndex: number) => {
@@ -92,18 +101,24 @@ export default class StationSearch extends React.Component<
   };
 
   private Search = styled.div`
-    width: ${this.width};
+    width: 400px;
     margin-bottom: 20px;
+    height: 100%;
   `;
 
   private Input = styled.input`
     width: 100%;
+    height: 100%;
     background: whitesmoke;
     padding: 10px;
-    border: none;
+    border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     outline: none;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+
+    &:focus {
+      background-color: #fff;
+    }
   `;
 
   render() {
@@ -122,7 +137,6 @@ export default class StationSearch extends React.Component<
         <FuzzyOverlay
           onFuzzySelect={this.handleFuzzySelect}
           fuzzyList={fuseMatch}
-          width={this.width}
           cursor={cursor}
         />
       </this.Search>

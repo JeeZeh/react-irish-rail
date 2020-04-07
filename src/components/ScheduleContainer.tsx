@@ -3,7 +3,6 @@ import { hot } from "react-hot-loader";
 import IrishRailApi, { Train, Station } from "../api/IrishRailApi";
 import styled from "styled-components";
 import ScheduleTable from "./ScheduleTable";
-import { SearchParameters } from "./SearchParameters";
 
 export interface TrainScheduleState {
   error: any;
@@ -13,6 +12,7 @@ export interface TrainScheduleState {
 
 export interface TrainScheduleProps {
   station: Station;
+  lookahead: number;
 }
 
 class ScheduleContainer extends React.Component<
@@ -33,20 +33,26 @@ class ScheduleContainer extends React.Component<
   }
 
   componentDidUpdate(prevProps: TrainScheduleProps) {
-    if (prevProps.station?.StationCode !== this.props.station?.StationCode) {
+    if (
+      prevProps.station?.StationCode !== this.props.station?.StationCode ||
+      prevProps.lookahead !== this.props.lookahead
+    ) {
       this.fetchStationData();
     }
   }
 
   fetchStationData() {
-    if (!this.props.station) return;
+    const { station, lookahead } = this.props;
+    if (!station) return;
 
-    IrishRailApi.getTrainsForStation(this.props.station)
+    IrishRailApi.getTrainsForStation(station, lookahead)
       .then((r) => this.setState({ isLoaded: true, stationData: r }))
       .catch((error) => this.setState({ isLoaded: true, error }));
   }
 
-  Card = styled.div`box-shadow: 0 5px 5px rgba(0,0,0,0.2);`
+  Card = styled.div`
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  `;
 
   render() {
     const { error, isLoaded, stationData } = this.state;

@@ -1,8 +1,5 @@
 import * as React from "react";
-import { hot } from "react-hot-loader";
-import IrishRailApi, { Train, Station } from "../api/IrishRailApi";
 import styled from "styled-components";
-import ScheduleTable from "./ScheduleTable";
 
 interface SearchParamerersProps {
   lookaheadOptions: number[];
@@ -11,21 +8,30 @@ interface SearchParamerersProps {
 }
 
 const RadioSelect = styled.div`
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  width: auto;
+  margin-left: 20px;
+  background-color: whitesmoke;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+
 
   & div {
-    background-color: white;
-    border-right: 1px solid rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    overflow: hidden;
+    color: rgba(0, 0, 0, 0.6);
+    padding: 8px;
+    cursor: pointer;
+    height: 100%;
   }
-
-  &:nth-child(1) {
-    border: none !important ;
-  }
-
 
   & .minute-selected {
-    background-color: rgba(0,0,0,.08);
+    color: rgba(0, 0, 0, 0.9);
+    background-color: #fff;
   }
 `;
 
@@ -33,7 +39,10 @@ export const SearchParameters = (props: SearchParamerersProps) => {
   const { lookaheadOptions } = props;
 
   const handleClick = async (e) => {
-    props.onLookaheadChange(parseInt(e.target.getAttribute("data-value")));
+    const newValue = parseInt(e.target.getAttribute("data-value"));
+    if (props.lookahead !== newValue) {
+      props.onLookaheadChange(newValue);
+    }
   };
 
   const renderLookaheadOptions = () => {

@@ -1,6 +1,8 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
+import styled from "styled-components";
+
 import ScheduleContainer from "./ScheduleContainer";
 import StationSearch from "./StationSearch";
 import { Station } from "../api/IrishRailApi";
@@ -8,8 +10,16 @@ import { SearchParameters } from "./SearchParameters";
 
 interface AppState {
   station: Station;
+  searchReady: boolean;
   lookahead: number;
 }
+
+const SearchWrapper = styled.div`
+  display: inline-flex;
+  flex-direction: row;
+  height: 40px;
+  margin-bottom: 20px;
+`;
 
 class App extends React.Component<{}, AppState> {
   private lookaheadOptions = [30, 60, 90, 120, 240];
@@ -18,6 +28,7 @@ class App extends React.Component<{}, AppState> {
     super(props);
     this.state = {
       station: null,
+      searchReady: false,
       lookahead: 90,
     };
   }
@@ -28,12 +39,16 @@ class App extends React.Component<{}, AppState> {
   };
 
   onLookaheadChange = (lookahead: number) => {
-    console.log(lookahead)
+    console.log(lookahead);
     this.setState({ lookahead });
   };
 
+  onSearchReady = () => {
+    this.setState({ searchReady: true });
+  };
+
   render() {
-    const { lookahead } = this.state;
+    const { lookahead, station, searchReady } = this.state;
 
     return (
       <div className="rail">
@@ -49,17 +64,21 @@ class App extends React.Component<{}, AppState> {
             reached.
           </footer>
         </blockquote>
-        <StationSearch
-          station={this.state.station}
-          onStationChange={this.onStationChange}
-        />
-        <SearchParameters
-          lookaheadOptions={this.lookaheadOptions}
-          lookahead={lookahead}
-          onLookaheadChange={this.onLookaheadChange}
-        />
-
-        <ScheduleContainer station={this.state.station} />
+        <SearchWrapper>
+          <StationSearch
+            onSearchReady={this.onSearchReady}
+            station={this.state.station}
+            onStationChange={this.onStationChange}
+          />
+          {searchReady ? (
+            <SearchParameters
+              lookaheadOptions={this.lookaheadOptions}
+              lookahead={lookahead}
+              onLookaheadChange={this.onLookaheadChange}
+            />
+          ) : null}
+        </SearchWrapper>
+        <ScheduleContainer station={station} lookahead={lookahead} />
       </div>
     );
   }

@@ -7,7 +7,6 @@ export default class IrishRailApi {
   private static STATIONDATA =
     "getStationDataByCodeXML_WithNumMins?StationCode=";
   private static ALLSTATIONS = "getAllStationsXML";
-  private static NINETYXML = "&NumMins=1200&format=xml";
   private static XML_OPTIONS = {
     attributeNamePrefix: "@_",
     attrNodeName: "attr", //default is 'false'
@@ -95,8 +94,8 @@ export default class IrishRailApi {
     return parsedXml.ArrayOfObjStation[0].objStation;
   }
 
-  public static async getTrainsForStation(station: Station): Promise<Train[]> {
-    const endpoint = `${this.CORS}${this.API}${this.STATIONDATA}${station.StationCode}${this.NINETYXML}`;
+  public static async getTrainsForStation(station: Station, lookahead: number): Promise<Train[]> {
+    const endpoint = `${this.CORS}${this.API}${this.STATIONDATA}${station.StationCode}&NumMins=${lookahead}&format=xml`;
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(endpoint);
