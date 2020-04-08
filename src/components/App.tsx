@@ -54,7 +54,7 @@ class App extends React.Component<{}, AppState> {
       <div className="rail">
         <h1>React - Irish Rail Times</h1>
         <blockquote className="blockquote">
-          <p>The train times for Irish Rail staions</p>
+          <p>The train times for Irish Rail stations</p>
           <footer className="blockquote-footer">
             This app was created using React as a personal learning experience,
             as a result, it's probably more complicated than it needs to be!

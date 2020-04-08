@@ -36,7 +36,6 @@ export default class StationSearch extends React.Component<
     distance: 100,
     keys: ["StationDesc", "StationCode"],
   };
-  private width = "400px";
 
   private fuse;
 
@@ -90,13 +89,13 @@ export default class StationSearch extends React.Component<
     const pattern = e.target.value;
     this.setState({
       input: pattern,
-      fuseMatch: this.fuse.search(pattern),
+      fuseMatch: this.fuse.search(pattern).slice(0,10),
       cursor: -1,
     });
   };
 
   handleFuzzySelect = (refIndex: number) => {
-    this.setState({ input: "", fuseMatch: this.fuse.search(""), cursor: -1 });
+    this.setState({ input: "", fuseMatch: [], cursor: -1 });
     this.props.onStationChange(this.state.stationList[refIndex]);
   };
 
