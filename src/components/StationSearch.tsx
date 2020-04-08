@@ -10,6 +10,7 @@ export interface StationSearchState {
   fuseMatch: Fuse.FuseResult<Station>[];
   input: string;
   cursor: number;
+  hasFocus: boolean;
   error: any;
 }
 
@@ -46,6 +47,7 @@ export default class StationSearch extends React.Component<
       stationList: null,
       fuseMatch: null,
       input: "",
+      hasFocus: false,
       cursor: -1,
       error: null,
     };
@@ -89,7 +91,7 @@ export default class StationSearch extends React.Component<
     const pattern = e.target.value;
     this.setState({
       input: pattern,
-      fuseMatch: this.fuse.search(pattern).slice(0,10),
+      fuseMatch: this.fuse.search(pattern).slice(0, 10),
       cursor: -1,
     });
   };
@@ -114,14 +116,17 @@ export default class StationSearch extends React.Component<
     border-radius: 5px;
     outline: none;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.1s ease-out;
 
     &:focus {
       background-color: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.6);
+      transition: all 0.05s ease-out;
     }
   `;
 
   render() {
-    const { isLoaded, error, fuseMatch, cursor } = this.state;
+    const { isLoaded, error, fuseMatch, cursor, hasFocus } = this.state;
     if (!isLoaded) return null;
     if (error) return <div>Error: {error.message}</div>;
 
@@ -131,13 +136,17 @@ export default class StationSearch extends React.Component<
           onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
           value={this.state.input}
+          onFocus={() => this.setState({ hasFocus: true })}
+          onBlur={() => this.setState({ hasFocus: false, cursor: 0 })}
           placeholder="Type a station name"
         />
-        <FuzzyOverlay
-          onFuzzySelect={this.handleFuzzySelect}
-          fuzzyList={fuseMatch}
-          cursor={cursor}
-        />
+        {hasFocus ? (
+          <FuzzyOverlay
+            onFuzzySelect={this.handleFuzzySelect}
+            fuzzyList={fuseMatch}
+            cursor={cursor}
+          />
+        ) : null}
       </this.Search>
     );
   }

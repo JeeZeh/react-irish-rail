@@ -9,7 +9,6 @@ export interface FuzzyOverlayProps {
   onFuzzySelect: (refIndex: number) => void;
 }
 
-
 const Fuzzy = styled.div`
   position: relative;
   z-index: 1;
