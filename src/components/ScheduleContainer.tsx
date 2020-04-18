@@ -15,6 +15,19 @@ export interface TrainScheduleProps {
   lookahead: number;
 }
 
+const Card = styled.div`
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  padding: 15px 20px;
+`;
+
+const CardHeader = styled.div`
+  font-weight: 700px;
+  font-size: 1.8em;
+  margin-bottom: 15px;
+`;
+
 class ScheduleContainer extends React.Component<
   TrainScheduleProps,
   TrainScheduleState
@@ -50,10 +63,6 @@ class ScheduleContainer extends React.Component<
       .catch((error) => this.setState({ isLoaded: true, error }));
   }
 
-  Card = styled.div`
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
-  `;
-
   render() {
     const { error, isLoaded, stationData } = this.state;
     const { station } = this.props;
@@ -61,14 +70,10 @@ class ScheduleContainer extends React.Component<
     if (error) return <div>Error: {error.message}</div>;
 
     return (
-      <this.Card className="card mb-4">
-        <div className="card-body">
-          <div className="card-header">
-            <h5>{this.props.station.StationDesc} Timetable</h5>
-          </div>
-          {isLoaded ? <ScheduleTable trainData={stationData} /> : null}
-        </div>
-      </this.Card>
+      <Card>
+        <CardHeader>{this.props.station.StationDesc}</CardHeader>
+        {isLoaded ? <ScheduleTable trainData={stationData} /> : null}
+      </Card>
     );
   }
 }

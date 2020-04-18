@@ -21,6 +21,14 @@ const SearchWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
+const Body = styled.div`
+  padding: 2em;
+  max-width: 1200px;
+  min-width: 750px;
+  height: 100%;
+  padding-bottom: 150px;
+`;
+
 class App extends React.Component<{}, AppState> {
   private lookaheadOptions = [30, 60, 90, 120, 240];
 
@@ -51,7 +59,7 @@ class App extends React.Component<{}, AppState> {
     const { lookahead, station, searchReady } = this.state;
 
     return (
-      <div className="rail">
+      <Body className="rail">
         <h1>React - Irish Rail Times</h1>
         <blockquote className="blockquote">
           <p>The train times for Irish Rail stations</p>
@@ -79,7 +87,7 @@ class App extends React.Component<{}, AppState> {
           ) : null}
         </SearchWrapper>
         <ScheduleContainer station={station} lookahead={lookahead} />
-      </div>
+      </Body>
     );
   }
 }

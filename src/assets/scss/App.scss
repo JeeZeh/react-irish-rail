@@ -1,8 +1,15 @@
-.rail {
-  font-family: helvetica, arial, sans-serif;
-  padding: 2em;
-  max-width: 1200px;
-  min-width: 750px;
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;900&display=swap");
+
+* {
+  font-family: "Nunito", sans-serif;
+}
+
+h1 {
+  font-weight: 700 !important;
+}
+
+body {
+  background-color: #fbfbfb !important;
 }
 
 .card-body {

@@ -11,6 +11,7 @@ export interface StationSearchState {
   input: string;
   cursor: number;
   hasFocus: boolean;
+  mouseOver: boolean;
   error: any;
 }
 
@@ -49,6 +50,7 @@ export default class StationSearch extends React.Component<
       input: "",
       hasFocus: false,
       cursor: -1,
+      mouseOver: false,
       error: null,
     };
   }
@@ -126,18 +128,30 @@ export default class StationSearch extends React.Component<
   `;
 
   render() {
-    const { isLoaded, error, fuseMatch, cursor, hasFocus } = this.state;
+    const {
+      isLoaded,
+      error,
+      fuseMatch,
+      cursor,
+      hasFocus,
+      mouseOver,
+    } = this.state;
     if (!isLoaded) return null;
     if (error) return <div>Error: {error.message}</div>;
 
     return (
-      <this.Search>
+      <this.Search
+        onFocus={() => this.setState({ hasFocus: true })}
+        onBlur={() => {
+          if (!mouseOver) this.setState({ hasFocus: false, cursor: 0 });
+        }}
+        onMouseEnter={() => this.setState({ mouseOver: true })}
+        onMouseLeave={() => this.setState({ mouseOver: false })}
+      >
         <this.Input
           onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
           value={this.state.input}
-          onFocus={() => this.setState({ hasFocus: true })}
-          onBlur={() => this.setState({ hasFocus: false, cursor: 0 })}
           placeholder="Type a station name"
         />
         {hasFocus ? (

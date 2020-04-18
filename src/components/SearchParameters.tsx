@@ -37,7 +37,7 @@ const RadioSelect = styled.div`
 export const SearchParameters = (props: SearchParamerersProps) => {
   const { lookaheadOptions } = props;
 
-  const handleClick = async (e) => {
+  const handleClick = (e) => {
     const newValue = parseInt(e.target.getAttribute("data-value"));
     if (props.lookahead !== newValue) {
       props.onLookaheadChange(newValue);
