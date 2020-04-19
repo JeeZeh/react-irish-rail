@@ -1,7 +1,10 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
-import { Train } from "../api/IrishRailApi";
+import IrishRailApi, { Train, Journey } from "../api/IrishRailApi";
+import * as Moment from "moment";
 import styled from "styled-components";
+import { JourneyMap } from "./JourneyMap";
+import Collapsible from "react-collapsible";
 
 interface TrainColumn {
   dispName: string;
@@ -40,6 +43,7 @@ const Row = styled.div`
   transition: opacity 0.08s ease-out;
   border-bottom: 2px solid #eee;
   padding-bottom: 15px;
+  transition: all 0.25s ease-in-out;
 `;
 
 const Train = styled.div`
@@ -59,22 +63,27 @@ const Train = styled.div`
 
 const Info = styled.div`
   grid-area: info;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.25s ease-in-out;
   width: 100%;
+  display: flex;
+  height: 200px;
+  flex-direction: row;
+  justify-content: center;
+  transition: height 0.1s ease-out;
 
-  &.open {
-    max-height: 100px;
+  & > div {
+    width: 100%;
   }
 `;
 
 const ScheduleTable = (props: ScheduleTableProps) => {
   const { trainData } = props;
   const [open, setOpen] = React.useState(new Set<string>());
+  const [journeys, setJourneys] = React.useState(new Map<string, Journey>());
 
   const handleTrainClick = (e) => {
     const trainCode = e.currentTarget.getAttribute("data-traincode");
+    let date = Moment().locale("en-gb").format("ll");
+    console.log(date);
     let newOpen: Set<string>;
     const modif = e.ctrlKey || e.altKey;
 
@@ -87,26 +96,43 @@ const ScheduleTable = (props: ScheduleTableProps) => {
       );
     }
 
+    if (!journeys.has(trainCode)) {
+      IrishRailApi.getTrainJourney(trainCode, date).then((j) => {
+        const newJourneys = journeys.set(trainCode, j);
+        setJourneys(new Map(newJourneys));
+      });
+    }
+
     setOpen(newOpen);
   };
 
   const renderTrain = (train: Train) => {
     return (
       <Row className={open.has(train.Traincode) ? "open" : null}>
-        <Train
-          onClick={handleTrainClick}
-          key={train.Traincode}
-          data-traincode={train.Traincode}
+        <Collapsible transitionTime={180} easing={"ease-out"}
+          trigger={
+            <Train
+              onClick={handleTrainClick}
+              key={train.Traincode}
+              data-traincode={train.Traincode}
+            >
+              {columns.map((c) => (
+                <div key={c.propName}>{train[c.propName]}</div>
+              ))}
+            </Train>
+          }
         >
-          {columns.map((c) => (
-            <div key={c.propName}>{train[c.propName]}</div>
-          ))}
-        </Train>
-        <Info className={open.has(train.Traincode) ? "open" : null}>
-          <div>MAP</div>
-          <div>CURRENT</div>
-          <div>AAA</div>
-        </Info>
+          <Info
+            className={open.has(train.Traincode) ? "open" : null}
+            key={train.Traincode + "info"}
+          >
+            {journeys.has(train.Traincode) ? (
+              <JourneyMap journey={journeys.get(train.Traincode)} />
+            ) : (
+              <div>LOADING</div>
+            )}
+          </Info>{" "}
+        </Collapsible>
       </Row>
     );
   };

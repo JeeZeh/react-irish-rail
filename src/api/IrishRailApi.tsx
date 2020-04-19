@@ -6,6 +6,7 @@ export default class IrishRailApi {
   private static API = "http://api.irishrail.ie/realtime/realtime.asmx/";
   private static STATIONDATA =
     "getStationDataByCodeXML_WithNumMins?StationCode=";
+  private static TRAINJOURNEY = "/getTrainMovementsXML?TrainId=";
   private static ALLSTATIONS = "getAllStationsXML";
   private static XML_OPTIONS = {
     attributeNamePrefix: "@_",
@@ -93,6 +94,14 @@ export default class IrishRailApi {
     const parsedXml = parser.parse(xml, this.XML_OPTIONS);
     return parsedXml.ArrayOfObjStation[0].objStation;
   }
+  
+  private static parseXmlTrainJourney(xml: string): Journey {
+    const parsedXml = parser.parse(xml, this.XML_OPTIONS);
+    if (parsedXml.ArrayOfObjTrainMovements[0]) {
+      return {stops: parsedXml.ArrayOfObjTrainMovements[0].objTrainMovements};
+    }
+    return {stops: []}
+  }
 
   public static async getTrainsForStation(station: Station, lookahead: number): Promise<Train[]> {
     const endpoint = `${this.CORS}${this.API}${this.STATIONDATA}${station.StationCode}&NumMins=${lookahead}&format=xml`;
@@ -104,6 +113,20 @@ export default class IrishRailApi {
         );
         console.log(stationData);
         resolve(stationData);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  public static async getTrainJourney(trainCode: string, trainDate: string): Promise<Journey> {
+    const endpoint = `${this.CORS}${this.API}${this.TRAINJOURNEY}${trainCode}&TrainDate=${trainDate}`;
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(endpoint);
+        const journeyData = this.parseXmlTrainJourney(await response.text());
+        console.log(journeyData);
+        resolve(journeyData);
       } catch (error) {
         reject(error);
       }
@@ -156,6 +179,30 @@ export interface Train {
   Direction: string;
   Traintype: string;
   Locationtype: string;
+}
+
+export interface Journey {
+  stops: Movement[];
+}
+
+export interface Movement {
+  TrainCode: string;
+  TrainDate: string;
+  LocationCode: string;
+  LocationFullName: string;
+  LocationOrder: number;
+  LocationType: string;
+  TrainOrigin: string;
+  TrainDestination: string;
+  ScheduledArrival: string;
+  ScheduledDeparture: string;
+  ExpectedArrival: string;
+  ExpectedDeparture: string;
+  Arrival: string;
+  Departure: string;
+  AutoArrival: number;
+  AutoDepart: number;
+  StopType: string;
 }
 
 export interface Station {

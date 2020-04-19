@@ -16,8 +16,8 @@ export interface TrainScheduleProps {
 }
 
 const Card = styled.div`
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
-  border: 1px solid #bbb;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px 20px;
 `;

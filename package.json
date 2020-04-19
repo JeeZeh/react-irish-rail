@@ -75,6 +75,9 @@
     "fast-xml-parser": "^3.16.0",
     "fuse.js": "^5.1.0",
     "he": "^1.2.0",
+    "moment": "^2.24.0",
+    "react-collapsible": "^2.7.0",
+    "react-indiana-drag-scroll": "^1.6.1",
     "react-table": "^7.0.0",
     "styled-components": "^5.0.1"
   }
