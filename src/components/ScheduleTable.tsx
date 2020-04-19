@@ -65,7 +65,6 @@ const Info = styled.div`
   grid-area: info;
   width: 100%;
   display: flex;
-  height: 200px;
   flex-direction: row;
   justify-content: center;
   transition: height 0.1s ease-out;
@@ -82,6 +81,9 @@ const ScheduleTable = (props: ScheduleTableProps) => {
 
   const handleTrainClick = (e) => {
     const trainCode = e.currentTarget.getAttribute("data-traincode");
+    const t = trainData.find(t => t.Traincode == trainCode);
+    console.log(t);
+    
     let date = Moment().locale("en-gb").format("ll");
     console.log(date);
     let newOpen: Set<string>;
@@ -107,31 +109,27 @@ const ScheduleTable = (props: ScheduleTableProps) => {
   };
 
   const renderTrain = (train: Train) => {
+    const code = train.Traincode;
     return (
-      <Row className={open.has(train.Traincode) ? "open" : null}>
-        <Collapsible transitionTime={180} easing={"ease-out"}
+      <Row key={code}>
+        <Collapsible
+          transitionTime={180}
+          easing={"ease-out"}
           trigger={
-            <Train
-              onClick={handleTrainClick}
-              key={train.Traincode}
-              data-traincode={train.Traincode}
-            >
+            <Train onClick={handleTrainClick} key={code} data-traincode={code}>
               {columns.map((c) => (
                 <div key={c.propName}>{train[c.propName]}</div>
               ))}
             </Train>
           }
         >
-          <Info
-            className={open.has(train.Traincode) ? "open" : null}
-            key={train.Traincode + "info"}
-          >
-            {journeys.has(train.Traincode) ? (
-              <JourneyMap journey={journeys.get(train.Traincode)} />
+          <Info key={code + "info"}>
+            {journeys.has(code) ? (
+              <JourneyMap journey={journeys.get(code)} />
             ) : (
               <div>LOADING</div>
             )}
-          </Info>{" "}
+          </Info>
         </Collapsible>
       </Row>
     );
