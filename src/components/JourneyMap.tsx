@@ -1,87 +1,50 @@
 import * as React from "react";
+import { useEffect, useRef, MutableRefObject } from "react";
 import styled from "styled-components";
-import { Journey, Movement } from "../api/IrishRailApi";
+import { Journey } from "../api/IrishRailApi";
 import ScrollContainer from "react-indiana-drag-scroll";
-
-interface JourneyMapProps {
-  journey: Journey;
-}
+import { Time, StationDiv, Name, JourneyStop } from "./JourneyStop";
 
 const Wrapper = styled.div`
-  padding: 10px;
+  margin: 10px;
   display: grid;
   grid-template-areas: "key map";
   grid-template-columns: 1fr 3fr;
+  position: relative;
+`;
+
+const Fade = styled.div`
+  position: absolute;
+  grid-area: map;
+  display: block;
+  width: 50px;
+  height: 100%;
+
+  z-index: 1;
+
+  &.left {
+    background-image: linear-gradient(
+    to left,
+    rgba(251, 251, 251,00),
+    rgba(251, 251, 251,1) 100%
+  );
+  }
+  &.right {
+    right:0px;
+    background-image: linear-gradient(
+    to right,
+    rgba(251, 251, 251,00),
+    rgba(251, 251, 251, 1) 100%
+  );
+  }
 `;
 
 const Map = styled.div`
   grid-area: map;
   display: flex;
   flex-direction: row;
-  justify-content: center;
   cursor: grab;
-`;
-
-const Dot = styled.div`
-  grid-area: dot;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  border: 2px solid #444;
-  align-self: center;
-  justify-self: center;
-
-  &.departed,
-  &.arrived {
-    background-color: #444;
-  }
-
-  &.future {
-    border-width: 1px;
-  }
-`;
-
-const Name = styled.div`
-  grid-area: name;
-  font-weight: 600;
-  user-select: none;
-  writing-mode: vertical-lr;
-  margin-top: 5px;
-
-  &.arrived {
-    font-weight: 700;
-  }
-`;
-
-const Time = styled.div`
-  font-weight: 900;
-  writing-mode: vertical-lr;
-  margin-top: 5px;
-  transition: opacity 0.1s ease-out;
-  opacity: 0;
-
-  &.show-time {
-    opacity: 1;
-  }
-`;
-
-const Station = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0 5px;
-  transform: rotate(195deg);
-
-  &.departed {
-    opacity: 0.2;
-  }
-
-  &.future {
-    opacity: 0.8;
-  }
-
-  &:hover ${Time} {
-    opacity: 1;
-  }
+  padding: 0 100px;
 `;
 
 const Header = styled.h5`
@@ -95,14 +58,20 @@ const Key = styled.div`
   display: flex;
   flex-direction: column;
   width: 250px;
-  cursor: auto;
+  cursor: default;
   user-select: none;
+  opacity: 0.7;
+  transition: opacity 0.1s ease-out;
+
+  &:hover {
+    opacity: 1;
+  }
 
   ${Header} {
     padding-top: 5px;
   }
 
-  ${Station} {
+  ${StationDiv} {
     padding: 0;
     transform: none;
     flex-direction: row;
@@ -119,74 +88,79 @@ const Key = styled.div`
   }
 `;
 
-interface StationState {
-  state: string;
-  time: string;
-}
-
-export const JourneyMap = (props: JourneyMapProps) => {
+export const JourneyMap = (props: { journey: Journey }) => {
   const { stops } = props.journey;
+  const scroller: MutableRefObject<ScrollContainer> = useRef();
+  const trainPosition = stops.findIndex((s) => !s.Departure);
 
-  // NEED TO TIDY THIS UP!
-  const getStationState = (station: Movement, index: number): StationState => {
-    if (station.Departure && stops[index + 1] && !stops[index + 1].Departure) {
-      return { state: "departed show-time", time: station.ExpectedArrival };
-    }
+  // Move to the train's point in the map
+  useEffect(() => {
+    const scrollDiv = scroller.current
+      .getElement()
+      .children.item(0) as HTMLElement;
 
-    if (station.Departure) {
-      return { state: "departed", time: station.Departure };
-    }
-
-    if (station.Arrival) {
-      return { state: "arrived show-time", time: station.ExpectedDeparture };
-    }
-
-    if (stops[index - 1] && stops[index - 1].Departure) {
-      return { state: "approaching show-time", time: station.ExpectedArrival };
-    }
-
-    if (stops[index - 2] && stops[index - 2].Departure) {
-      return { state: "future  show-time", time: station.ExpectedArrival };
-    }
-
-    return {
-      state: `future ${
-        index == 0 || index == stops.length - 1 ? "show-time" : ""
-      }`,
-      time: index == 0 ? station.ExpectedDeparture : station.ExpectedArrival,
-    };
-  };
+    const trainDiv = scrollDiv.children.item(trainPosition) as HTMLElement;
+    const scrollTo =
+      trainDiv.offsetLeft - trainDiv.parentElement.offsetLeft - 100;
+    console.log(
+      trainDiv.offsetLeft - trainDiv.parentElement.offsetLeft,
+      scrollDiv.scrollWidth
+    );
+    scroller.current.getElement().scrollTo(scrollTo, 0);
+  });
 
   const renderKey = () => {
     return (
       <Key>
         <Header>Map Key</Header>
-        <Station className="departed">
-          <Dot className="departed" />
-          <Name className="departed">Departed</Name>
-          <Time className="show-time">· Departed Time</Time>
-        </Station>
-        <Station className="arrived">
-          <Dot className="arrived" />
-          <Name className="arrived">Arrived</Name>
-          <Time className="show-time">· Departing Time</Time>
-        </Station>
-        <Station className="approaching">
-          <Dot className="approaching" />
-          <Name className="approaching">Approaching</Name>
-          <Time className="show-time">· Arrival Time</Time>
-        </Station>
-        <Station className="future">
-          <Dot className="future" />
-          <Name className="future">Future Station</Name>
-          <Time className="show-time">· Arrival Time</Time>
-        </Station>
-        <p>Hover over a station to show relevant time, try it below!</p>
-        <Station className="future">
-          <Dot className="future" />
-          <Name className="future">Station Name</Name>
-          <Time>· Hidden Time</Time>
-        </Station>
+        <JourneyStop
+          station={{ Departure: "Departed Time", LocationFullName: "Departed" }}
+          stopNumber={0}
+          trainPosition={2}
+          journeyLength={4}
+          forceShowTime={true}
+        />
+        <JourneyStop
+          station={{
+            Arrival: "foo",
+            ExpectedDeparture: "Departing Time",
+            LocationFullName: "Arrived",
+          }}
+          stopNumber={1}
+          trainPosition={1}
+          journeyLength={4}
+          forceShowTime={true}
+        />
+        <JourneyStop
+          station={{
+            ExpectedArrival: "Arriving Time",
+            LocationFullName: "Approaching",
+          }}
+          stopNumber={2}
+          trainPosition={2}
+          journeyLength={4}
+          forceShowTime={true}
+        />
+        <JourneyStop
+          station={{
+            ExpectedArrival: "Arriving Time",
+            LocationFullName: "Future Stop",
+          }}
+          stopNumber={3}
+          trainPosition={1}
+          journeyLength={4}
+          forceShowTime={true}
+        />
+        <p>Hover over a station to show the relevant time, try it below!</p>
+        <JourneyStop
+          station={{
+            ExpectedArrival: "Hidden Time",
+            LocationFullName: "Station Name",
+          }}
+          stopNumber={3}
+          trainPosition={1}
+          journeyLength={5}
+        />
       </Key>
     );
   };
@@ -194,22 +168,21 @@ export const JourneyMap = (props: JourneyMapProps) => {
   return (
     <Wrapper>
       {renderKey()}
-      <ScrollContainer>
-        
+      <Fade className="left"/>
+      <ScrollContainer ref={scroller}>
         <Map>
           {stops.map((s, i) => (
-            <Station className={getStationState(s, i).state} key={i}>
-              <Dot className={getStationState(s, i).state} />
-              <Name className={getStationState(s, i).state}>
-                {s.LocationFullName}
-              </Name>
-              <Time className={getStationState(s, i).state}>
-                · {getStationState(s, i).time}
-              </Time>
-            </Station>
+            <JourneyStop
+              station={s}
+              stopNumber={i}
+              trainPosition={trainPosition}
+              journeyLength={stops.length}
+              key={i}
+            />
           ))}
         </Map>
       </ScrollContainer>
+      <Fade className="right"/>
     </Wrapper>
   );
 };

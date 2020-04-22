@@ -24,22 +24,8 @@ const Table = styled.div`
   transition: border 0.08s ease-out;
 `;
 
-const Body = styled.div`
-  & > div > div:first-child {
-    cursor: pointer;
-  }
-
-  & > div:last-child {
-    border-bottom: none;
-  }
-`;
-
 const Row = styled.div`
   padding-top: 15px;
-  display: grid;
-  grid-template-areas:
-    "train"
-    "info";
   transition: opacity 0.08s ease-out;
   border-bottom: 2px solid #eee;
   padding-bottom: 15px;
@@ -50,7 +36,6 @@ const Train = styled.div`
   display: grid;
   grid-template-areas: "due dep from to term last";
   grid-template-columns: 1fr 1fr 2.5fr 2.5fr 1fr 2.5fr;
-  grid-area: train;
 
   &:not(.header):hover {
     opacity: 0.8;
@@ -60,6 +45,18 @@ const Train = styled.div`
     font-weight: 700;
   }
 `;
+
+const Body = styled.div`
+  ${Train} {
+    cursor: pointer;
+  }
+
+  & > div:last-child {
+    border-bottom: none;
+  }
+`;
+
+
 
 const Info = styled.div`
   grid-area: info;

@@ -99,7 +99,7 @@ export default class IrishRailApi {
     const parsedXml = parser.parse(xml, this.XML_OPTIONS);
     if (parsedXml.ArrayOfObjTrainMovements[0]) {
       const movements: Movement[] = parsedXml.ArrayOfObjTrainMovements[0].objTrainMovements;
-      return {stops: movements.filter(loc => loc.LocationType !== "T")};
+      return {stops: movements.filter(loc => loc.LocationType                !== "T")};
     }
     return {stops: []}
   }

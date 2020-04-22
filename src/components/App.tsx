@@ -22,6 +22,7 @@ const SearchWrapper = styled.div`
 `;
 
 const Body = styled.div`
+margin: auto auto;
   padding: 2em;
   max-width: 1200px;
   min-width: 750px;
