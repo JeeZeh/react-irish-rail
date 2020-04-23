@@ -81,11 +81,12 @@ export default class IrishRailApi {
   private static parseXmlStationData(xml: string): Train[] {
     const parsedXml = parser.parse(xml, this.XML_OPTIONS);
     if (!parsedXml.ArrayOfObjStationData) {
-      let fakeData = new Array<Train>();
-      for (let i = 0; i < 10; i++) {
-        fakeData.push(this.generateFakeStationData());
-      }
-      return fakeData;
+      // let fakeData = new Array<Train>();
+      // for (let i = 0; i < 10; i++) {
+      //   fakeData.push(this.generateFakeStationData());
+      // }
+      // return fakeData;
+      return [];
     }
     return parsedXml.ArrayOfObjStationData[0].objStationData;
   }

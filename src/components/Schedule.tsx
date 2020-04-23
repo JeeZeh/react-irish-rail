@@ -22,11 +22,20 @@ const Card = styled.div`
   padding: 15px 20px;
 `;
 
-const CardHeader = styled.div`
+const CardHeader = styled.h2`
   font-weight: 700px;
   font-size: 1.8em;
   margin-bottom: 15px;
 `;
+
+const Error = styled.h2`
+  font-weight: 700;
+  text-align: center;
+  margin: 100px;
+  color: #777;
+  user-select: none;
+  
+`
 
 class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
   constructor(props) {
@@ -62,10 +71,14 @@ class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
 
   render() {
     const { error, isLoaded, stationData } = this.state;
-    const { station } = this.props;
+    const { station, lookahead } = this.props;
     if (!station) return null;
     if (error) return <div>Error: {error.message}</div>;
-
+    if (stationData.length === 0) {
+      return (<Card><Error>
+          No trains due in the next {lookahead} minutes
+        </Error></Card>)
+    }
     return (
       <Card>
         <CardHeader>{this.props.station.StationDesc}</CardHeader>
