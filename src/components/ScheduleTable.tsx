@@ -78,11 +78,8 @@ const ScheduleTable = (props: ScheduleTableProps) => {
 
   const handleTrainClick = (e) => {
     const trainCode = e.currentTarget.getAttribute("data-traincode");
-    const t = trainData.find(t => t.Traincode == trainCode);
-    console.log(t);
-    
+    const t = trainData.find(t => t.Traincode == trainCode);   
     let date = Moment().locale("en-gb").format("ll");
-    console.log(date);
     let newOpen: Set<string>;
     const modif = e.ctrlKey || e.altKey;
 

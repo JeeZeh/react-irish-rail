@@ -27,6 +27,10 @@ const FuzzyItem = styled.div`
   &:hover {
     background: whitesmoke;
   }
+
+  &.active {
+    background-color: #eee;
+  }
 `;
 
 export const FuzzyOverlay = (props: FuzzyOverlayProps) => {

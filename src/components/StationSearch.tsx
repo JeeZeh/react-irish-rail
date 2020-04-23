@@ -68,7 +68,7 @@ export default class StationSearch extends React.Component<
     this.props.onSearchReady();
   }
 
-  handleKeyDown = (e) => {
+  private handleKeyDown = (e) => {
     const { cursor, fuseMatch } = this.state;
     // Up Arrow
     if (e.keyCode === 38 && cursor > 0) {
@@ -91,7 +91,7 @@ export default class StationSearch extends React.Component<
     }
   };
 
-  handleChange = (e) => {
+  private handleChange = (e) => {
     const pattern = e.target.value;
     this.setState({
       input: pattern,
@@ -152,7 +152,7 @@ export default class StationSearch extends React.Component<
       >
         <this.Input
           onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown}
+          onKeyDown={this.handleKeyDown} // Displays the event
           value={this.state.input}
           placeholder="Type a station name"
         />

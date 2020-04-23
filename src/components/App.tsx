@@ -68,12 +68,10 @@ class App extends React.Component<{}, AppState> {
   }
 
   onStationChange = (station: Station) => {
-    console.log(station);
     this.setState({ station });
   };
 
   onLookaheadChange = (lookahead: number) => {
-    console.log(lookahead);
     this.setState({ lookahead });
   };
 

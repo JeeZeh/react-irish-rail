@@ -112,7 +112,6 @@ export default class IrishRailApi {
         const stationData = this.parseXmlStationData(await response.text()).map(
           this.cleanData
         );
-        console.log(stationData);
         resolve(stationData);
       } catch (error) {
         reject(error);
@@ -126,7 +125,6 @@ export default class IrishRailApi {
       try {
         const response = await fetch(endpoint);
         const journeyData = this.parseXmlTrainJourney(await response.text());
-        console.log(journeyData);
         resolve(journeyData);
       } catch (error) {
         reject(error);

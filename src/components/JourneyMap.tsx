@@ -58,12 +58,10 @@ const Map = styled.div`
 
 const InfoWrapper = styled.div`
   grid-area: info;
- margin: 20px 10px 10px 30px;
+  margin: 20px 10px 10px 30px;
 `;
 
-
-
-export const JourneyMap = (props: { journey: Journey, train: Train }) => {
+export const JourneyMap = (props: { journey: Journey; train: Train }) => {
   const { journey, train } = props;
   const scroller: MutableRefObject<ScrollContainer> = useRef();
   const trainPosition = journey.stops.findIndex((s) => !s.Departure);
@@ -73,25 +71,23 @@ export const JourneyMap = (props: { journey: Journey, train: Train }) => {
     const scrollDiv = scroller.current
       .getElement()
       .children.item(0) as HTMLElement;
-
     const trainDiv = scrollDiv.children.item(trainPosition) as HTMLElement;
     const scrollTo =
       trainDiv.offsetLeft - trainDiv.parentElement.offsetLeft - 100;
-    console.log(
-      trainDiv.offsetLeft - trainDiv.parentElement.offsetLeft,
-      scrollDiv.scrollWidth
-    );
     scroller.current.getElement().scrollTo(scrollTo, 0);
   });
 
   return (
     <Wrapper>
       <InfoWrapper>
-        <JourneyInfo journey={props.journey} train={train}/>
-
+        <JourneyInfo journey={props.journey} train={train} />
       </InfoWrapper>
       <Fade className="left" />
-      <ScrollContainer ref={scroller} vertical={false} className="scroll-container">
+      <ScrollContainer
+        ref={scroller}
+        vertical={false}
+        className="scroll-container"
+      >
         <Map>
           {journey.stops.map((s, i) => (
             <JourneyStop
