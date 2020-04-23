@@ -29,7 +29,8 @@
     "start": "npm run start-dev",
     "start-dev": "webpack-dev-server --config=configs/webpack/dev.js",
     "start-prod": "npm run build && node express.js",
-    "test": "jest --coverage --watchAll --config=configs/jest.json"
+    "test": "jest --coverage --watchAll --config=configs/jest.json",
+    "heroku-postbuild": "npm run start-prod"
   },
   "devDependencies": {
     "@types/he": "^1.1.1",
@@ -49,6 +50,7 @@
     "express": "^4.17.1",
     "file-loader": "^5.1.0",
     "html-webpack-plugin": "^3.2.0",
+    "http-proxy-middleware": "^1.0.3",
     "image-webpack-loader": "^6.0.0",
     "jest": "^25.1.0",
     "node-sass": "^4.13.1",
@@ -69,6 +71,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "fast-xml-parser": "^3.16.0",
     "fuse.js": "^5.1.0",
     "he": "^1.2.0",

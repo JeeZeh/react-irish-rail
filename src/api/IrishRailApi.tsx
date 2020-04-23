@@ -2,8 +2,7 @@ import * as parser from "fast-xml-parser";
 import * as he from "he";
 
 export default class IrishRailApi {
-  private static CORS = "https://cors-anywhere.herokuapp.com/";
-  private static API = "http://api.irishrail.ie/realtime/realtime.asmx/";
+  private static API = "/";
   private static STATIONDATA =
     "getStationDataByCodeXML_WithNumMins?StationCode=";
   private static TRAINJOURNEY = "/getTrainMovementsXML?TrainId=";
@@ -106,7 +105,7 @@ export default class IrishRailApi {
   }
 
   public static async getTrainsForStation(station: Station, lookahead: number): Promise<Train[]> {
-    const endpoint = `${this.CORS}${this.API}${this.STATIONDATA}${station.StationCode}&NumMins=${lookahead}&format=xml`;
+    const endpoint = `${this.API}${this.STATIONDATA}${station.StationCode}&NumMins=${lookahead}&format=xml`;
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(endpoint);
@@ -121,7 +120,7 @@ export default class IrishRailApi {
   }
 
   public static async getTrainJourney(trainCode: string, trainDate: string): Promise<Journey> {
-    const endpoint = `${this.CORS}${this.API}${this.TRAINJOURNEY}${trainCode}&TrainDate=${trainDate}`;
+    const endpoint = `${this.API}${this.TRAINJOURNEY}${trainCode}&TrainDate=${trainDate}`;
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(endpoint);
@@ -144,7 +143,7 @@ export default class IrishRailApi {
   }
 
   public static getStations(): Promise<Station[]> {
-    const endpoint = `${this.CORS}${this.API}${this.ALLSTATIONS}`;
+    const endpoint = `${this.API}${this.ALLSTATIONS}`;
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(endpoint);
