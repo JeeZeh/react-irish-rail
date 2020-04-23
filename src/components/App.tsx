@@ -3,10 +3,11 @@ import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
 import styled from "styled-components";
 
-import ScheduleContainer from "./ScheduleContainer";
+import Schedule from "./Schedule";
 import StationSearch from "./StationSearch";
 import { Station } from "../api/IrishRailApi";
 import { SearchParameters } from "./SearchParameters";
+import { JourneyKey } from "./JourneyKey";
 
 interface AppState {
   station: Station;
@@ -15,19 +16,43 @@ interface AppState {
 }
 
 const SearchWrapper = styled.div`
-  display: inline-flex;
+  display: flex;
+  grid-area: search;
   flex-direction: row;
   height: 40px;
   margin-bottom: 20px;
+  padding-right: 50px;
+`;
+
+const ScheduleWrapper = styled.div`
+margin-top: 20px;
+  grid-area: schedule;
+`;
+
+const KeyWrapper = styled.div`
+  grid-area: key;
 `;
 
 const Body = styled.div`
-margin: auto auto;
+  display: grid;
+  grid-template-areas:
+    "title title"
+    "head key"
+    "search key"
+    "schedule schedule";
+  grid-template-columns: 4fr 1fr;
+  grid-template-rows: 1fr 3fr 1fr auto;
+  margin: auto auto;
   padding: 2em;
   max-width: 1200px;
   min-width: 750px;
   height: 100%;
   padding-bottom: 150px;
+`;
+
+const Head = styled.div`
+  grid-area: head;
+  padding-right: 50px;
 `;
 
 class App extends React.Component<{}, AppState> {
@@ -62,17 +87,23 @@ class App extends React.Component<{}, AppState> {
     return (
       <Body className="rail">
         <h1>React - Irish Rail Times</h1>
-        <blockquote className="blockquote">
-          <p>The train times for Irish Rail stations</p>
-          <footer className="blockquote-footer">
-            This app was created using React as a personal learning experience,
-            as a result, it's probably more complicated than it needs to be!
-            <br />
-            If the times never load or if the data displayed is gibberish, there
-            may be either no trains available or the API proxy cannot be
-            reached.
-          </footer>
-        </blockquote>
+        <Head>
+          <blockquote className="blockquote">
+            <p>The train times for Irish Rail stations</p>
+            <footer className="blockquote-footer">
+              This app was created using React as a personal learning
+              experience, as a result, it's probably more complicated than it
+              needs to be!
+              <br />
+              If the times never load or if the data displayed is gibberish,
+              there may be either no trains available or the API proxy cannot be
+              reached.
+            </footer>
+          </blockquote>
+        </Head>
+        <KeyWrapper>
+          <JourneyKey/>
+        </KeyWrapper>
         <SearchWrapper>
           <StationSearch
             onSearchReady={this.onSearchReady}
@@ -87,7 +118,9 @@ class App extends React.Component<{}, AppState> {
             />
           ) : null}
         </SearchWrapper>
-        <ScheduleContainer station={station} lookahead={lookahead} />
+        <ScheduleWrapper>
+          <Schedule station={station} lookahead={lookahead} />
+        </ScheduleWrapper>
       </Body>
     );
   }

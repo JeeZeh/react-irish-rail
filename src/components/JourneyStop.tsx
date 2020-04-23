@@ -49,6 +49,10 @@ export const Time = styled.div`
   &.show-time {
     opacity: 1;
   }
+
+  &::before{
+    content: "· ";
+  }
 `;
 
 export const StationDiv = styled.div`
@@ -125,7 +129,7 @@ export const JourneyStop = (props: JourneyStopProps) => {
     <StationDiv className={getStyle()}>
       <Dot className={getStyle()} />
       <Name className={getStyle()}>{station.LocationFullName}</Name>
-      <Time className={getStyle()}>· {getTime()}</Time>
+      <Time className={getStyle()}>{getTime()}</Time>
     </StationDiv>
   );
 };

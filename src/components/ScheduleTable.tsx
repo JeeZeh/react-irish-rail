@@ -122,7 +122,7 @@ const ScheduleTable = (props: ScheduleTableProps) => {
         >
           <Info key={code + "info"}>
             {journeys.has(code) ? (
-              <JourneyMap journey={journeys.get(code)} />
+              <JourneyMap journey={journeys.get(code)} train={train} />
             ) : (
               <div>LOADING</div>
             )}

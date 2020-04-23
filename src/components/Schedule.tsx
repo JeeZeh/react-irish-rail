@@ -28,10 +28,7 @@ const CardHeader = styled.div`
   margin-bottom: 15px;
 `;
 
-class ScheduleContainer extends React.Component<
-  TrainScheduleProps,
-  TrainScheduleState
-> {
+class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -78,4 +75,4 @@ class ScheduleContainer extends React.Component<
   }
 }
 
-export default hot(module)(ScheduleContainer);
+export default hot(module)(Schedule);

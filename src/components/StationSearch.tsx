@@ -85,7 +85,9 @@ export default class StationSearch extends React.Component<
         fuseMatch.length === 1
           ? fuseMatch[0].refIndex
           : fuseMatch[cursor].refIndex;
-      this.handleFuzzySelect(selection);
+      if (selection) {
+        this.handleFuzzySelect(selection);
+      }
     }
   };
 
