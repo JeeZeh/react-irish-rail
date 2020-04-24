@@ -13,11 +13,17 @@ const Wrapper = styled.div`
   grid-template-columns: 3fr 1fr;
   position: relative;
   align-content: center;
+  width: 100%;
 
   & div.scroll-container {
     height: auto;
     display: flex;
     justify-content: center;
+    overflow: scroll;
+  }
+  & div.scroll-container::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
   }
 `;
 
@@ -95,6 +101,7 @@ export const JourneyMap = (props: { journey: Journey; train: Train }) => {
         ref={scroller}
         vertical={false}
         className="scroll-container"
+        hideScrollbars={false}
       >
         <Map>
           {journey.stops.map((s, i) => (

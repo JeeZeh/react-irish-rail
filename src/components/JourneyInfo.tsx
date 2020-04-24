@@ -4,6 +4,8 @@ import { Journey, Train } from "../api/IrishRailApi";
 
 const Header = styled.h5`
   font-weight: 700;
+  margin: 10px 0 20px 0;
+  font-size: 1.2em;
 `;
 
 const Info = styled.div`
@@ -30,7 +32,7 @@ const Title = styled.div`
 `;
 
 const Value = styled.div`
-  font-weight: 500;
+  font-weight: 400;
 `;
 
 export const JourneyInfo = (props: { journey: Journey; train: Train }) => {
