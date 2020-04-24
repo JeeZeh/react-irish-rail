@@ -36,26 +36,26 @@ const Value = styled.div`
 export const JourneyInfo = (props: { journey: Journey; train: Train }) => {
   const { journey, train } = props;
   return (
-      <Info>
-        <Header>Journey Information</Header>
-        <Entry>
-          <Title>Origin · {train.Origintime}</Title>
-          <Value>{train.Origin}</Value>
-        </Entry>
-        <Entry>
-          <Title>Destination · {train.Destinationtime}</Title>
-          <Value>{train.Destination}</Value>
-        </Entry>
-        <Entry>
-          <Title>Number of Stops</Title>
-          <Value>
-            {journey.stops.filter((s) => s.LocationType === "S").length}
-          </Value>
-        </Entry>
-        <Entry>
-          <Title>Direction</Title>
-          <Value>{train.Direction}</Value>
-        </Entry>
-      </Info>
+    <Info>
+      <Header>Journey Information</Header>
+      <Entry>
+        <Title>Origin · {train.Origintime}</Title>
+        <Value>{train.Origin}</Value>
+      </Entry>
+      <Entry>
+        <Title>Destination · {train.Destinationtime}</Title>
+        <Value>{train.Destination}</Value>
+      </Entry>
+      <Entry>
+        <Title>Number of Stops</Title>
+        <Value>
+          {journey.stops.filter((s) => s.LocationType === "S").length}
+        </Value>
+      </Entry>
+      <Entry>
+        <Title>Direction</Title>
+        <Value>{train.Direction}</Value>
+      </Entry>
+    </Info>
   );
 };

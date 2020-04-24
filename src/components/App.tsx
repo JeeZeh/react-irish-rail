@@ -23,7 +23,6 @@ const SearchWrapper = styled.div`
   width: 90%;
 `;
 
-
 const ScheduleWrapper = styled.div`
   margin-top: 20px;
   grid-area: schedule;

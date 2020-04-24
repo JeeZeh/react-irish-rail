@@ -11,7 +11,7 @@ export interface FuzzyOverlayProps {
 
 const Fuzzy = styled.div`
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   background: white;
   width: 100%;
 

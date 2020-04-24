@@ -51,7 +51,6 @@ export default class StationSearch extends React.Component<
 
   componentDidMount() {
     this.fuse = new Fuse(this.props.stationList, this.FUSE_OPTIONS);
-    console.log(this.props.stationList);
   }
 
   private handleKeyDown = (e) => {
@@ -70,7 +69,9 @@ export default class StationSearch extends React.Component<
       const selection =
         fuseMatch.length === 1
           ? fuseMatch[0].refIndex
-          : fuseMatch[cursor].refIndex;
+          : cursor !== -1
+          ? fuseMatch[cursor].refIndex
+          : null;
       if (selection) {
         this.handleFuzzySelect(selection);
       }
@@ -96,9 +97,7 @@ export default class StationSearch extends React.Component<
     width: 400px;
     height: 100%;
     position: relative;
-
   `;
-
 
   private Input = styled.input`
     width: 100%;
@@ -118,40 +117,35 @@ export default class StationSearch extends React.Component<
   `;
 
   render() {
-    const {
-      fuseMatch,
-      cursor,
-      hasFocus,
-      mouseOver,
-    } = this.state;
-    
+    const { fuseMatch, cursor, hasFocus, mouseOver } = this.state;
+
     return (
       <div>
-        <h4 >Trains at</h4>
+        <h4>Trains at</h4>
         <this.Search
-        onFocus={() => this.setState({ hasFocus: true })}
-        onBlur={() => {
-          if (!mouseOver) this.setState({ hasFocus: false, cursor: 0 });
-        }}
-        onMouseEnter={() => this.setState({ mouseOver: true })}
-        onMouseLeave={() => this.setState({ mouseOver: false })}
-      >
-        <this.Input
-          onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown} 
-          value={this.state.input}
-          placeholder="Type a station name"
-          aria-label="Input box for searching a station"
-        />
-        {hasFocus ? (
-          <FuzzyOverlay
-            onFuzzySelect={this.handleFuzzySelect}
-            fuzzyList={fuseMatch}
-            cursor={cursor}
+          onFocus={() => this.setState({ hasFocus: true })}
+          onBlur={() => {
+            if (!mouseOver) this.setState({ hasFocus: false, cursor: 0 });
+          }}
+          onMouseEnter={() => this.setState({ mouseOver: true })}
+          onMouseLeave={() => this.setState({ mouseOver: false })}
+        >
+          <this.Input
+            onChange={this.handleChange}
+            onKeyDown={this.handleKeyDown}
+            value={this.state.input}
+            placeholder="Type a station name"
+            aria-label="Input box for searching a station"
           />
-        ) : null}
-      </this.Search>
-        </div>
+          {hasFocus ? (
+            <FuzzyOverlay
+              onFuzzySelect={this.handleFuzzySelect}
+              fuzzyList={fuseMatch}
+              cursor={cursor}
+            />
+          ) : null}
+        </this.Search>
+      </div>
     );
   }
 }

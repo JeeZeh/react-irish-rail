@@ -62,8 +62,6 @@ const InfoWrapper = styled.div`
 
 export const JourneyMap = (props: { journey: Journey; train: Train }) => {
   const { journey, train } = props;
-  console.log(journey, train);
-
   const scroller: MutableRefObject<ScrollContainer> = useRef();
   const trainPosition = journey.stops.findIndex((s, i) => {
     return (

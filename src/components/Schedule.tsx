@@ -34,8 +34,7 @@ const Error = styled.h2`
   margin: 100px;
   color: #777;
   user-select: none;
-  
-`
+`;
 
 class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
   constructor(props) {
@@ -75,9 +74,11 @@ class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
     if (!station) return null;
     if (error) return <div>Error: {error.message}</div>;
     if (stationData.length === 0) {
-      return (<Card><Error>
-          No trains due in the next {lookahead} minutes
-        </Error></Card>)
+      return (
+        <Card>
+          <Error>No trains due in the next {lookahead} minutes</Error>
+        </Card>
+      );
     }
     return (
       <Card>

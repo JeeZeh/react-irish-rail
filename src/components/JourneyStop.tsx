@@ -34,7 +34,6 @@ export const Dot = styled.div`
     border: none;
     color: darkorange;
     align-self: end;
-
   }
 
   &.early {
@@ -53,7 +52,7 @@ export const Name = styled.div`
 
   &.arrived {
     font-weight: 700;
-  } 
+  }
 
   &.relevant {
     font-weight: 900 !important;
@@ -61,25 +60,24 @@ export const Name = styled.div`
 `;
 
 export const OffSchedule = styled.div`
-position: absolute;
-font-weight: 700;
-transform: translateX(-85%);
-height: 250%; 
-border: 1px solid #ddd;
-background-color: #fff;
-border-radius: 5px;
-padding: 5px; 
-opacity: 0;
-transition: opacity 0.08s ease-out;
+  position: absolute;
+  font-weight: 700;
+  transform: translateX(-85%);
+  height: 250%;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+  opacity: 0;
+  transition: opacity 0.08s ease-out;
 
-&:hover {
-  opacity: 1;
-}
-
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 export const Time = styled.div`
-position:relative;
+  position: relative;
   display: inline-flex;
   font-weight: 900;
   writing-mode: vertical-lr;
@@ -111,7 +109,6 @@ export const StationDiv = styled.div`
   width: 40px;
   padding: 0 8px;
   transform: rotate(225deg);
- 
 
   &.departed {
     opacity: 0.2;
@@ -124,7 +121,6 @@ export const StationDiv = styled.div`
   &:hover ${Time} {
     opacity: 1;
   }
-  
 `;
 
 export const JourneyStop = (props: JourneyStopProps) => {
@@ -194,9 +190,7 @@ export const JourneyStop = (props: JourneyStopProps) => {
           moment(station.ExpectedArrival, "HH:mm:SS"),
           "minutes"
         );
-        console.log(unaccountedDelay);
       }
-      console.log(diff);
 
       if (diff > 2 || unaccountedDelay > 2) {
         classNames.push("delayed");
