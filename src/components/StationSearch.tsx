@@ -1,8 +1,9 @@
 import * as React from "react";
 import * as Fuse from "fuse.js/dist/fuse";
-import IrishRailApi, { Station } from "../api/IrishRailApi";
+import { Station } from "../api/IrishRailApi";
 import styled from "styled-components";
 import { FuzzyOverlay } from "./FuzzyOverlay";
+import { SearchHeading } from "./App";
 
 export interface StationSearchState {
   fuseMatch: Fuse.FuseResult<Station>[];
@@ -106,6 +107,7 @@ export default class StationSearch extends React.Component<
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     outline: none;
+  font-size: 0.95em;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
     transition: all 0.1s ease-out;
 
@@ -121,7 +123,7 @@ export default class StationSearch extends React.Component<
 
     return (
       <div>
-        <h4>Trains at</h4>
+        <SearchHeading>Trains at</SearchHeading>
         <this.Search
           onFocus={() => this.setState({ hasFocus: true })}
           onBlur={() => {

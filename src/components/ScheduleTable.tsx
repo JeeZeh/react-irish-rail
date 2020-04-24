@@ -56,8 +56,6 @@ const Body = styled.div`
   }
 `;
 
-
-
 const Info = styled.div`
   grid-area: info;
   width: 100%;
@@ -74,7 +72,7 @@ const ScheduleTable = (props: ScheduleTableProps) => {
   const handleTrainClick = (e) => {
     const trainCode = e.currentTarget.getAttribute("data-traincode");
     let date = Moment().locale("en-gb").format("ll");
-   
+
     if (!journeys.has(trainCode)) {
       IrishRailApi.getTrainJourney(trainCode, date).then((j) => {
         const newJourneys = journeys.set(trainCode, j);

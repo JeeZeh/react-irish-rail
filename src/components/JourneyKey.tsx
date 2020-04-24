@@ -4,6 +4,7 @@ import { Time, StationDiv, Name, Dot } from "./JourneyStop";
 
 const Header = styled.h5`
   font-weight: 700;
+  font-size: 1.3em;
 `;
 
 const Key = styled.div`
@@ -16,9 +17,13 @@ const Key = styled.div`
   transition: opacity 0.1s ease-out;
   writing-mode: horizontal-tb;
 
+  hr {
+    width: 100%;
+    margin: 15px 0;
+  }
 
   & p {
-    margin: 10px 0;
+    margin-top: 0;
   }
 
   ${Header} {
@@ -54,39 +59,44 @@ export const JourneyKey = () => {
     <Key>
       <Header>Map Key</Header>
       <StationDiv className="departed">
-        <Dot className="departed"/>
+        <Dot className="departed" />
         <Name className="departed">Departed</Name>
         <Time className="departed show-time">Departed Time</Time>
       </StationDiv>
       <StationDiv className="arrived">
-        <Dot className="arrived"/>
+        <Dot className="arrived" />
         <Name className="arrived">Arrived</Name>
         <Time className="arrived show-time">Departing Time</Time>
       </StationDiv>
       <StationDiv className="appraoching">
-        <Dot className="appraoching"/>
+        <Dot className="appraoching" />
         <Name className="appraoching">Appraoching</Name>
         <Time className="appraoching show-time">Arriving Time</Time>
       </StationDiv>
       <StationDiv className="future">
-        <Dot className="future"/>
+        <Dot className="future" />
         <Name className="future">Future Stop</Name>
         <Time className="future show-time">Arriving Time</Time>
       </StationDiv>
+      <hr />
       <p>
         If a train defers from schedule, the new arrival time along with the
         original schedule are shown:
       </p>
-      
+
       <StationDiv>
         <Dot className="delayed show-time">!</Dot>
         <Name className="approaching">Delayed</Name>
-        <Time className="approaching delayed show-time">Expected (scheduled)</Time>
+        <Time className="approaching delayed show-time">
+          Expected (scheduled)
+        </Time>
       </StationDiv>
       <StationDiv>
         <Dot className="early show-time">!</Dot>
         <Name className="approaching">Early</Name>
-        <Time className="approaching early show-time">Expected (scheduled)</Time>
+        <Time className="approaching early show-time">
+          Expected (scheduled)
+        </Time>
       </StationDiv>
     </Key>
   );

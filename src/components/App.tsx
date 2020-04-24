@@ -1,6 +1,5 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
-import "./../assets/scss/App.scss";
 import styled from "styled-components";
 
 import Schedule from "./Schedule";
@@ -60,6 +59,13 @@ const Head = styled.div`
 
   & h1 {
     font-weight: 700;
+    margin: none;
+  }
+
+  & h3 {
+    font-weight: 500;
+    font-size: 1.3em;
+    margin: none;
   }
 
   & ul {
@@ -70,6 +76,11 @@ const Head = styled.div`
     list-style-position: inside;
     opacity: 0.9;
   }
+`;
+
+export const SearchHeading = styled.h3`
+  font-weight: 500;
+  margin: 10px 0;
 `;
 
 class App extends React.Component<{}, AppState> {
@@ -108,8 +119,10 @@ class App extends React.Component<{}, AppState> {
     return (
       <Body className="rail">
         <Head>
-          <h1>Irish Rail Train Schedule</h1>
-          <h5>A modern train schedule for Irish Rail</h5>
+          <div>
+            <h1>Irish Rail Train Schedule</h1>
+            <h3>A modern train schedule for Irish Rail</h3>
+          </div>
           <ul>
             <li>
               This app allows you to view all trains passing through a given

@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
+import { SearchHeading } from "./App";
 
 interface SearchParamerersProps {
   lookaheadOptions: number[];
@@ -11,6 +12,7 @@ const RadioSelect = styled.div`
   display: inline-flex;
   flex-direction: row;
   border: 1px solid rgba(0, 0, 0, 0.2);
+  overflow: hidden;
   border-radius: 5px;
   background-color: whitesmoke;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
@@ -20,9 +22,10 @@ const RadioSelect = styled.div`
     display: flex;
     align-items: center;
     font-weight: bold;
-    overflow: hidden;
     color: rgba(0, 0, 0, 0.6);
+    overflow: hidden;
     padding: 8px;
+
     cursor: pointer;
   }
 
@@ -44,7 +47,7 @@ export const SearchParameters = (props: SearchParamerersProps) => {
 
   return (
     <div>
-      <h4>In the next</h4>
+      <SearchHeading>In the next</SearchHeading>
       <RadioSelect>
         {lookaheadOptions.map((o, i) => {
           return (
