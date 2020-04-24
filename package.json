@@ -26,11 +26,10 @@
     "build": "npm run clean-dist && webpack -p --config=configs/webpack/prod.js",
     "clean-dist": "rimraf dist/*",
     "lint": "tslint './src/**/*.ts*' --format stylish --project . --force",
-    "start": "npm run start-dev",
+    "start": "npm run start-prod",
     "start-dev": "webpack-dev-server --config=configs/webpack/dev.js",
-    "start-prod": "npm run build && node express.js",
-    "test": "jest --coverage --watchAll --config=configs/jest.json",
-    "heroku-postbuild": "npm run start-prod"
+    "start-prod": "node express.js",
+    "test": "jest --coverage --watchAll --config=configs/jest.json"
   },
   "devDependencies": {
     "@types/he": "^1.1.1",

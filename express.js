@@ -22,7 +22,7 @@ const corsOptions = {
 
 app.use(express.static(sourceDir));
 
-app.listen(portNumber, () => {
+app.listen(process.env.PORT ?  process.env.PORT : portNumber, () => {
   console.log(`Express web server started: http://localhost:${portNumber}`);
   console.log(`Serving content from /${sourceDir}/`);
 });
