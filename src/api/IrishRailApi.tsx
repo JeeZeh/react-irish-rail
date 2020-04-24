@@ -2,7 +2,9 @@ import * as parser from "fast-xml-parser";
 import * as he from "he";
 
 export default class IrishRailApi {
-  private static API = "/";
+  private static API = window.location.host.includes("localhost")
+    ? "http://localhost:3000/"
+    : "/";
   private static STATIONDATA =
     "getStationDataByCodeXML_WithNumMins?StationCode=";
   private static TRAINJOURNEY = "/getTrainMovementsXML?TrainId=";
@@ -94,17 +96,21 @@ export default class IrishRailApi {
     const parsedXml = parser.parse(xml, this.XML_OPTIONS);
     return parsedXml.ArrayOfObjStation[0].objStation;
   }
-  
+
   private static parseXmlTrainJourney(xml: string): Journey {
     const parsedXml = parser.parse(xml, this.XML_OPTIONS);
     if (parsedXml.ArrayOfObjTrainMovements[0]) {
-      const movements: Movement[] = parsedXml.ArrayOfObjTrainMovements[0].objTrainMovements;
-      return {stops: movements.filter(loc => loc.LocationType                !== "T")};
+      const movements: Movement[] =
+        parsedXml.ArrayOfObjTrainMovements[0].objTrainMovements;
+      return { stops: movements.filter((loc) => loc.LocationType !== "T") };
     }
-    return {stops: []}
+    return { stops: [] };
   }
 
-  public static async getTrainsForStation(station: Station, lookahead: number): Promise<Train[]> {
+  public static async getTrainsForStation(
+    station: Station,
+    lookahead: number
+  ): Promise<Train[]> {
     const endpoint = `${this.API}${this.STATIONDATA}${station.StationCode}&NumMins=${lookahead}&format=xml`;
     return new Promise(async (resolve, reject) => {
       try {
@@ -119,7 +125,10 @@ export default class IrishRailApi {
     });
   }
 
-  public static async getTrainJourney(trainCode: string, trainDate: string): Promise<Journey> {
+  public static async getTrainJourney(
+    trainCode: string,
+    trainDate: string
+  ): Promise<Journey> {
     const endpoint = `${this.API}${this.TRAINJOURNEY}${trainCode}&TrainDate=${trainDate}`;
     return new Promise(async (resolve, reject) => {
       try {
