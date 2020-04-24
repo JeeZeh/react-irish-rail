@@ -7,7 +7,7 @@ export default class IrishRailApi {
     : "/";
   private static STATIONDATA =
     "getStationDataByCodeXML_WithNumMins?StationCode=";
-  private static TRAINJOURNEY = "/getTrainMovementsXML?TrainId=";
+  private static TRAINJOURNEY = "getTrainMovementsXML?TrainId=";
   private static ALLSTATIONS = "getAllStationsXML";
   private static XML_OPTIONS = {
     attributeNamePrefix: "@_",
