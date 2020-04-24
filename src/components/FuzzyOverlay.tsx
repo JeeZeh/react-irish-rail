@@ -10,10 +10,11 @@ export interface FuzzyOverlayProps {
 }
 
 const Fuzzy = styled.div`
-  position: relative;
+  position: absolute;
   z-index: 1;
   background: white;
   width: 100%;
+
   border: 1px rgba(0, 0, 0, 0.2) solid;
   border-top: none;
   border-radius: 0 0 5px 5px;
@@ -38,7 +39,7 @@ export const FuzzyOverlay = (props: FuzzyOverlayProps) => {
     props.onFuzzySelect(e.target.getAttribute("data-index"));
   };
 
-  if (!props.fuzzyList || props.fuzzyList.length == 0) return null;
+  if (!props.fuzzyList || props.fuzzyList.length === 0) return null;
   return (
     <Fuzzy>
       {props.fuzzyList.map((e, i) => (

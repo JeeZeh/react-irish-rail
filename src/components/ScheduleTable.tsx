@@ -65,41 +65,22 @@ const Info = styled.div`
   flex-direction: row;
   justify-content: center;
   transition: height 0.1s ease-out;
-
-  & > div {
-    width: 100%;
-  }
 `;
 
 const ScheduleTable = (props: ScheduleTableProps) => {
   const { trainData } = props;
-  const [open, setOpen] = React.useState(new Set<string>());
   const [journeys, setJourneys] = React.useState(new Map<string, Journey>());
 
   const handleTrainClick = (e) => {
     const trainCode = e.currentTarget.getAttribute("data-traincode");
-    const t = trainData.find(t => t.Traincode == trainCode);   
     let date = Moment().locale("en-gb").format("ll");
-    let newOpen: Set<string>;
-    const modif = e.ctrlKey || e.altKey;
-
-    if (open.has(trainCode)) {
-      open.delete(trainCode);
-      newOpen = new Set<string>(modif ? open : []);
-    } else {
-      newOpen = new Set<string>(
-        modif ? [...Array.from(open), trainCode] : [trainCode]
-      );
-    }
-
+   
     if (!journeys.has(trainCode)) {
       IrishRailApi.getTrainJourney(trainCode, date).then((j) => {
         const newJourneys = journeys.set(trainCode, j);
         setJourneys(new Map(newJourneys));
       });
     }
-
-    setOpen(newOpen);
   };
 
   const renderTrain = (train: Train) => {

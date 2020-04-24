@@ -27,7 +27,6 @@ const Fade = styled.div`
   display: block;
   width: 50px;
   height: 100%;
-
   z-index: 1;
 
   &.left {
@@ -52,7 +51,7 @@ const Map = styled.div`
   display: flex;
   flex-direction: row;
   cursor: grab;
-  padding: 0 0 0 100px;
+  padding: 0 0 0 140px;
   width: 100%;
 `;
 
@@ -63,19 +62,30 @@ const InfoWrapper = styled.div`
 
 export const JourneyMap = (props: { journey: Journey; train: Train }) => {
   const { journey, train } = props;
+  console.log(journey, train);
+
   const scroller: MutableRefObject<ScrollContainer> = useRef();
-  const trainPosition = journey.stops.findIndex((s) => !s.Departure);
+  const trainPosition = journey.stops.findIndex((s, i) => {
+    return (
+      (i < journey.stops.length - 1 &&
+        s.Departure &&
+        !journey.stops[i + 1].Arrival) ||
+      (s.Arrival && !s.Departure)
+    );
+  });
 
   // Move to the train's point in the map
   useEffect(() => {
     const scrollDiv = scroller.current
       .getElement()
       .children.item(0) as HTMLElement;
-    const trainDiv = scrollDiv.children.item(trainPosition) as HTMLElement;
+    const trainDiv = scrollDiv.children.item(
+      Math.max(trainPosition, 0)
+    ) as HTMLElement;
     const scrollTo =
-      trainDiv.offsetLeft - trainDiv.parentElement.offsetLeft - 100;
+      trainDiv.offsetLeft - trainDiv.parentElement.offsetLeft - 120;
     scroller.current.getElement().scrollTo(scrollTo, 0);
-  });
+  }, [scroller]);
 
   return (
     <Wrapper>
@@ -95,6 +105,7 @@ export const JourneyMap = (props: { journey: Journey; train: Train }) => {
               stopNumber={i}
               trainPosition={trainPosition}
               journeyLength={journey.stops.length}
+              train={train}
               key={i}
             />
           ))}

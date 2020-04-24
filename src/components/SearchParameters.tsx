@@ -12,10 +12,9 @@ const RadioSelect = styled.div`
   flex-direction: row;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  width: auto;
-  margin-left: 20px;
   background-color: whitesmoke;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  grid-area: paramsbar;
 
   & div {
     display: flex;
@@ -25,7 +24,6 @@ const RadioSelect = styled.div`
     color: rgba(0, 0, 0, 0.6);
     padding: 8px;
     cursor: pointer;
-    height: 100%;
   }
 
   & .minute-selected {
@@ -44,20 +42,23 @@ export const SearchParameters = (props: SearchParamerersProps) => {
     }
   };
 
-  const renderLookaheadOptions = () => {
-    return lookaheadOptions.map((o, i) => {
-      return (
-        <div
-          key={i}
-          className={props.lookahead === o ? "minute-selected" : ""}
-          onClick={handleClick}
-          data-value={o}
-        >
-          {o} mins
-        </div>
-      );
-    });
-  };
-
-  return <RadioSelect>{renderLookaheadOptions()}</RadioSelect>;
+  return (
+    <div>
+      <h4>In the next</h4>
+      <RadioSelect>
+        {lookaheadOptions.map((o, i) => {
+          return (
+            <div
+              key={i}
+              className={props.lookahead === o ? "minute-selected" : ""}
+              onClick={handleClick}
+              data-value={o}
+            >
+              {o} mins
+            </div>
+          );
+        })}
+      </RadioSelect>
+    </div>
+  );
 };

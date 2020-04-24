@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Movement } from "../api/IrishRailApi";
+import { Movement, Train } from "../api/IrishRailApi";
+import moment = require("moment");
 
 interface JourneyStopProps {
   station: Movement | any;
@@ -8,15 +9,16 @@ interface JourneyStopProps {
   trainPosition: number;
   journeyLength: number;
   forceShowTime?: boolean;
+  train: Train;
 }
 
 export const Dot = styled.div`
-  width: 10px;
   height: 10px;
+  width: 10px;
   border-radius: 5px;
   border: 2px solid #444;
-  align-self: center;
-  justify-self: center;
+  font-size: 1em;
+  font-weight: 900;
 
   &.departed,
   &.arrived {
@@ -25,6 +27,21 @@ export const Dot = styled.div`
 
   &.future {
     border-width: 1px;
+  }
+
+  &.delayed {
+    writing-mode: vertical-lr;
+    border: none;
+    color: darkorange;
+    align-self: end;
+
+  }
+
+  &.early {
+    writing-mode: vertical-lr;
+    align-self: end;
+    border: none;
+    color: darkblue;
   }
 `;
 
@@ -36,13 +53,36 @@ export const Name = styled.div`
 
   &.arrived {
     font-weight: 700;
+  } 
+
+  &.relevant {
+    font-weight: 900 !important;
   }
 `;
 
+export const OffSchedule = styled.div`
+position: absolute;
+font-weight: 700;
+transform: translateX(-85%);
+height: 250%; 
+border: 1px solid #ddd;
+background-color: #fff;
+border-radius: 5px;
+padding: 5px; 
+opacity: 0;
+transition: opacity 0.08s ease-out;
+
+&:hover {
+  opacity: 1;
+}
+
+`;
+
 export const Time = styled.div`
+position:relative;
+  display: inline-flex;
   font-weight: 900;
   writing-mode: vertical-lr;
-  margin-top: 5px;
   transition: opacity 0.1s ease-out;
   opacity: 0;
 
@@ -50,16 +90,28 @@ export const Time = styled.div`
     opacity: 1;
   }
 
-  &::before{
-    content: "· ";
+  &::before {
+    content: "·  ";
+    margin: 5px 0;
+  }
+
+  &.delayed {
+    color: darkorange;
+  }
+
+  &.early {
+    color: darkblue;
   }
 `;
 
 export const StationDiv = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 5px;
-  transform: rotate(215deg);
+  align-items: center;
+  width: 40px;
+  padding: 0 8px;
+  transform: rotate(225deg);
+ 
 
   &.departed {
     opacity: 0.2;
@@ -72,6 +124,7 @@ export const StationDiv = styled.div`
   &:hover ${Time} {
     opacity: 1;
   }
+  
 `;
 
 export const JourneyStop = (props: JourneyStopProps) => {
@@ -81,7 +134,11 @@ export const JourneyStop = (props: JourneyStopProps) => {
     journeyLength,
     trainPosition,
     forceShowTime,
+    train,
   } = props;
+
+  let time: string | React.ReactElement = "";
+  let classes = "";
 
   const getTime = () => {
     if (station.Departure) {
@@ -96,13 +153,13 @@ export const JourneyStop = (props: JourneyStopProps) => {
     }
 
     if (station.LocationType === "O") {
-        return station.ExpectedDeparture;
+      return station.ExpectedDeparture;
     }
 
     return station.ExpectedArrival;
   };
 
-  const getStyle = () => {
+  const getClasses = () => {
     const classNames =
       [
         0,
@@ -122,14 +179,48 @@ export const JourneyStop = (props: JourneyStopProps) => {
       classNames.push("future");
     }
 
+    if (!station.Arrival && station.LocationFullName == train.Stationfullname) {
+      classNames.push("relevant");
+      classNames.push("show-time");
+      const diff = moment(station.ExpectedArrival, "HH:mm:SS").diff(
+        moment(station.ScheduledArrival, "HH:mm:SS"),
+        "minutes"
+      );
+
+      let unaccountedDelay = 0;
+
+      if (trainPosition !== -1) {
+        unaccountedDelay = moment(train.Querytime, "HH:mm:SS").diff(
+          moment(station.ExpectedArrival, "HH:mm:SS"),
+          "minutes"
+        );
+        console.log(unaccountedDelay);
+      }
+      console.log(diff);
+
+      if (diff > 2 || unaccountedDelay > 2) {
+        classNames.push("delayed");
+        time = `${time} (${station.ScheduledArrival})`;
+        // time = (<div>{time} <OffSchedule>Scheduled {station.ScheduledArrival}</OffSchedule></div>)
+      } else if (diff < -2) {
+        classNames.push("early");
+        time = `${time} (${station.ScheduledArrival})`;
+      }
+    }
+
     return classNames.join(" ");
   };
 
+  time = getTime();
+  classes = getClasses();
+
   return (
-    <StationDiv className={getStyle()}>
-      <Dot className={getStyle()} />
-      <Name className={getStyle()}>{station.LocationFullName}</Name>
-      <Time className={getStyle()}>{getTime()}</Time>
+    <StationDiv className={classes}>
+      <Dot className={classes}>
+        {classes.includes("early") || classes.includes("delayed") ? "!" : null}
+      </Dot>
+      <Name className={classes}>{station.LocationFullName}</Name>
+      <Time className={classes}>{time}</Time>
     </StationDiv>
   );
 };

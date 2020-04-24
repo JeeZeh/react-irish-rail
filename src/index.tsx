@@ -10,7 +10,8 @@ const Root = styled.div`
   background-color: #fbfbfb;
   font-family: "Nunito", sans-serif;
   width: 100%;
-  padding-bottom: 100vh;
+  padding-bottom: 150px;
+  min-height: 100vh;
 `;
 
 render(<Root children={<App />} />, rootEl);

@@ -5,19 +5,16 @@ import styled from "styled-components";
 import { FuzzyOverlay } from "./FuzzyOverlay";
 
 export interface StationSearchState {
-  isLoaded: boolean;
-  stationList: Station[];
   fuseMatch: Fuse.FuseResult<Station>[];
   input: string;
   cursor: number;
   hasFocus: boolean;
   mouseOver: boolean;
-  error: any;
 }
 
 export interface StationSearchProps {
+  stationList: Station[];
   station: Station;
-  onSearchReady: () => void;
   onStationChange: (station: Station) => void;
 }
 
@@ -44,28 +41,17 @@ export default class StationSearch extends React.Component<
   constructor(props) {
     super(props);
     this.state = {
-      isLoaded: false,
-      stationList: null,
       fuseMatch: null,
       input: "",
       hasFocus: false,
       cursor: -1,
       mouseOver: false,
-      error: null,
     };
   }
 
-  async componentDidMount() {
-    await IrishRailApi.getStations()
-      .then((stationList) =>
-        this.setState({
-          isLoaded: true,
-          stationList,
-        })
-      )
-      .catch((error) => this.setState({ isLoaded: true, error }));
-    this.fuse = new Fuse(this.state.stationList, this.FUSE_OPTIONS);
-    this.props.onSearchReady();
+  componentDidMount() {
+    this.fuse = new Fuse(this.props.stationList, this.FUSE_OPTIONS);
+    console.log(this.props.stationList);
   }
 
   private handleKeyDown = (e) => {
@@ -102,18 +88,20 @@ export default class StationSearch extends React.Component<
 
   handleFuzzySelect = (refIndex: number) => {
     this.setState({ input: "", fuseMatch: [], cursor: -1 });
-    this.props.onStationChange(this.state.stationList[refIndex]);
+    this.props.onStationChange(this.props.stationList[refIndex]);
   };
 
   private Search = styled.div`
+    grid-area: searchbar;
     width: 400px;
-    margin-bottom: 20px;
     height: 100%;
+    position: relative;
+
   `;
+
 
   private Input = styled.input`
     width: 100%;
-    height: 100%;
     background: whitesmoke;
     padding: 10px;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -131,18 +119,16 @@ export default class StationSearch extends React.Component<
 
   render() {
     const {
-      isLoaded,
-      error,
       fuseMatch,
       cursor,
       hasFocus,
       mouseOver,
     } = this.state;
-    if (!isLoaded) return null;
-    if (error) return <div>Error: {error.message}</div>;
-
+    
     return (
-      <this.Search
+      <div>
+        <h4 >Trains at</h4>
+        <this.Search
         onFocus={() => this.setState({ hasFocus: true })}
         onBlur={() => {
           if (!mouseOver) this.setState({ hasFocus: false, cursor: 0 });
@@ -152,9 +138,10 @@ export default class StationSearch extends React.Component<
       >
         <this.Input
           onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown} // Displays the event
+          onKeyDown={this.handleKeyDown} 
           value={this.state.input}
           placeholder="Type a station name"
+          aria-label="Input box for searching a station"
         />
         {hasFocus ? (
           <FuzzyOverlay
@@ -164,6 +151,7 @@ export default class StationSearch extends React.Component<
           />
         ) : null}
       </this.Search>
+        </div>
     );
   }
 }
