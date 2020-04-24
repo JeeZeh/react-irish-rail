@@ -52,6 +52,8 @@
     "jest": "^25.1.0",
     "node-sass": "^4.13.1",
     "prettier": "^2.0.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
     "react-hot-loader": "^4.12.19",
     "rimraf": "^3.0.2",
     "sass-loader": "^8.0.2",
@@ -73,8 +75,6 @@
     "fuse.js": "^5.1.0",
     "he": "^1.2.0",
     "moment": "^2.24.0",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
     "react-collapsible": "^2.7.0",
     "react-indiana-drag-scroll": "^1.6.1",
     "styled-components": "^5.0.1"

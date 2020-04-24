@@ -23,10 +23,9 @@ const Card = styled.div`
 `;
 
 const CardHeader = styled.h2`
-  font-weight: 700;
+  font-weight: 700px;
   font-size: 1.8em;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 `;
 
 const Error = styled.h2`

@@ -55,7 +55,7 @@ export const Name = styled.div`
   }
 
   &.relevant {
-    font-weight: 800;
+    font-weight: 900 !important;
   }
 `;
 
@@ -79,7 +79,7 @@ export const OffSchedule = styled.div`
 export const Time = styled.div`
   position: relative;
   display: inline-flex;
-  font-weight: 800;
+  font-weight: 900;
   writing-mode: vertical-lr;
   transition: opacity 0.1s ease-out;
   opacity: 0;
