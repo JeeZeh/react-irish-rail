@@ -2,7 +2,15 @@ import * as React from "react";
 import { render } from "react-dom";
 require("./favicon.ico");
 import App from "./components/App";
+import styled from "styled-components";
 
 const rootEl = document.getElementById("root");
 
-render(<App />, rootEl);
+const Root = styled.div`
+  background-color: #fbfbfb;
+  font-family: "Nunito", sans-serif;
+  width: 100%;
+  padding-bottom: 100vh;
+`;
+
+render(<Root children={<App />} />, rootEl);

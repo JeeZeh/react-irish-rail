@@ -93,8 +93,13 @@ export default class IrishRailApi {
   }
 
   private static parseXmlAllStations(xml: string): Station[] {
-    const parsedXml = parser.parse(xml, this.XML_OPTIONS);
-    return parsedXml.ArrayOfObjStation[0].objStation;
+    const parsedXml: Station[] = parser.parse(xml, this.XML_OPTIONS)
+      .ArrayOfObjStation[0].objStation;
+    const removedDuplicates = new Map<string, Station>();
+    for (const station of parsedXml) {
+      removedDuplicates.set(station.StationDesc, station);
+    }
+    return Array.from(removedDuplicates.values());
   }
 
   private static parseXmlTrainJourney(xml: string): Journey {
