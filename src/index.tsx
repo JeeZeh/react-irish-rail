@@ -8,10 +8,14 @@ const rootEl = document.getElementById("root");
 
 const Root = styled.div`
   background-color: #fbfbfb;
-  font-family: "Nunito", sans-serif;
   width: 100%;
   padding-bottom: 150px;
-  min-height: 100vh;
+  min-height: 110vh;
+
+  * {
+    box-sizing: border-box;
+    font-family: "Nunito", sans-serif;
+  }
 `;
 
 render(<Root children={<App />} />, rootEl);

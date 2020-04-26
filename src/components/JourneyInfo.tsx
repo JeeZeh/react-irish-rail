@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import { Journey, Train } from "../api/IrishRailApi";
+import { Card } from "./Schedule";
 
 const Header = styled.h5`
   font-weight: 700;
@@ -8,15 +9,11 @@ const Header = styled.h5`
   font-size: 1.2em;
 `;
 
-const Info = styled.div`
+const Info = styled(props => <Card {...props}/>)`
   grid-area: key;
   display: flex;
   flex-direction: column;
-  cursor: default;
   user-select: none;
-  padding: 20px;
-  border: 1px solid #bbb;
-  border-radius: 10px;
 `;
 
 const Entry = styled.div`

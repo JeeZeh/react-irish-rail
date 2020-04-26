@@ -96,7 +96,6 @@ export default class StationSearch extends React.Component<
   private Search = styled.div`
     grid-area: searchbar;
     width: 400px;
-    height: 100%;
     position: relative;
   `;
 

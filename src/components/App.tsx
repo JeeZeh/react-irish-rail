@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
 import styled from "styled-components";
@@ -8,12 +9,18 @@ import StationSearch from "./StationSearch";
 import IrishRailApi, { Station } from "../api/IrishRailApi";
 import { SearchParameters } from "./SearchParameters";
 import { JourneyKey } from "./JourneyKey";
+import { FavouriteStations } from "./FavouriteStations";
 
 interface AppState {
   station: Station;
   stationList: Station[];
   lookahead: number;
 }
+
+const FavouritesList = styled.div`
+  grid-area: schedule;
+  width: 250px;
+`;
 
 const SearchWrapper = styled.div`
   grid-area: search;
@@ -82,93 +89,151 @@ export const SearchHeading = styled.h3`
   margin: 10px 0;
 `;
 
-class App extends React.Component<{}, AppState> {
-  private lookaheadOptions = [30, 60, 90, 120];
+export const App = () => {
+  const lookaheadOptions = [30, 60, 90, 120];
+  const [state, setState] = useState<AppState>({
+    station: null,
+    stationList: null,
+    lookahead: 90,
+  });
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      station: null,
-      stationList: null,
-      lookahead: 90,
-    };
-  }
-
-  componentDidMount = () => {
+  React.useEffect(() => {
     IrishRailApi.getStations()
       .then((stationList) =>
-        this.setState({
+        setState({
+          ...state,
           stationList,
         })
       )
       .catch(console.error);
+  }, []);
+
+  const onStationChange = (station: Station) => {
+    setState({ ...state, station });
   };
 
-  onStationChange = (station: Station) => {
-    this.setState({ station });
+  const onLookaheadChange = (lookahead: number) => {
+    setState({ ...state, lookahead });
   };
 
-  onLookaheadChange = (lookahead: number) => {
-    this.setState({ lookahead });
-  };
-
-  render() {
-    const { lookahead, station, stationList } = this.state;
-
-    return (
-      <Body className="rail">
-        <Head>
-          <div>
-            <h1>Irish Rail Train Schedule</h1>
-            <h3>A modern train schedule for Irish Rail</h3>
-          </div>
-          <ul>
-            <li>
-              This app allows you to view all trains passing through a given
-              station.
-            </li>
-            <li>
-              You can explore each train, its journey information, and live
-              location map.
-            </li>
-            <li>
-              This is not a commercial product, nor is it linked in any way to
-              Iarnród Éireann.
-            </li>
-            <li>
-              It was created as a learning experience using React, feel free to
-              read the{" "}
-              <a href="https://github.com/JeeZeh/React-Irish-Rail">
-                source code.
-              </a>
-            </li>
-          </ul>
-        </Head>
-        <KeyWrapper>
-          <JourneyKey />
-        </KeyWrapper>
-        {stationList ? (
-          <SearchWrapper>
-            <StationSearch
-              stationList={stationList}
-              station={this.state.station}
-              onStationChange={this.onStationChange}
-            />
-            <SearchParameters
-              lookaheadOptions={this.lookaheadOptions}
-              lookahead={lookahead}
-              onLookaheadChange={this.onLookaheadChange}
-            />
-          </SearchWrapper>
-        ) : null}
-        <ScheduleWrapper>
-          <Schedule station={station} lookahead={lookahead} />
-        </ScheduleWrapper>
-      </Body>
+  const onFavouriteSelect = (e) => {
+    const station = stationList.find(
+      (s) => s.StationDesc === e.target.innerHTML
     );
-  }
-}
+
+    if (station) {
+      setState({ ...state, station });
+    } else {
+      console.error("Couldn't find station", e.target.innerHTML);
+    }
+  };
+
+  const onStationClose = () => {
+    setState({ ...state, station: null });
+  };
+
+  const { lookahead, station, stationList } = state;
+  return (
+    <Body className="rail">
+      <Head>
+        <div>
+          <h1>Irish Rail Train Schedule</h1>
+          <h3>A modern train schedule for Irish Rail</h3>
+        </div>
+        <ul>
+          <li>
+            This app allows you to view all trains passing through a given
+            station.
+          </li>
+          <li>
+            You can explore each train, its journey information, and live
+            location map.
+          </li>
+          <li>
+            This is not a commercial product, nor is it linked in any way to
+            Iarnród Éireann.
+          </li>
+          <li>
+            It was created as a learning experience using React, feel free to
+            read the{" "}
+            <a href="https://github.com/JeeZeh/React-Irish-Rail">
+              source code.
+            </a>
+          </li>
+        </ul>
+      </Head>
+      <KeyWrapper>
+        <JourneyKey />
+      </KeyWrapper>
+      {stationList ? (
+        <SearchWrapper>
+          <StationSearch
+            stationList={stationList}
+            station={state.station}
+            onStationChange={onStationChange}
+          />
+          <SearchParameters
+            lookaheadOptions={lookaheadOptions}
+            lookahead={lookahead}
+            onLookaheadChange={onLookaheadChange}
+          />
+        </SearchWrapper>
+      ) : null}
+      {station ? (
+        <ScheduleWrapper>
+          <Schedule
+            station={station}
+            lookahead={lookahead}
+            handleStationClose={onStationClose}
+          />
+        </ScheduleWrapper>
+      ) : (
+        <FavouritesList>
+          <FavouriteStations handleClick={onFavouriteSelect} />
+        </FavouritesList>
+      )}
+    </Body>
+  );
+};
 
 declare let module: object;
 
 export default hot(module)(App);
+
+/**
+ * Local Storage hook from https://usehooks.com/useLocalStorage/
+ */
+export const useLocalStorage = <T,>(key, initialValue): [T, (x: T) => void] => {
+  // State to store our value
+  // Pass initial state function to useState so logic is only executed once
+  const [storedValue, setStoredValue] = useState(() => {
+    try {
+      // Get from local storage by key
+      const item = window.localStorage.getItem(key);
+      // Parse stored json or if none return initialValue
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      // If error also return initialValue
+      console.log(error);
+      return initialValue;
+    }
+  });
+
+  // Return a wrapped version of useState's setter function that ...
+  // ... persists the new value to localStorage.
+  const setValue = (value) => {
+    try {
+      // Allow value to be a function so we have same API as useState
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value;
+      // Save state
+      setStoredValue(valueToStore);
+      // Save to local storage
+      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+    } catch (error) {
+      // A more advanced implementation would handle the error case
+      console.log(error);
+    }
+  };
+  return [storedValue, setValue];
+};

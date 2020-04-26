@@ -9,19 +9,15 @@ export interface FuzzyOverlayProps {
   onFuzzySelect: (refIndex: number) => void;
 }
 
-const Fuzzy = styled.div`
-  position: absolute;
-  z-index: 2;
+export const ItemList = styled.div`
   background: white;
-  width: 100%;
-
   border: 1px rgba(0, 0, 0, 0.2) solid;
-  border-top: none;
-  border-radius: 0 0 5px 5px;
+  overflow:hidden;
+  border-radius:  5px;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 `;
 
-const FuzzyItem = styled.div`
+export const ListItem = styled.div`
   padding: 10px;
   cursor: pointer;
 
@@ -34,6 +30,14 @@ const FuzzyItem = styled.div`
   }
 `;
 
+const FuzzyList = styled(ItemList)`
+    position: absolute;
+    border-top: none;
+
+  z-index: 2;
+  width: 100%;
+`
+
 export const FuzzyOverlay = (props: FuzzyOverlayProps) => {
   const handleClick = (e) => {
     props.onFuzzySelect(e.target.getAttribute("data-index"));
@@ -41,17 +45,17 @@ export const FuzzyOverlay = (props: FuzzyOverlayProps) => {
 
   if (!props.fuzzyList || props.fuzzyList.length === 0) return null;
   return (
-    <Fuzzy>
+    <FuzzyList>
       {props.fuzzyList.map((e, i) => (
-        <FuzzyItem
+        <ListItem
           onClick={handleClick}
           key={e.refIndex}
           data-index={e.refIndex}
           className={props.cursor === i ? "active" : null}
         >
           {e.item.StationDesc}
-        </FuzzyItem>
+        </ListItem>
       ))}
-    </Fuzzy>
+    </FuzzyList>
   );
 };
