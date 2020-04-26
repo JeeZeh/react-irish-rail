@@ -46,15 +46,14 @@ export const FavouriteStations = (props: { handleClick: (e) => void }) => {
   // Janky state wrapper to keep track of favourites value as it changes
 
   const { handleClick } = props;
-  console.log(favourites);
   if (favourites.length === 0) return null;
 
   return (
     <div>
       <SearchHeading>Saved Stations</SearchHeading>
       <ItemList>
-        {favourites.map((f) => (
-          <ListItem onClick={handleClick} children={f} />
+        {favourites.map((f, i) => (
+          <ListItem key={i} onClick={handleClick} children={f} />
         ))}
       </ItemList>
     </div>

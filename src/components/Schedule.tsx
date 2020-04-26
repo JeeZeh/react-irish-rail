@@ -122,7 +122,6 @@ class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
 
   componentDidMount() {
     this.fetchStationData();
-    this.schedule.current.focus();
   }
 
   componentDidUpdate(prevProps: TrainScheduleProps) {
@@ -140,7 +139,8 @@ class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
 
     IrishRailApi.getTrainsForStation(station, lookahead)
       .then((r) => this.setState({ isLoaded: true, stationData: r }))
-      .catch((error) => this.setState({ isLoaded: true, error }));
+      .catch((error) => this.setState({ isLoaded: true, error }))
+      .then((_) => this.schedule.current.focus());
   }
 
   handleKeyDown = (e) => {
@@ -153,36 +153,35 @@ class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
   render() {
     const { error, isLoaded, stationData } = this.state;
     const { station, lookahead, handleStationClose } = this.props;
-    if (!station) return null;
+    if (!station || !isLoaded) return null;
     if (error) return <div>Error: {error.message}</div>;
-    if (stationData.length === 0) {
-      return (
-        <Card onKeyDown={this.handleKeyDown} tabIndex={0} ref={this.schedule}>
-          <CardToolbar>
-            <CardHeader>
-              <FavouriteStar stationName={station.StationDesc} />
-              {this.props.station.StationDesc}
-            </CardHeader>
-            <CloseButton onClick={handleStationClose}>
-              <div>X</div>
-            </CloseButton>
-          </CardToolbar>
 
-          {stationData.length === 0 ? (
-            <CardBody>
-              <Error>
-                No trains due at {station.StationDesc} for the next {lookahead}{" "}
-                minutes
-              </Error>
-            </CardBody>
-          ) : (
-            <CardBody>
-              {isLoaded ? <ScheduleTable trainData={stationData} /> : null}
-            </CardBody>
-          )}
-        </Card>
-      );
-    }
+    return (
+      <Card onKeyDown={this.handleKeyDown} tabIndex={0} ref={this.schedule}>
+        <CardToolbar>
+          <CardHeader>
+            <FavouriteStar stationName={station.StationDesc} />
+            {this.props.station.StationDesc}
+          </CardHeader>
+          <CloseButton onClick={handleStationClose}>
+            <div>X</div>
+          </CloseButton>
+        </CardToolbar>
+
+        {stationData.length === 0 ? (
+          <CardBody>
+            <Error>
+              No trains due at {station.StationDesc} for the next {lookahead}{" "}
+              minutes
+            </Error>
+          </CardBody>
+        ) : (
+          <CardBody>
+            {isLoaded ? <ScheduleTable trainData={stationData} /> : null}
+          </CardBody>
+        )}
+      </Card>
+    );
   }
 }
 
