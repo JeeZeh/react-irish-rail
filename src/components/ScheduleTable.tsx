@@ -71,8 +71,9 @@ const Info = styled.div`
 
 const ScheduleTable = (props: ScheduleTableProps) => {
   const originalTrainData = [...props.trainData];
+  const defaultSort = "Expdepart";
   const [journeys, setJourneys] = useState(new Map<string, Journey>());
-  const [sort, setSort] = useState({ col: columns[0].propName, dir: 1 }); // 1 = Ascending, -1 Descending
+  const [sort, setSort] = useState({ col: defaultSort, dir: 1 }); // 1 = Ascending, -1 Descending
   const [sortedTrainData, setSortedTrainData] = useState([...originalTrainData]);
 
   const handleTrainClick = (e) => {
