@@ -69,12 +69,13 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "http-proxy-middleware": "^1.0.3",
     "fast-xml-parser": "^3.16.0",
     "fuse.js": "^5.1.0",
     "he": "^1.2.0",
+    "http-proxy-middleware": "^1.0.3",
     "moment": "^2.24.0",
     "react-collapsible": "^2.7.0",
+    "react-feather": "^2.0.8",
     "react-indiana-drag-scroll": "^1.6.1",
     "styled-components": "^5.0.1"
   }

@@ -1,10 +1,12 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import { hot } from "react-hot-loader";
 import IrishRailApi, { Train, Journey } from "../api/IrishRailApi";
 import * as Moment from "moment";
 import styled from "styled-components";
 import { JourneyMap } from "./JourneyMap";
 import Collapsible from "react-collapsible";
+import { ArrowDown, ArrowUp } from "react-feather";
 
 interface TrainColumn {
   dispName: string;
@@ -43,6 +45,8 @@ const Train = styled.div`
   &.header {
     color: #444;
     font-weight: 700;
+    user-select: none;
+    cursor: pointer;
   }
 `;
 
@@ -66,8 +70,10 @@ const Info = styled.div`
 `;
 
 const ScheduleTable = (props: ScheduleTableProps) => {
-  const { trainData } = props;
-  const [journeys, setJourneys] = React.useState(new Map<string, Journey>());
+  const originalTrainData = [...props.trainData];
+  const [journeys, setJourneys] = useState(new Map<string, Journey>());
+  const [sort, setSort] = useState({ col: columns[0].propName, dir: 1 }); // 1 = Ascending, -1 Descending
+  const [sortedTrainData, setSortedTrainData] = useState([...originalTrainData]);
 
   const handleTrainClick = (e) => {
     const trainCode = e.currentTarget.getAttribute("data-traincode");
@@ -81,6 +87,35 @@ const ScheduleTable = (props: ScheduleTableProps) => {
     }
   };
 
+  // Re-sort the train data when the user updates the sorting params
+  useEffect(() => {
+    const {col, dir} = sort;
+    if (col && dir !== 0) {
+      console.log("sorting by:", col, dir)
+      sortedTrainData.sort((a, b) => {
+        return (a[col] >= b[col] ? 1 : -1)*dir;
+      });
+      setSortedTrainData([...sortedTrainData]);
+    } else {
+      setSortedTrainData([...originalTrainData]);
+    }
+  }, [sort]);
+
+  // Updates the sorting direction based on the selected heading
+  const handleSort = (e) => {
+    const col = e.currentTarget.getAttribute("data-col");
+    if (sort.col === col) {
+      if (sort.dir === -1) {
+        setSort({ ...sort, dir: 0 });
+      } else {
+        setSort({ ...sort, dir: sort.dir > 0 ? -1 : 1 });
+      }
+    } else {
+      setSort({col, dir: 1 });
+    }
+    console.log("Updated sorting");
+  };
+
   const renderTrain = (train: Train) => {
     const code = train.Traincode;
     return (
@@ -89,9 +124,11 @@ const ScheduleTable = (props: ScheduleTableProps) => {
           transitionTime={180}
           easing={"ease-out"}
           trigger={
-            <Train onClick={handleTrainClick} key={code} data-traincode={code}>
+            <Train key={code} data-traincode={code}>
               {columns.map((c) => (
-                <div key={c.propName}>{train[c.propName]}</div>
+                <div onClick={handleTrainClick} key={c.propName}>
+                  {train[c.propName]}
+                </div>
               ))}
             </Train>
           }
@@ -112,7 +149,16 @@ const ScheduleTable = (props: ScheduleTableProps) => {
     return (
       <Train className="header">
         {columns.map((c, i) => (
-          <div key={i}>{c.dispName}</div>
+          <div onClick={handleSort} key={i} data-col={c.propName}>
+            {c.dispName}{" "}
+            {sort.col === c.propName && sort.dir !== 0 ? (
+              sort.dir === -1 ? (
+                <ArrowUp />
+              ) : (
+                <ArrowDown />
+              )
+            ) : null}
+          </div>
         ))}
       </Train>
     );
@@ -121,7 +167,7 @@ const ScheduleTable = (props: ScheduleTableProps) => {
   return (
     <Table>
       {renderHeader()}
-      <Body>{trainData.map(renderTrain)}</Body>
+      <Body>{sortedTrainData.map(renderTrain)}</Body>
     </Table>
   );
 };
