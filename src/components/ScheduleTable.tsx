@@ -74,11 +74,14 @@ const ScheduleTable = (props: ScheduleTableProps) => {
   const defaultSort = "Expdepart";
   const [journeys, setJourneys] = useState(new Map<string, Journey>());
   const [sort, setSort] = useState({ col: defaultSort, dir: 1 }); // 1 = Ascending, -1 Descending
-  const [sortedTrainData, setSortedTrainData] = useState([...originalTrainData]);
+  const [sortedTrainData, setSortedTrainData] = useState([
+    ...originalTrainData,
+  ]);
 
   const handleTrainClick = (e) => {
     const trainCode = e.currentTarget.getAttribute("data-traincode");
     let date = Moment().locale("en-gb").format("ll");
+    console.log(trainCode);
 
     if (!journeys.has(trainCode)) {
       IrishRailApi.getTrainJourney(trainCode, date).then((j) => {
@@ -90,11 +93,11 @@ const ScheduleTable = (props: ScheduleTableProps) => {
 
   // Re-sort the train data when the user updates the sorting params
   useEffect(() => {
-    const {col, dir} = sort;
+    const { col, dir } = sort;
     if (col && dir !== 0) {
-      console.log("sorting by:", col, dir)
+      console.log("sorting by:", col, dir);
       sortedTrainData.sort((a, b) => {
-        return (a[col] >= b[col] ? 1 : -1)*dir;
+        return (a[col] >= b[col] ? 1 : -1) * dir;
       });
       setSortedTrainData([...sortedTrainData]);
     } else {
@@ -112,7 +115,7 @@ const ScheduleTable = (props: ScheduleTableProps) => {
         setSort({ ...sort, dir: sort.dir > 0 ? -1 : 1 });
       }
     } else {
-      setSort({col, dir: 1 });
+      setSort({ col, dir: 1 });
     }
     console.log("Updated sorting");
   };
@@ -125,11 +128,9 @@ const ScheduleTable = (props: ScheduleTableProps) => {
           transitionTime={180}
           easing={"ease-out"}
           trigger={
-            <Train key={code} data-traincode={code}>
+            <Train key={code} onClick={handleTrainClick} data-traincode={code}>
               {columns.map((c) => (
-                <div onClick={handleTrainClick} key={c.propName}>
-                  {train[c.propName]}
-                </div>
+                <div key={c.propName}>{train[c.propName]}</div>
               ))}
             </Train>
           }

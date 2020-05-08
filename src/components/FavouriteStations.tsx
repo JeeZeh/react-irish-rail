@@ -1,9 +1,8 @@
 import * as React from "react";
-import { useState } from "react";
 import { ItemList, ListItem } from "./FuzzyOverlay";
 import { useLocalStorage, SearchHeading } from "./App";
 import starIcon from "../assets/star.png";
-import styled, { StyledFunction } from "styled-components";
+import styled from "styled-components";
 
 interface StarProps {
   checked: boolean;
@@ -43,7 +42,6 @@ export const FavouriteStar = (props: { stationName: string }) => {
 
 export const FavouriteStations = (props: { handleClick: (e) => void }) => {
   const [favourites, s] = useLocalStorage<string[]>("favourites", []);
-  // Janky state wrapper to keep track of favourites value as it changes
 
   const { handleClick } = props;
   if (favourites.length === 0) return null;
