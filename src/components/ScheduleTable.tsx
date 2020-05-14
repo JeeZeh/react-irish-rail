@@ -37,7 +37,7 @@ const Row = styled.div`
 const Train = styled.div`
   display: grid;
   grid-template-areas: "due dep from to term last";
-  grid-template-columns: 1fr 1fr 2.5fr 2.5fr 1fr 2.5fr;
+  grid-template-columns: 1fr 1.5fr 2.5fr 2.5fr 1fr 2.5fr;
 
   &:not(.header):hover {
     opacity: 0.8;
@@ -81,8 +81,6 @@ const ScheduleTable = (props: ScheduleTableProps) => {
   const handleTrainClick = (e) => {
     const trainCode = e.currentTarget.getAttribute("data-traincode");
     let date = Moment().locale("en-gb").format("ll");
-    console.log(trainCode);
-
     if (!journeys.has(trainCode)) {
       IrishRailApi.getTrainJourney(trainCode, date).then((j) => {
         const newJourneys = journeys.set(trainCode, j);

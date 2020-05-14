@@ -33,12 +33,12 @@ export const Dot = styled.div`
     writing-mode: vertical-lr;
     border: none;
     color: darkorange;
-    align-self: end;
+    align-self: flex-start;
   }
 
   &.early {
     writing-mode: vertical-lr;
-    align-self: end;
+    align-self: flex-start;
     border: none;
     color: darkblue;
   }
@@ -185,7 +185,8 @@ export const JourneyStop = (props: JourneyStopProps) => {
 
       let unaccountedDelay = 0;
 
-      if (trainPosition !== -1) {
+      // Only check the unaccounted delay if it's the next station
+      if (trainPosition !== -1 && trainPosition + 1 == station.LocationOrder) {
         unaccountedDelay = moment(train.Querytime, "HH:mm:SS").diff(
           moment(station.ExpectedArrival, "HH:mm:SS"),
           "minutes"
@@ -195,7 +196,6 @@ export const JourneyStop = (props: JourneyStopProps) => {
       if (diff > 2 || unaccountedDelay > 2) {
         classNames.push("delayed");
         time = `${time} (${station.ScheduledArrival})`;
-        // time = (<div>{time} <OffSchedule>Scheduled {station.ScheduledArrival}</OffSchedule></div>)
       } else if (diff < -2) {
         classNames.push("early");
         time = `${time} (${station.ScheduledArrival})`;

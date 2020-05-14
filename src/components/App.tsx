@@ -28,6 +28,14 @@ const SearchWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 90%;
+
+  @media only screen and (max-width: 1205px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    & > div {
+      margin: 10px 0;
+    }
+  }
 `;
 
 const ScheduleWrapper = styled.div`
@@ -47,13 +55,28 @@ const Body = styled.div`
     "search key"
     "schedule schedule";
   grid-template-columns: 7fr 2fr;
-  grid-template-rows: 2fr 1fr auto;
   margin: auto auto;
   padding: 2em;
   max-width: 1200px;
-  min-width: 750px;
   height: 100%;
   padding-bottom: 150px;
+
+  @media only screen and (max-width: 1205px) {
+    grid-template-columns: 5fr 2fr;
+  }
+  @media only screen and (max-width: 1000px) {
+    grid-template-columns: 5fr 3fr;
+  }
+  @media only screen and (max-width: 900px) {
+    grid-template-columns: auto;
+
+    grid-template-areas:
+    "head"
+    "key"
+    "search"
+    "schedule";
+  }
+  
 `;
 
 const Head = styled.div`

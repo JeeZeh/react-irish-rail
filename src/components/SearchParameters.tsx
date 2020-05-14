@@ -18,6 +18,7 @@ const RadioSelect = styled.div`
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
   grid-area: paramsbar;
   overflow: hidden;
+  user-select: none;
 
   & div {
     display: flex;
