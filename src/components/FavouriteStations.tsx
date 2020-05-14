@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ItemList, ListItem } from "./FuzzyOverlay";
-import { useLocalStorage, SearchHeading } from "./App";
+import { SearchHeading } from "./App";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import starIcon from "../assets/star.png";
 import styled from "styled-components";
 

@@ -122,7 +122,7 @@ export default class StationSearch extends React.Component<
 
     return (
       <div>
-         <SearchHeading>Trains at</SearchHeading>
+        <SearchHeading>Find trains at</SearchHeading>
         <this.Search
           onFocus={() => this.setState({ hasFocus: true })}
           onBlur={() => {

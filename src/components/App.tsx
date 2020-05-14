@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
 import styled from "styled-components";
@@ -10,6 +10,7 @@ import IrishRailApi, { Station } from "../api/IrishRailApi";
 import { SearchParameters } from "./SearchParameters";
 import { JourneyKey } from "./JourneyKey";
 import { FavouriteStations } from "./FavouriteStations";
+import { useWindowSize } from "../hooks/useWindowSize";
 
 interface AppState {
   station: Station;
@@ -36,6 +37,11 @@ const SearchWrapper = styled.div`
       margin: 10px 0;
     }
   }
+
+  @media only screen and (max-width: 900px) {
+    align-items: center;
+    text-align: center;
+  }
 `;
 
 const ScheduleWrapper = styled.div`
@@ -45,6 +51,7 @@ const ScheduleWrapper = styled.div`
 
 const KeyWrapper = styled.div`
   grid-area: key;
+  justify-self: center;
 `;
 
 const Body = styled.div`
@@ -69,14 +76,13 @@ const Body = styled.div`
   }
   @media only screen and (max-width: 900px) {
     grid-template-columns: auto;
-
+    justify-content: center;
     grid-template-areas:
-    "head"
-    "key"
-    "search"
-    "schedule";
+      "head"
+      "key"
+      "search"
+      "schedule";
   }
-  
 `;
 
 const Head = styled.div`
@@ -99,7 +105,7 @@ const Head = styled.div`
   }
 
   & ul {
-    width: 80%;
+    width: 100%;
     margin-top: 30px;
     padding-left: 0;
     list-style-position: inside;
@@ -114,13 +120,15 @@ export const SearchHeading = styled.h3`
 
 export const App = () => {
   const lookaheadOptions = [30, 60, 90, 120];
+  const size = useWindowSize();
+  const isPortable = size.width < 900;
   const [state, setState] = useState<AppState>({
     station: null,
     stationList: null,
     lookahead: 90,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     IrishRailApi.getStations()
       .then((stationList) =>
         setState({
@@ -163,30 +171,32 @@ export const App = () => {
           <h1>Irish Rail Train Schedule</h1>
           <h3>A modern train schedule for Irish Rail</h3>
         </div>
-        <ul>
-          <li>
-            This app allows you to view all trains passing through a given
-            station.
-          </li>
-          <li>
-            You can explore each train, its journey information, and live
-            location map.
-          </li>
-          <li>
-            This is not a commercial product, nor is it linked in any way to
-            Iarnród Éireann.
-          </li>
-          <li>
-            It was created as a learning experience using React, feel free to
-            read the{" "}
-            <a href="https://github.com/JeeZeh/React-Irish-Rail">
-              source code.
-            </a>
-          </li>
-        </ul>
+        {isPortable ? null : (
+          <ul>
+            <li>
+              This app allows you to view all trains passing through a given
+              station.
+            </li>
+            <li>
+              You can explore each train, its journey information, and live
+              location map.
+            </li>
+            <li>
+              This is not a commercial product, nor is it linked in any way to
+              Iarnród Éireann.
+            </li>
+            <li>
+              It was created as a learning experience using React, feel free to
+              read the{" "}
+              <a href="https://github.com/JeeZeh/React-Irish-Rail">
+                source code.
+              </a>
+            </li>
+          </ul>
+        )}
       </Head>
       <KeyWrapper>
-        <JourneyKey />
+        <JourneyKey isPortable={isPortable} />
       </KeyWrapper>
       {stationList ? (
         <SearchWrapper>
@@ -222,41 +232,3 @@ export const App = () => {
 declare let module: object;
 
 export default hot(module)(App);
-
-/**
- * Local Storage hook from https://usehooks.com/useLocalStorage/
- */
-export const useLocalStorage = <T,>(key, initialValue): [T, (x: T) => void] => {
-  // State to store our value
-  // Pass initial state function to useState so logic is only executed once
-  const [storedValue, setStoredValue] = useState(() => {
-    try {
-      // Get from local storage by key
-      const item = window.localStorage.getItem(key);
-      // Parse stored json or if none return initialValue
-      return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      // If error also return initialValue
-      console.log(error);
-      return initialValue;
-    }
-  });
-
-  // Return a wrapped version of useState's setter function that ...
-  // ... persists the new value to localStorage.
-  const setValue = (value) => {
-    try {
-      // Allow value to be a function so we have same API as useState
-      const valueToStore =
-        value instanceof Function ? value(storedValue) : value;
-      // Save state
-      setStoredValue(valueToStore);
-      // Save to local storage
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
-    } catch (error) {
-      // A more advanced implementation would handle the error case
-      console.log(error);
-    }
-  };
-  return [storedValue, setValue];
-};
