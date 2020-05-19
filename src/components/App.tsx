@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
 import styled from "styled-components";
-
+import { Info } from "react-feather";
 import Schedule from "./Schedule";
 import StationSearch from "./StationSearch";
 import IrishRailApi, { Station } from "../api/IrishRailApi";
@@ -11,6 +11,8 @@ import { SearchParameters } from "./SearchParameters";
 import { JourneyKey } from "./JourneyKey";
 import { FavouriteStations } from "./FavouriteStations";
 import { useWindowSize } from "../hooks/useWindowSize";
+import { ModalInfo } from "./ModalInfo";
+import { About } from "./About";
 
 interface AppState {
   station: Station;
@@ -103,19 +105,17 @@ const Head = styled.div`
     font-size: 1.3em;
     margin: none;
   }
-
-  & ul {
-    width: 100%;
-    margin-top: 30px;
-    padding-left: 0;
-    list-style-position: inside;
-    opacity: 0.9;
-  }
 `;
 
 export const SearchHeading = styled.h3`
   font-weight: 500;
   margin: 10px 0;
+`;
+
+const ModalButton = styled.button`
+  cursor: pointer;
+  user-select: none;
+  display: inline-block;
 `;
 
 export const App = () => {
@@ -127,6 +127,8 @@ export const App = () => {
     stationList: null,
     lookahead: 90,
   });
+
+  const [modalOpen, setModelOpen] = useState(false);
 
   useEffect(() => {
     IrishRailApi.getStations()
@@ -163,6 +165,14 @@ export const App = () => {
     setState({ ...state, station: null });
   };
 
+  const handleCloseModal = () => {
+    setModelOpen(false);
+  };
+
+  const handleOpenModal = () => {
+    setModelOpen(true);
+  };
+
   const { lookahead, station, stationList } = state;
   return (
     <Body className="rail">
@@ -171,33 +181,22 @@ export const App = () => {
           <h1>Irish Rail Train Schedule</h1>
           <h3>A modern train schedule for Irish Rail</h3>
         </div>
-        {isPortable ? null : (
-          <ul>
-            <li>
-              This app allows you to view all trains passing through a given
-              station.
-            </li>
-            <li>
-              You can explore each train, its journey information, and live
-              location map.
-            </li>
-            <li>
-              This is not a commercial product, nor is it linked in any way to
-              Iarnród Éireann.
-            </li>
-            <li>
-              It was created as a learning experience using React, feel free to
-              read the{" "}
-              <a href="https://github.com/JeeZeh/React-Irish-Rail">
-                source code.
-              </a>
-            </li>
-          </ul>
-        )}
+        {isPortable ? null : <About />}
       </Head>
-      <KeyWrapper>
-        <JourneyKey isPortable={isPortable} />
-      </KeyWrapper>
+      {isPortable ? null : (
+        <KeyWrapper>
+          <JourneyKey />
+        </KeyWrapper>
+      )}
+
+      {isPortable ? (
+        <ModalButton onClick={handleOpenModal}>
+          <Info size={40} />
+        </ModalButton>
+      ) : null}
+
+      {modalOpen ? <ModalInfo handleCloseModal={handleCloseModal} /> : null}
+
       {stationList ? (
         <SearchWrapper>
           <StationSearch

@@ -2,15 +2,23 @@ import * as React from "react";
 import { ItemList, ListItem } from "./FuzzyOverlay";
 import { SearchHeading } from "./App";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import starIcon from "../assets/star.png";
+import { Star } from "react-feather";
 import styled from "styled-components";
 
-interface StarProps {
-  checked: boolean;
-}
+const FavouriteStarWrapper = styled(Star)`
+  cursor: pointer;
+  opacity: 0.7;
+  fill: none;
+  transition: all 0.2s ease-out;
 
-const Star = styled.img<StarProps>`
-  opacity: ${(p) => (p.checked ? 1 : 0.4)};
+  &.on {
+    opacity: 1;
+    fill: black;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 export const FavouriteStar = (props: { stationName: string }) => {
@@ -33,16 +41,16 @@ export const FavouriteStar = (props: { stationName: string }) => {
   };
 
   return (
-    <Star
-      checked={favourites.includes(stationName)}
-      src={starIcon}
+    <FavouriteStarWrapper
+      className={favourites.includes(stationName) ? "on" : null}
+      size={28}
       onClick={handleClick}
-    ></Star>
+    />
   );
 };
 
 export const FavouriteStations = (props: { handleClick: (e) => void }) => {
-  const [favourites, s] = useLocalStorage<string[]>("favourites", []);
+  const [favourites, _] = useLocalStorage<string[]>("favourites", []);
 
   const { handleClick } = props;
   if (favourites.length === 0) return null;

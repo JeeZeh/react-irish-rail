@@ -3,6 +3,7 @@ import { createRef } from "react";
 import { hot } from "react-hot-loader";
 import IrishRailApi, { Train, Station } from "../api/IrishRailApi";
 import styled from "styled-components";
+import { XCircle } from "react-feather";
 import ScheduleTable from "./ScheduleTable";
 import { FavouriteStar } from "./FavouriteStations";
 
@@ -27,36 +28,44 @@ export const Card = styled.div`
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 15px 20px;
+  padding: 0 20px;
   position: relative;
   &:focus {
     outline: none;
   }
 `;
 
-export const CardHeader = styled.h2`
+export const CardToolbar = styled.div`
+  grid-area: toolbar;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  margin: 20px 0;
+`;
+
+export const CardHeader = styled.div`
   font-weight: 700;
   font-size: 1.8em;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  grid-column: 2;
+  align-self: center;
+  padding-left: 15px;
+`;
 
-  & > img {
-    cursor: pointer;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 8px;
-    margin-right: 10px;
-    width: 40px;
-    height: 40px;
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease-out;
+const CardFavourite = styled.div`
+  grid-column: 1;
+  justify-self: center;
+  align-self: center;
+`;
 
-    &:hover {
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+const CardClose = styled.div`
+  grid-column: 3;
+  justify-self: center;
+  align-self: center;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease-out;
+
+  &:hover {
+    opacity: 1;
   }
 `;
 
@@ -68,44 +77,8 @@ const Error = styled.h2`
   user-select: none;
 `;
 
-const CardBody = styled.div`
+export const CardBody = styled.div`
   grid-area: body;
-`;
-
-const CardToolbar = styled.div`
-  grid-area: toolbar;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const CloseButton = styled.button`
-  grid-area: toolbar;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-weight: 900;
-  margin-top: 10px;
-
-  font-size: 150%;
-  outline: none;
-  background: none;
-  color: #aaa;
-
-  cursor: pointer;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 8px;
-  width: 40px;
-  height: 40px;
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease-out;
-
-  &:hover {
-    color: #444;
-    box-shadow: none;
-  }
 `;
 
 class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
@@ -157,15 +130,15 @@ class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
     if (error) return <div>Error: {error.message}</div>;
 
     return (
-      <Card onKeyDown={this.handleKeyDown} tabIndex={0} ref={this.schedule}>
+      <Card onKeyDown={this.handleKeyDown} tabIndex={-1} ref={this.schedule}>
         <CardToolbar>
-          <CardHeader>
+          <CardFavourite>
             <FavouriteStar stationName={station.StationDesc} />
-            {this.props.station.StationDesc}
-          </CardHeader>
-          <CloseButton onClick={handleStationClose}>
-            <div>X</div>
-          </CloseButton>
+          </CardFavourite>
+          <CardHeader>{this.props.station.StationDesc}</CardHeader>
+          <CardClose>
+            <XCircle onClick={handleStationClose} size={32} />
+          </CardClose>
         </CardToolbar>
 
         {stationData.length === 0 ? (

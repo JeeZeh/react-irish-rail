@@ -1,35 +1,23 @@
 import * as React from "react";
-import { useState } from "react";
 import styled from "styled-components";
 import { Time, StationDiv, Name, Dot } from "./JourneyStop";
-import { Card, CardHeader } from "./Schedule";
-import { PlusCircle, MinusCircle } from "react-feather";
-import Collapsible from "react-collapsible";
 
-const Title = styled.h5`
+const Title = styled.div`
+  grid-column: 2;
   font-weight: 700;
-`;
-
-const KeyCard = styled(Card)`
-  width: 300px;
-`;
-
-const KeyCardHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
+  font-size: 1.2em;
+  align-self: center;
 `;
 
 const Key = styled.div`
   grid-area: key;
   display: flex;
   flex-direction: column;
-  width: 100%;
   cursor: default;
   user-select: none;
   transition: opacity 0.1s ease-out;
   writing-mode: horizontal-tb;
+  padding-bottom: 30px;
 
   hr {
     width: 100%;
@@ -116,34 +104,6 @@ const renderKey = () => {
   );
 };
 
-export const JourneyKey = (props: { isPortable: boolean }) => {
-  const { isPortable } = props;
-  const [open, setOpen] = useState(false);
-
-  // Render the key collapsible if on a small screen
-  if (isPortable) {
-    return (
-      <KeyCard>
-        <Collapsible
-          transitionTime={250}
-          easing={"ease-out"}
-          trigger={
-            <KeyCardHeader>
-              <Title>Map Key</Title> {open ? <MinusCircle /> : <PlusCircle />}
-            </KeyCardHeader>
-          }
-          children={renderKey()}
-          onOpening={() => setOpen(true)}
-          onClosing={() => setOpen(false)}
-        />
-      </KeyCard>
-    );
-  }
-
-  return (
-    <div>
-      <Title>Map Key</Title>
-      {renderKey()}
-    </div>
-  );
+export const JourneyKey = () => {
+  return <div>{renderKey()}</div>;
 };
