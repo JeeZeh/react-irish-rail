@@ -1,9 +1,11 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { JourneyKey } from "./JourneyKey";
 import { About } from "./About";
 import { XCircle } from "react-feather";
 import { Card } from "./Schedule";
+import { H1A } from "./App";
 
 const Overlay = styled.div`
   position: fixed;
@@ -16,6 +18,13 @@ const Overlay = styled.div`
   overflow-y: scroll;
   background-color: #fffffffa;
   z-index: 10;
+
+  opacity: 0;
+
+  &.visible {
+    transition: opacity 0.1s ease-in;
+    opacity: 1;
+  }
 `;
 
 const Info = styled.div`
@@ -24,7 +33,7 @@ const Info = styled.div`
   flex-direction: column;
   align-items: center;
   @media only screen and (max-width: 330px) {
-    padding: 0;
+    padding: 20px 0;
   }
 `;
 
@@ -61,8 +70,11 @@ const CloseText = styled(CloseItem)`
 `;
 
 export const ModalInfo = (props: { handleCloseModal: () => void }) => {
+  const [fade, setFade] = useState(false);
+  useEffect(() => setFade(true), []);
+
   return (
-    <Overlay>
+    <Overlay className={fade ? "visible" : null}>
       <Info>
         <CloseModal onClick={props.handleCloseModal}>
           <CloseText>Close</CloseText>
@@ -71,11 +83,11 @@ export const ModalInfo = (props: { handleCloseModal: () => void }) => {
           </CloseItem>
         </CloseModal>
         <InfoCard>
-          <h3>Map Key</h3>
+          <H1A>Map Key</H1A>
           <JourneyKey />
         </InfoCard>
         <InfoCard>
-          <h3>About</h3>
+          <H1A>About</H1A>
           <About />
         </InfoCard>
       </Info>

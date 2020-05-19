@@ -17,7 +17,6 @@ const Key = styled.div`
   user-select: none;
   transition: opacity 0.1s ease-out;
   writing-mode: horizontal-tb;
-  padding-bottom: 30px;
 
   hr {
     width: 100%;

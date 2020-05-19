@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
 import styled from "styled-components";
-import { Info } from "react-feather";
+import { Compass } from "react-feather";
 import Schedule from "./Schedule";
 import StationSearch from "./StationSearch";
 import IrishRailApi, { Station } from "../api/IrishRailApi";
@@ -23,6 +23,12 @@ interface AppState {
 const FavouritesList = styled.div`
   grid-area: schedule;
   width: 250px;
+
+  @media only screen and (max-width: 900px) {
+    align-items: center;
+    justify-self: center;
+    text-align: center;
+  }
 `;
 
 const SearchWrapper = styled.div`
@@ -78,12 +84,34 @@ const Body = styled.div`
   }
   @media only screen and (max-width: 900px) {
     grid-template-columns: auto;
-    justify-content: center;
     grid-template-areas:
       "head"
       "key"
       "search"
       "schedule";
+
+    padding: 0;
+    width: 100%;
+  }
+`;
+
+export const H1A = styled.h1`
+  font-weight: 700;
+  @media only screen and (max-width: 500px) {
+    font-size: 2em;
+  }
+
+  @media only screen and (max-width: 400px) {
+    font-size: 1.4em;
+  }
+`;
+
+export const H3A = styled.h3`
+  font-weight: 500;
+  font-size: 1.3em;
+
+  @media only screen and (max-width: 400px) {
+    font-size: 1em;
   }
 `;
 
@@ -96,26 +124,38 @@ const Head = styled.div`
   align-items: flex-start;
   height: 100%;
 
-  & h1 {
-    font-weight: 700;
-    margin: none;
-  }
-  & h3 {
-    font-weight: 500;
-    font-size: 1.3em;
-    margin: none;
+  @media only screen and (max-width: 900px) {
+    padding: 15px 0;
+    text-align: center;
+    width: 100%;
+    align-items: center;
   }
 `;
 
-export const SearchHeading = styled.h3`
-  font-weight: 500;
+export const SearchHeading = styled(H3A)`
+  font-weight: 700;
   margin: 10px 0;
 `;
 
 const ModalButton = styled.button`
   cursor: pointer;
   user-select: none;
-  display: inline-block;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: #fefefe;
+  border: 1px solid #aaa;
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px #00000022;
+  &:focus {
+    outline: none;
+  }
+
+  & svg {
+    color: #444;
+  }
 `;
 
 export const App = () => {
@@ -175,11 +215,11 @@ export const App = () => {
 
   const { lookahead, station, stationList } = state;
   return (
-    <Body className="rail">
+    <Body>
       <Head>
         <div>
-          <h1>Irish Rail Train Schedule</h1>
-          <h3>A modern train schedule for Irish Rail</h3>
+          <H1A>Irish Rail Schedule</H1A>
+          <H3A>A modern train schedule for Irish Rail</H3A>
         </div>
         {isPortable ? null : <About />}
       </Head>
@@ -191,7 +231,7 @@ export const App = () => {
 
       {isPortable ? (
         <ModalButton onClick={handleOpenModal}>
-          <Info size={40} />
+          <Compass size={32} />
         </ModalButton>
       ) : null}
 

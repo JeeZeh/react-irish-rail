@@ -57,7 +57,7 @@ export const FavouriteStations = (props: { handleClick: (e) => void }) => {
 
   return (
     <div>
-      <SearchHeading>Saved Stations</SearchHeading>
+      <SearchHeading>Favourites</SearchHeading>
       <ItemList>
         {favourites.map((f, i) => (
           <ListItem key={i} onClick={handleClick} children={f} />
