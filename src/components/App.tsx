@@ -13,11 +13,14 @@ import { FavouriteStations } from "./FavouriteStations";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { ModalInfo } from "./ModalInfo";
 import { About } from "./About";
+import { ErrorDialogue } from "./ErrorDialogue";
 
 interface AppState {
   station: Station;
   stationList: Station[];
   lookahead: number;
+  waiting: boolean;
+  error: any;
 }
 
 const FavouritesList = styled.div`
@@ -159,6 +162,7 @@ const ModalButton = styled.button`
 `;
 
 export const App = () => {
+  const timeout = 5000;
   const lookaheadOptions = [30, 60, 90, 120];
   const size = useWindowSize();
   const isPortable = size.width < 900;
@@ -166,20 +170,42 @@ export const App = () => {
     station: null,
     stationList: null,
     lookahead: 90,
+    waiting: true,
+    error: null,
   });
 
   const [modalOpen, setModelOpen] = useState(false);
 
   useEffect(() => {
+    setTimeout(errorTimeout, timeout);
     IrishRailApi.getStations()
       .then((stationList) =>
         setState({
           ...state,
+          waiting: false,
           stationList,
         })
       )
-      .catch(console.error);
+      .catch((error) => {
+        console.error(error);
+        setState({
+          ...state,
+          waiting: false,
+          error,
+        });
+      });
   }, []);
+
+  const errorTimeout = () => {
+    if (state.waiting) {
+      setState({
+        ...state,
+        error: new Error(
+          "Timout from endpoint, showing error dialogue for now"
+        ),
+      });
+    }
+  };
 
   const onStationChange = (station: Station) => {
     setState({ ...state, station });
@@ -213,16 +239,34 @@ export const App = () => {
     setModelOpen(true);
   };
 
-  const { lookahead, station, stationList } = state;
-  return (
-    <Body>
+  const renderHeader = () => {
+    return (
       <Head>
         <div>
           <H1A>Irish Rail Schedule</H1A>
           <H3A>A modern train schedule for Irish Rail</H3A>
         </div>
-        {isPortable ? null : <About />}
       </Head>
+    );
+  };
+
+  const { lookahead, station, stationList, error, waiting } = state;
+
+  if (error)
+    return (
+      <Body>
+        {renderHeader()}
+        <ErrorDialogue />
+      </Body>
+    );
+
+  if (waiting) return <Body>{renderHeader()}</Body>;
+
+  return (
+    <Body>
+      {renderHeader()}
+      {isPortable ? null : <About />}
+
       {isPortable ? null : (
         <KeyWrapper>
           <JourneyKey />
