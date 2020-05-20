@@ -18,7 +18,6 @@ import { ErrorDialogue } from "./ErrorDialogue";
 interface AppState {
   station: Station;
   stationList: Station[];
-  lookahead: number;
   waiting: boolean;
   error: any;
 }
@@ -162,14 +161,14 @@ const ModalButton = styled.button`
 `;
 
 export const App = () => {
-  const timeout = 5000;
+  const timeoutLength = 5000;
   const lookaheadOptions = [30, 60, 90, 120];
   const size = useWindowSize();
   const isPortable = size.width < 900;
+  const [lookahead, setLookahead] = useState(90);
   const [state, setState] = useState<AppState>({
     station: null,
     stationList: null,
-    lookahead: 90,
     waiting: true,
     error: null,
   });
@@ -177,42 +176,36 @@ export const App = () => {
   const [modalOpen, setModelOpen] = useState(false);
 
   useEffect(() => {
-    setTimeout(errorTimeout, timeout);
+    const timeout = setTimeout(errorTimeout, timeoutLength);
     IrishRailApi.getStations()
-      .then((stationList) =>
+      .then((stationList) => {
         setState({
           ...state,
           waiting: false,
           stationList,
-        })
-      )
+        });
+        clearTimeout(timeout);
+      })
       .catch((error) => {
-        console.error(error);
         setState({
           ...state,
           waiting: false,
           error,
         });
+        clearTimeout(timeout);
       });
   }, []);
 
   const errorTimeout = () => {
-    if (state.waiting) {
-      setState({
-        ...state,
-        error: new Error(
-          "Timout from endpoint, showing error dialogue for now"
-        ),
-      });
-    }
+    setState({
+      ...state,
+      waiting: false,
+      error: new Error("Timout from endpoint, showing error dialogue for now"),
+    });
   };
 
   const onStationChange = (station: Station) => {
     setState({ ...state, station });
-  };
-
-  const onLookaheadChange = (lookahead: number) => {
-    setState({ ...state, lookahead });
   };
 
   const onFavouriteSelect = (e) => {
@@ -246,29 +239,32 @@ export const App = () => {
           <H1A>Irish Rail Schedule</H1A>
           <H3A>A modern train schedule for Irish Rail</H3A>
         </div>
+        {isPortable ? null : <About />}
       </Head>
     );
   };
 
-  const { lookahead, station, stationList, error, waiting } = state;
+  const { station, stationList, error, waiting } = state;
 
-  if (error)
+  if (error) {
+    console.error(error);
     return (
       <Body>
         {renderHeader()}
         <ErrorDialogue />
       </Body>
     );
+  }
 
   if (waiting) return <Body>{renderHeader()}</Body>;
 
   return (
     <Body>
       {renderHeader()}
-      {isPortable ? null : <About />}
 
       {isPortable ? null : (
         <KeyWrapper>
+          <H3A>Map Key</H3A>
           <JourneyKey />
         </KeyWrapper>
       )}
@@ -291,7 +287,7 @@ export const App = () => {
           <SearchParameters
             lookaheadOptions={lookaheadOptions}
             lookahead={lookahead}
-            onLookaheadChange={onLookaheadChange}
+            onLookaheadChange={setLookahead}
           />
         </SearchWrapper>
       ) : null}
