@@ -1,17 +1,17 @@
 // production config
-const merge = require('webpack-merge');
-const {resolve} = require('path');
+const merge = require("webpack-merge");
+const CompressionPlugin = require("compression-webpack-plugin");
+const { resolve } = require("path");
 
-const commonConfig = require('./common');
+const commonConfig = require("./common");
 
 module.exports = merge(commonConfig, {
-  mode: 'production',
-  entry: './index.tsx',
+  mode: "production",
+  entry: "./index.tsx",
   output: {
-    filename: 'js/bundle.[hash].min.js',
-    path: resolve(__dirname, '../../dist'),
-    publicPath: '/',
+    filename: "js/bundle.[hash].min.js",
+    path: resolve(__dirname, "../../dist"),
+    publicPath: "/",
   },
-  devtool: 'source-map',
-  plugins: [],
+  plugins: [new CompressionPlugin()],
 });
