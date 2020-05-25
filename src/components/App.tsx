@@ -51,6 +51,7 @@ const SearchWrapper = styled.div`
   @media only screen and (max-width: 900px) {
     align-items: center;
     text-align: center;
+    margin: auto;
   }
 `;
 
@@ -97,8 +98,9 @@ const Body = styled.div`
   }
 `;
 
-export const H1A = styled.h1`
+export const H1A = styled.h1<{ margin?: string }>`
   font-weight: 700;
+  margin: ${(p) => p.margin ?? 0};
   @media only screen and (max-width: 500px) {
     font-size: 2em;
   }
@@ -108,9 +110,10 @@ export const H1A = styled.h1`
   }
 `;
 
-export const H3A = styled.h3`
+export const H3A = styled.h3<{ margin?: string }>`
   font-weight: 500;
   font-size: 1.3em;
+  margin: ${(p) => p.margin ?? 0}; /* "10px 0 0 10px" */
 
   @media only screen and (max-width: 400px) {
     font-size: 1em;
@@ -264,7 +267,7 @@ export const App = () => {
 
       {isPortable ? null : (
         <KeyWrapper>
-          <H3A>Map Key</H3A>
+          <H3A margin={"0 0 10px 0"}>Map Key</H3A>
           <JourneyKey />
         </KeyWrapper>
       )}

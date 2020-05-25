@@ -41,7 +41,13 @@ const InfoCard = styled(Card)`
   width: 300px;
   padding: 20px;
   background-color: #fff;
-  margin: 10px 0;
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+
+  & > ul {
+    margin: 0;
+  }
 
   @media only screen and (max-width: 330px) {
     transform: scale(0.9);
@@ -83,11 +89,11 @@ export const ModalInfo = (props: { handleCloseModal: () => void }) => {
           </CloseItem>
         </CloseModal>
         <InfoCard>
-          <H1A>Map Key</H1A>
+          <H1A margin="0 0 10px 0">Map Key</H1A>
           <JourneyKey />
         </InfoCard>
         <InfoCard>
-          <H1A>About</H1A>
+          <H1A margin="0 0 10px 0">About</H1A>
           <About />
         </InfoCard>
       </Info>

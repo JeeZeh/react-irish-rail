@@ -12,8 +12,8 @@ export interface FuzzyOverlayProps {
 export const ItemList = styled.div`
   background: white;
   border: 1px rgba(0, 0, 0, 0.2) solid;
-  overflow:hidden;
-  border-radius:  5px;
+  overflow: hidden;
+  border-radius: 5px;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 `;
 
@@ -31,12 +31,12 @@ export const ListItem = styled.div`
 `;
 
 const FuzzyList = styled(ItemList)`
-    position: absolute;
-    border-top: none;
+  position: absolute;
+  border-top: none;
 
   z-index: 2;
   width: 100%;
-`
+`;
 
 export const FuzzyOverlay = (props: FuzzyOverlayProps) => {
   const handleClick = (e) => {

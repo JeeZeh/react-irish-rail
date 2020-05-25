@@ -56,7 +56,7 @@ const Key = styled.div`
   }
 `;
 
-const renderKey = () => {
+export const JourneyKey = () => {
   return (
     <Key>
       <StationDiv className="departed">
@@ -101,8 +101,4 @@ const renderKey = () => {
       </StationDiv>
     </Key>
   );
-};
-
-export const JourneyKey = () => {
-  return <div>{renderKey()}</div>;
 };

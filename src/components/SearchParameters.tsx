@@ -2,7 +2,6 @@ import * as React from "react";
 import styled from "styled-components";
 import { SearchHeading } from "./App";
 
-
 interface SearchParamerersProps {
   lookaheadOptions: number[];
   lookahead: number;
@@ -19,21 +18,20 @@ const RadioSelect = styled.div`
   grid-area: paramsbar;
   overflow: hidden;
   user-select: none;
+`;
 
-  & div {
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    overflow: hidden;
-    color: rgba(0, 0, 0, 0.6);
-    padding: 8px;
-    cursor: pointer;
-  }
-
-  & .minute-selected {
-    color: rgba(0, 0, 0, 0.9);
-    background-color: #fff;
-  }
+const RadioButton = styled.button<{ selected?: boolean }>`
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  overflow: hidden;
+  color: ${(p) => (p.selected ? "rgba(0, 0, 0, 0.9)" : "rgba(0, 0, 0, 0.6)")};
+  background-color: ${(p) => (p.selected ? "#fff" : "inherit")};
+  padding: 8px;
+  cursor: pointer;
+  border: none;
+  outline: none;
 `;
 
 export const SearchParameters = (props: SearchParamerersProps) => {
@@ -52,14 +50,14 @@ export const SearchParameters = (props: SearchParamerersProps) => {
       <RadioSelect>
         {lookaheadOptions.map((o, i) => {
           return (
-            <div
+            <RadioButton
               key={i}
-              className={props.lookahead === o ? "minute-selected" : ""}
+              selected={props.lookahead === o}
               onClick={handleClick}
               data-value={o}
             >
               {o} mins
-            </div>
+            </RadioButton>
           );
         })}
       </RadioSelect>
