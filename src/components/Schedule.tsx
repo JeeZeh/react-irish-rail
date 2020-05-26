@@ -17,6 +17,7 @@ export interface TrainScheduleProps {
   station: Station;
   lookahead: number;
   handleStationClose: () => void;
+  isPortable: boolean;
 }
 
 export const Card = styled.div`
@@ -125,7 +126,7 @@ class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
 
   render() {
     const { error, isLoaded, stationData } = this.state;
-    const { station, lookahead, handleStationClose } = this.props;
+    const { station, lookahead, handleStationClose, isPortable } = this.props;
     if (!station || !isLoaded) return null;
     if (error) return <div>Error: {error.message}</div>;
 
@@ -150,7 +151,9 @@ class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
           </CardBody>
         ) : (
           <CardBody>
-            {isLoaded ? <ScheduleTable trainData={stationData} /> : null}
+            {isLoaded ? (
+              <ScheduleTable trainData={stationData} isPortable={isPortable} />
+            ) : null}
           </CardBody>
         )}
       </Card>

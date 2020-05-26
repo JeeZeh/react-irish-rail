@@ -27,7 +27,7 @@
     "clean-dist": "rimraf dist/*",
     "lint": "tslint './src/**/*.ts*' --format stylish --project . --force",
     "start": "npm run start-prod",
-    "start-dev": "webpack-dev-server --config=configs/webpack/dev.js",
+    "dev": "concurrently --kill-others \"webpack-dev-server --config=configs/webpack/dev.js\" \"node express.js\"",
     "start-prod": "node express.js",
     "test": "jest --coverage --watchAll --config=configs/jest.json"
   },

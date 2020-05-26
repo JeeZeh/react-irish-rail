@@ -300,6 +300,7 @@ export const App = () => {
             station={station}
             lookahead={lookahead}
             handleStationClose={onStationClose}
+            isPortable={isPortable}
           />
         </ScheduleWrapper>
       ) : (

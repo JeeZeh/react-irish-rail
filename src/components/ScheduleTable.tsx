@@ -15,6 +15,7 @@ interface TrainColumn {
 
 export interface ScheduleTableProps {
   trainData: Train[];
+  isPortable: boolean;
 }
 
 const Table = styled.div`
@@ -77,6 +78,7 @@ const ScheduleTable = (props: ScheduleTableProps) => {
   const [sortedTrainData, setSortedTrainData] = useState([
     ...originalTrainData,
   ]);
+  const columns = getTrainColumns(props.isPortable);
 
   const handleTrainClick = (e) => {
     const trainCode = e.currentTarget.getAttribute("data-traincode");
@@ -174,29 +176,17 @@ const ScheduleTable = (props: ScheduleTableProps) => {
 
 export default hot(module)(ScheduleTable);
 
-const columns: TrainColumn[] = [
-  {
-    dispName: "Due",
-    propName: "Exparrival",
-  },
-  {
-    dispName: `Departs`,
-    propName: "Expdepart",
-  },
-  {
-    dispName: "From",
-    propName: "Origin",
-  },
-  {
-    dispName: "To",
-    propName: "Destination",
-  },
-  {
-    dispName: "Ends",
-    propName: "Destinationtime",
-  },
-  {
-    dispName: "Last Seen",
-    propName: "Lastlocation",
-  },
-];
+const getTrainColumns = (isPortable): TrainColumn[] => {
+  const headings = new Map<string, string>([
+    ["Due", "Exparrival"],
+    ["Departs", "Expdepart"],
+    ["From", "Origin"],
+    ["To", "Destination"],
+    ["Ends", "Destinationtime"],
+    ["Last Seen", "Lastlocation"],
+  ]);
+
+  return Array.from(Object.entries(headings))
+    .filter((e) => !(isPortable && e[0] === "Last Seen"))
+    .map((e) => ({ dispName: e[0], propName: e[1] }));
+};
