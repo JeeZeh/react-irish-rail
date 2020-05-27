@@ -1,8 +1,8 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
 import * as Fuse from "fuse.js/dist/fuse";
 import { Station } from "../api/IrishRailApi";
 import styled from "styled-components";
-import { SearchHeading } from "./App";
 import { FuzzyOverlay } from "./FuzzyOverlay";
 
 export interface StationSearchState {
@@ -11,19 +11,49 @@ export interface StationSearchState {
   cursor: number;
   hasFocus: boolean;
   mouseOver: boolean;
+  fuse: Fuse<Station, any>;
 }
 
 export interface StationSearchProps {
   stationList: Station[];
   station: Station;
   onStationChange: (station: Station) => void;
+  isPortable: boolean;
 }
 
-export default class StationSearch extends React.Component<
-  StationSearchProps,
-  StationSearchState
-> {
-  private FUSE_OPTIONS = {
+const Search = styled.div`
+  grid-area: searchbar;
+  max-width: 400px;
+  position: relative;
+  width: 100%;
+`;
+
+const Input = styled.input`
+  background: whitesmoke;
+  font-size: 0.95em;
+  width: 100%;
+  display: inline-block;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.1s ease-out;
+
+  &:focus {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    transition: all 0.05s ease-out;
+  }
+`;
+
+const SearchFlex = styled.div<{ isPortable?: boolean }>`
+  display: flex;
+  flex-direction: ${(p) => (p.isPortable ? "column-reverse" : "column")};
+`;
+
+export const StationSearch = (props: StationSearchProps) => {
+  const FUSE_OPTIONS = {
     isCaseSensitive: false,
     findAllMatches: false,
     includeMatches: false,
@@ -37,35 +67,27 @@ export default class StationSearch extends React.Component<
     keys: ["StationDesc", "StationCode"],
   };
 
-  private fuse;
+  const [state, setState] = useState<StationSearchState>({
+    fuseMatch: null,
+    fuse: null,
+    input: "",
+    hasFocus: false,
+    cursor: -1,
+    mouseOver: false,
+  });
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      fuseMatch: null,
-      input: "",
-      hasFocus: false,
-      cursor: -1,
-      mouseOver: false,
-    };
-  }
+  useEffect(() => {
+    setState({ ...state, fuse: new Fuse(props.stationList, FUSE_OPTIONS) });
+  }, []);
 
-  componentDidMount() {
-    this.fuse = new Fuse(this.props.stationList, this.FUSE_OPTIONS);
-  }
-
-  private handleKeyDown = (e) => {
-    const { cursor, fuseMatch } = this.state;
+  const handleKeyDown = (e) => {
+    const { cursor, fuseMatch } = state;
     // Up Arrow
     if (e.keyCode === 38 && cursor > 0) {
-      this.setState((prevState) => ({
-        cursor: prevState.cursor - 1,
-      }));
+      setState({ ...state, cursor: state.cursor - 1 });
     } // Down Arrow
     else if (e.keyCode === 40 && cursor < fuseMatch.length - 1) {
-      this.setState((prevState) => ({
-        cursor: prevState.cursor + 1,
-      }));
+      setState({ ...state, cursor: state.cursor + 1 });
     } else if (e.keyCode === 13) {
       const selection =
         fuseMatch.length === 1
@@ -74,79 +96,56 @@ export default class StationSearch extends React.Component<
           ? fuseMatch[cursor].refIndex
           : null;
       if (selection) {
-        this.handleFuzzySelect(selection);
+        handleFuzzySelect(selection);
       }
     }
   };
 
-  private handleChange = (e) => {
+  const handleChange = (e) => {
     const pattern = e.target.value;
-    this.setState({
+    console.log(state.fuse);
+
+    setState({
+      ...state,
       input: pattern,
-      fuseMatch: this.fuse.search(pattern).slice(0, 10),
+      fuseMatch: state.fuse.search(pattern).slice(0, 10),
       cursor: -1,
     });
   };
 
-  handleFuzzySelect = (refIndex: number) => {
-    this.setState({ input: "", fuseMatch: [], cursor: -1 });
-    this.props.onStationChange(this.props.stationList[refIndex]);
+  const handleFuzzySelect = (refIndex: number) => {
+    setState({ ...state, input: "", fuseMatch: [], cursor: -1 });
+    props.onStationChange(props.stationList[refIndex]);
   };
 
-  private Search = styled.div`
-    grid-area: searchbar;
-    width: 400px;
-    position: relative;
-  `;
+  const { fuseMatch, cursor, hasFocus, mouseOver } = state;
 
-  private Input = styled.input`
-    width: 100%;
-    background: whitesmoke;
-    font-size: 0.95em;
-    padding: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    outline: none;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-    transition: all 0.1s ease-out;
-
-    &:focus {
-      background-color: #fff;
-      border: 1px solid rgba(0, 0, 0, 0.6);
-      transition: all 0.05s ease-out;
-    }
-  `;
-
-  render() {
-    const { fuseMatch, cursor, hasFocus, mouseOver } = this.state;
-
-    return (
-      <div>
-        <SearchHeading>Find trains at</SearchHeading>
-        <this.Search
-          onFocus={() => this.setState({ hasFocus: true })}
-          onBlur={() => {
-            if (!mouseOver) this.setState({ hasFocus: false, cursor: 0 });
-          }}
-          onMouseEnter={() => this.setState({ mouseOver: true })}
-          onMouseLeave={() => this.setState({ mouseOver: false })}
-        >
-          <this.Input
-            onChange={this.handleChange}
-            onKeyDown={this.handleKeyDown}
-            value={this.state.input}
-            placeholder="Type a station name"
-            aria-label="Input box for searching a station"
+  return (
+    <Search
+      onFocus={() => setState({ ...state, hasFocus: true })}
+      onBlur={() => {
+        if (!mouseOver) setState({ ...state, hasFocus: false, cursor: 0 });
+      }}
+      onMouseEnter={() => setState({ ...state, mouseOver: true })}
+      onMouseLeave={() => setState({ ...state, mouseOver: false })}
+    >
+      <SearchFlex isPortable={props.isPortable}>
+        <Input
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          value={state.input}
+          placeholder="Type a station name"
+          aria-label="Input box for searching a station"
+        />
+        {hasFocus ? (
+          <FuzzyOverlay
+            onFuzzySelect={handleFuzzySelect}
+            fuzzyList={fuseMatch}
+            cursor={cursor}
+            isPortable={props.isPortable}
           />
-          {hasFocus ? (
-            <FuzzyOverlay
-              onFuzzySelect={this.handleFuzzySelect}
-              fuzzyList={fuseMatch}
-              cursor={cursor}
-            />
-          ) : null}
-        </this.Search>
-      </div>
-    );
-  }
-}
+        ) : null}
+      </SearchFlex>
+    </Search>
+  );
+};

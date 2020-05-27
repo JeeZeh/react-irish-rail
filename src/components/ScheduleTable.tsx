@@ -35,10 +35,12 @@ const Row = styled.div`
   transition: all 0.25s ease-in-out;
 `;
 
-const Train = styled.div`
+const Train = styled.div<{ isPortable?: boolean }>`
   display: grid;
-  grid-template-areas: "due dep from to term last";
-  grid-template-columns: 1fr 1.5fr 2.5fr 2.5fr 1fr 2.5fr;
+  grid-template-areas: ${(p) =>
+    p.isPortable ? "due dep from to" : "due dep from to term last"};
+  grid-template-columns: ${(p) =>
+    p.isPortable ? "1fr 1.5fr 2.5fr 2.5fr" : "1fr 1.5fr 2.5fr 2.5fr 1fr 2.5fr"};
 
   &:not(.header):hover {
     opacity: 0.8;
@@ -78,7 +80,9 @@ const ScheduleTable = (props: ScheduleTableProps) => {
   const [sortedTrainData, setSortedTrainData] = useState([
     ...originalTrainData,
   ]);
-  const columns = getTrainColumns(props.isPortable);
+  const columns = props.isPortable
+    ? headings.slice(0, headings.length - 2)
+    : headings;
 
   const handleTrainClick = (e) => {
     const trainCode = e.currentTarget.getAttribute("data-traincode");
@@ -106,7 +110,10 @@ const ScheduleTable = (props: ScheduleTableProps) => {
   }, [sort]);
 
   // Updates the sorting direction based on the selected heading
-  const handleSort = (e) => {
+  const handleSort = (e, isPortable?: boolean) => {
+    if (isPortable) {
+      return;
+    }
     const col = e.currentTarget.getAttribute("data-col");
     if (sort.col === col) {
       if (sort.dir === -1) {
@@ -120,7 +127,7 @@ const ScheduleTable = (props: ScheduleTableProps) => {
     console.log("Updated sorting");
   };
 
-  const renderTrain = (train: Train) => {
+  const renderTrain = (train: Train, isPortable?: boolean) => {
     const code = train.Traincode;
     return (
       <Row key={code}>
@@ -128,7 +135,12 @@ const ScheduleTable = (props: ScheduleTableProps) => {
           transitionTime={180}
           easing={"ease-out"}
           trigger={
-            <Train key={code} onClick={handleTrainClick} data-traincode={code}>
+            <Train
+              key={code}
+              onClick={handleTrainClick}
+              data-traincode={code}
+              isPortable={isPortable}
+            >
               {columns.map((c) => (
                 <div key={c.propName}>{train[c.propName]}</div>
               ))}
@@ -147,13 +159,17 @@ const ScheduleTable = (props: ScheduleTableProps) => {
     );
   };
 
-  const renderHeader = () => {
+  const renderHeader = (isPortable?: boolean) => {
     return (
-      <Train className="header">
+      <Train className="header" isPortable={isPortable}>
         {columns.map((c, i) => (
-          <div onClick={handleSort} key={i} data-col={c.propName}>
+          <div
+            onClick={(e) => handleSort(e, isPortable)}
+            key={i}
+            data-col={c.propName}
+          >
             {c.dispName}{" "}
-            {sort.col === c.propName && sort.dir !== 0 ? (
+            {sort.col === c.propName && sort.dir !== 0 && !isPortable ? (
               sort.dir === -1 ? (
                 <ArrowUp />
               ) : (
@@ -168,25 +184,39 @@ const ScheduleTable = (props: ScheduleTableProps) => {
 
   return (
     <Table>
-      {renderHeader()}
-      <Body>{sortedTrainData.map(renderTrain)}</Body>
+      {renderHeader(props.isPortable)}
+      <Body>
+        {sortedTrainData.map((t) => renderTrain(t, props.isPortable))}
+      </Body>
     </Table>
   );
 };
 
 export default hot(module)(ScheduleTable);
 
-const getTrainColumns = (isPortable): TrainColumn[] => {
-  const headings = new Map<string, string>([
-    ["Due", "Exparrival"],
-    ["Departs", "Expdepart"],
-    ["From", "Origin"],
-    ["To", "Destination"],
-    ["Ends", "Destinationtime"],
-    ["Last Seen", "Lastlocation"],
-  ]);
-
-  return Array.from(Object.entries(headings))
-    .filter((e) => !(isPortable && e[0] === "Last Seen"))
-    .map((e) => ({ dispName: e[0], propName: e[1] }));
-};
+const headings: TrainColumn[] = [
+  {
+    dispName: "Due",
+    propName: "Exparrival",
+  },
+  {
+    dispName: `Departs`,
+    propName: "Expdepart",
+  },
+  {
+    dispName: "From",
+    propName: "Origin",
+  },
+  {
+    dispName: "To",
+    propName: "Destination",
+  },
+  {
+    dispName: "Ends",
+    propName: "Destinationtime",
+  },
+  {
+    dispName: "Last Seen",
+    propName: "Lastlocation",
+  },
+];

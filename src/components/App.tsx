@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
 import styled from "styled-components";
-import { Compass } from "react-feather";
+import { Compass, Search } from "react-feather";
 import Schedule from "./Schedule";
-import StationSearch from "./StationSearch";
+import { StationSearch } from "./StationSearch";
 import IrishRailApi, { Station } from "../api/IrishRailApi";
 import { SearchParameters } from "./SearchParameters";
 import { JourneyKey } from "./JourneyKey";
@@ -38,20 +38,30 @@ const SearchWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
   width: 90%;
+
+  & > div {
+    width: 40%;
+  }
 
   @media only screen and (max-width: 1205px) {
     flex-direction: column;
     justify-content: flex-start;
     & > div {
       margin: 10px 0;
+      width: 100%;
     }
   }
 
   @media only screen and (max-width: 900px) {
     align-items: center;
+    justify-content: center;
     text-align: center;
     margin: auto;
+    & > div {
+      width: 300px;
+    }
   }
 `;
 
@@ -94,7 +104,6 @@ const Body = styled.div`
       "schedule";
 
     padding: 0;
-    width: 100%;
   }
 `;
 
@@ -282,16 +291,23 @@ export const App = () => {
 
       {stationList ? (
         <SearchWrapper>
-          <StationSearch
-            stationList={stationList}
-            station={state.station}
-            onStationChange={onStationChange}
-          />
-          <SearchParameters
-            lookaheadOptions={lookaheadOptions}
-            lookahead={lookahead}
-            onLookaheadChange={setLookahead}
-          />
+          <div>
+            <SearchHeading>Find trains at</SearchHeading>
+            <StationSearch
+              stationList={stationList}
+              station={state.station}
+              onStationChange={onStationChange}
+              isPortable={isPortable}
+            />
+          </div>
+          <div>
+            <SearchHeading>In the next</SearchHeading>
+            <SearchParameters
+              lookaheadOptions={lookaheadOptions}
+              lookahead={lookahead}
+              onLookaheadChange={setLookahead}
+            />
+          </div>
         </SearchWrapper>
       ) : null}
       {station ? (

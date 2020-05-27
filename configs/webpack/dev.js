@@ -2,8 +2,6 @@
 const merge = require("webpack-merge");
 const webpack = require("webpack");
 const commonConfig = require("./common");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
 
 module.exports = merge(commonConfig, {
   mode: "development",
@@ -19,7 +17,6 @@ module.exports = merge(commonConfig, {
   },
   devtool: "cheap-module-eval-source-map",
   plugins: [
-    new BundleAnalyzerPlugin(),
     new webpack.HotModuleReplacementPlugin(), // enable HMR globally
     new webpack.NamedModulesPlugin(), // prints more readable module names in the browser console on HMR updates
   ],

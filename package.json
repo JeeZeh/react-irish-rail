@@ -41,6 +41,7 @@
     "@types/styled-components": "^5.0.1",
     "awesome-typescript-loader": "^5.2.1",
     "compression-webpack-plugin": "^4.0.0",
+    "concurrently": "^5.2.0",
     "css-loader": "^3.4.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
@@ -80,6 +81,7 @@
     "react-collapsible": "^2.7.0",
     "react-feather": "^2.0.8",
     "react-indiana-drag-scroll": "^1.6.1",
+    "react-window": "^1.8.5",
     "styled-components": "^5.0.1"
   }
 }

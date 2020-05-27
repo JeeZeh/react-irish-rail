@@ -45,22 +45,19 @@ export const SearchParameters = (props: SearchParamerersProps) => {
   };
 
   return (
-    <div>
-      <SearchHeading>In the next</SearchHeading>
-      <RadioSelect>
-        {lookaheadOptions.map((o, i) => {
-          return (
-            <RadioButton
-              key={i}
-              selected={props.lookahead === o}
-              onClick={handleClick}
-              data-value={o}
-            >
-              {o} mins
-            </RadioButton>
-          );
-        })}
-      </RadioSelect>
-    </div>
+    <RadioSelect>
+      {lookaheadOptions.map((o, i) => {
+        return (
+          <RadioButton
+            key={i}
+            selected={props.lookahead === o}
+            onClick={handleClick}
+            data-value={o}
+          >
+            {o} mins
+          </RadioButton>
+        );
+      })}
+    </RadioSelect>
   );
 };

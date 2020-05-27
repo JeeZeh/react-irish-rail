@@ -27,29 +27,20 @@ const Wrapper = styled.div`
   }
 `;
 
-const Fade = styled.div`
+export const Fade = styled.div<{ side: string; size: string }>`
   position: absolute;
   grid-area: map;
   display: block;
-  width: 50px;
-  height: 100%;
+  width: ${(p) => (p.side === "bottom" || p.side === "top" ? "100%" : p.size)};
+  height: ${(p) => (p.side === "bottom" || p.side === "top" ? p.size : "100%")};
   z-index: 1;
-
-  &.left {
-    background-image: linear-gradient(
-      to left,
-      rgba(251, 251, 251, 00),
-      rgba(251, 251, 251, 1) 100%
-    );
-  }
-  &.right {
-    right: 0px;
-    background-image: linear-gradient(
-      to right,
-      rgba(251, 251, 251, 00),
-      rgba(251, 251, 251, 1) 100%
-    );
-  }
+  pointer-events: none;
+  background-image: linear-gradient(
+    to ${(p) => p.side},
+    rgba(251, 251, 251, 00),
+    rgba(251, 251, 251, 1) 100%
+  );
+  ${(p) => p.side}: 0px;
 `;
 
 const Map = styled.div`
@@ -96,7 +87,7 @@ export const JourneyMap = (props: { journey: Journey; train: Train }) => {
       <InfoWrapper>
         <JourneyInfo journey={props.journey} train={train} />
       </InfoWrapper>
-      <Fade className="left" />
+      <Fade side="left" size="50px" />
       <ScrollContainer
         ref={scroller}
         vertical={false}
@@ -116,7 +107,7 @@ export const JourneyMap = (props: { journey: Journey; train: Train }) => {
           ))}
         </Map>
       </ScrollContainer>
-      <Fade className="right" />
+      <Fade side="right" size="50px" />
     </Wrapper>
   );
 };
