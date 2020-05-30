@@ -9,11 +9,12 @@ const Header = styled.h5`
   font-size: 1.2em;
 `;
 
-const Info = styled(props => <Card {...props}/>)`
+const Info = styled((props) => <Card {...props} />)`
   grid-area: key;
   display: flex;
   flex-direction: column;
   user-select: none;
+  padding: 10px;
 `;
 
 const Entry = styled.div`

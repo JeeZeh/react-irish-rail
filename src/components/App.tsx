@@ -60,7 +60,7 @@ const SearchWrapper = styled.div`
     text-align: center;
     margin: auto;
     & > div {
-      width: 300px;
+      width: 320px;
     }
   }
 `;
@@ -163,6 +163,7 @@ const ModalButton = styled.button`
   height: 56px;
   border-radius: 10px;
   box-shadow: 0 3px 8px #00000022;
+  z-index: 9;
   &:focus {
     outline: none;
   }

@@ -2,33 +2,41 @@ import * as React from "react";
 import { ItemList, ListItem } from "./FuzzyOverlay";
 import { SearchHeading } from "./App";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { Star } from "react-feather";
+import { Heart } from "react-feather";
 import styled from "styled-components";
 
-const FavouriteStarWrapper = styled(Star)`
+const FavouriteHeartWrapper = styled.div<{ gridColumn: number }>`
   cursor: pointer;
+  grid-column: ${(p) => p.gridColumn};
+  ${(p) => (p.gridColumn ? "grid-row: 1" : null)};
   opacity: 0.7;
   fill: none;
   transition: all 0.2s ease-out;
-
-  &.on {
-    opacity: 1;
-    fill: black;
-  }
+  background-color: white;
+  border: 2px solid #444;
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     opacity: 1;
   }
 `;
 
-export const FavouriteStar = (props: { stationName: string }) => {
+export const FavouriteHeart = (props: {
+  stationName: string;
+  gridColumn: number;
+}) => {
   const { stationName } = props;
   const [favourites, setFavourites] = useLocalStorage<string[]>(
     "favourites",
     []
   );
 
-  const handleClick = (e) => {
+  const handleFavouriteClick = (stationName: string) => {
     const favSet = new Set(favourites);
     if (favSet.has(stationName)) {
       favSet.delete(stationName);
@@ -41,11 +49,17 @@ export const FavouriteStar = (props: { stationName: string }) => {
   };
 
   return (
-    <FavouriteStarWrapper
+    <FavouriteHeartWrapper
       className={favourites.includes(stationName) ? "on" : null}
-      size={28}
-      onClick={handleClick}
-    />
+      gridColumn={props.gridColumn}
+      onClick={(_) => handleFavouriteClick(stationName)}
+    >
+      <Heart
+        size={32}
+        fill={favourites.includes(stationName) ? "pink" : null}
+        opacity={favourites.includes(stationName) ? "pink" : null}
+      />
+    </FavouriteHeartWrapper>
   );
 };
 

@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { JourneyMap } from "./JourneyMap";
 import Collapsible from "react-collapsible";
 import { ArrowDown, ArrowUp } from "react-feather";
+import { MobileTrainCard } from "./MobileTrainCard";
 
 interface TrainColumn {
   dispName: string;
@@ -22,9 +23,13 @@ const Table = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  padding: 5px;
+  padding: 15px;
   font-family: "Lato", sans-serif;
   transition: border 0.08s ease-out;
+
+  @media only screen and (max-width: 900px) {
+    padding: 0;
+  }
 `;
 
 const Row = styled.div`
@@ -129,6 +134,9 @@ const ScheduleTable = (props: ScheduleTableProps) => {
 
   const renderTrain = (train: Train, isPortable?: boolean) => {
     const code = train.Traincode;
+
+    if (isPortable) return <MobileTrainCard train={train} key={code} />;
+
     return (
       <Row key={code}>
         <Collapsible
@@ -149,7 +157,11 @@ const ScheduleTable = (props: ScheduleTableProps) => {
         >
           <Info key={code + "info"}>
             {journeys.has(code) ? (
-              <JourneyMap journey={journeys.get(code)} train={train} />
+              <JourneyMap
+                journey={journeys.get(code)}
+                isPortable={isPortable}
+                train={train}
+              />
             ) : (
               <div>LOADING</div>
             )}
@@ -184,9 +196,9 @@ const ScheduleTable = (props: ScheduleTableProps) => {
 
   return (
     <Table>
-      {renderHeader(props.isPortable)}
+      {!props.isPortable ? renderHeader(props.isPortable) : null}
       <Body>
-        {sortedTrainData.map((t) => renderTrain(t, props.isPortable))}
+        {props.trainData.map((t) => renderTrain(t, props.isPortable))}
       </Body>
     </Table>
   );
@@ -220,3 +232,27 @@ const headings: TrainColumn[] = [
     propName: "Lastlocation",
   },
 ];
+
+const testTrain: Train = {
+  Servertime: null,
+  Traincode: null,
+  Stationfullname: null,
+  Stationcode: null,
+  Querytime: null,
+  Traindate: null,
+  Origin: "Dublin Connolly",
+  Destination: "Limerick Junction",
+  Origintime: "13:42",
+  Destinationtime: "15:55",
+  Status: null,
+  Lastlocation: null,
+  Duein: null,
+  Late: null,
+  Exparrival: "14:26",
+  Expdepart: "14:30",
+  Scharrival: null,
+  Schdepart: null,
+  Direction: null,
+  Traintype: null,
+  Locationtype: null,
+};

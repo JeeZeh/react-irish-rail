@@ -3,9 +3,9 @@ import { createRef } from "react";
 import { hot } from "react-hot-loader";
 import IrishRailApi, { Train, Station } from "../api/IrishRailApi";
 import styled from "styled-components";
-import { XCircle } from "react-feather";
+import { X } from "react-feather";
 import ScheduleTable from "./ScheduleTable";
-import { FavouriteStar } from "./FavouriteStations";
+import { FavouriteHeart } from "./FavouriteStations";
 
 export interface TrainScheduleState {
   error: any;
@@ -20,53 +20,76 @@ export interface TrainScheduleProps {
   isPortable: boolean;
 }
 
-export const Card = styled.div`
+export const Card = styled.div<{ isPortable?: boolean }>`
+  background-color: #fefefe;
   display: grid;
   grid-template-areas:
     "toolbar"
     "body";
 
+  padding: ${(p) => (p.isPortable ? 0 : 15)}px;
+
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 0 20px;
   position: relative;
   &:focus {
     outline: none;
   }
+
+  @media only screen and (max-width: 900px) {
+    max-width: 400px;
+    margin: auto;
+  }
 `;
 
-export const CardToolbar = styled.div`
+export const CardToolbar = styled.div<{ isPortable?: boolean }>`
   grid-area: toolbar;
   display: grid;
   grid-template-columns: auto 1fr auto;
-  margin: 20px 0;
+  margin: ${(p) => (p.isPortable ? "15px 20px" : "5px 5px 10px 5px")};
 `;
 
-export const CardHeader = styled.div`
+export const CardHeader = styled.div<{ isPortable: boolean }>`
   font-weight: 700;
   font-size: 1.8em;
   grid-column: 2;
   align-self: center;
-  padding-left: 15px;
+  padding-left: ${(p) => (p.isPortable ? 0 : 15)}px;
+
+  @media only screen and (max-width: 900px) {
+    font-size: 1.6em;
+  }
+  @media only screen and (max-width: 400px) {
+    font-size: 1.3em;
+  }
 `;
 
-const CardFavourite = styled.div`
-  grid-column: 1;
+const CardToolbarButton = styled.div<{ gridColumn: number }>`
+  grid-column: ${(p) => p.gridColumn};
   justify-self: center;
-  align-self: center;
-`;
-
-const CardClose = styled.div`
-  grid-column: 3;
-  justify-self: center;
-  align-self: center;
   cursor: pointer;
-  opacity: 0.7;
+  background-color: white;
+  border: 2px solid #444;
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  align-self: center;
+  grid-row: 1;
+  opacity: 0.8;
   transition: opacity 0.2s ease-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
   &:hover {
     opacity: 1;
+  }
+
+  button:focus {
+    outline: 0;
   }
 `;
 
@@ -131,15 +154,25 @@ class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
     if (error) return <div>Error: {error.message}</div>;
 
     return (
-      <Card onKeyDown={this.handleKeyDown} tabIndex={-1} ref={this.schedule}>
-        <CardToolbar>
-          <CardFavourite>
-            <FavouriteStar stationName={station.StationDesc} />
-          </CardFavourite>
-          <CardHeader>{this.props.station.StationDesc}</CardHeader>
-          <CardClose>
-            <XCircle onClick={handleStationClose} size={32} />
-          </CardClose>
+      <Card
+        onKeyDown={this.handleKeyDown}
+        tabIndex={-1}
+        ref={this.schedule}
+        isPortable={isPortable}
+      >
+        <CardToolbar isPortable={isPortable}>
+          <FavouriteHeart
+            stationName={station.StationDesc}
+            gridColumn={isPortable ? 3 : 1}
+          />
+          <CardHeader isPortable={isPortable}>
+            {this.props.station.StationDesc}
+          </CardHeader>
+          {isPortable ? null : (
+            <CardToolbarButton gridColumn={3} onClick={handleStationClose}>
+              <X size={32} />
+            </CardToolbarButton>
+          )}
         </CardToolbar>
 
         {stationData.length === 0 ? (

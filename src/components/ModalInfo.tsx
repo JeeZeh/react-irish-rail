@@ -41,7 +41,7 @@ const InfoCard = styled(Card)`
   width: 300px;
   padding: 20px;
   background-color: #fff;
-  margin: 15px 0;
+  margin: 15px 0 !important;
   display: flex;
   flex-direction: column;
 

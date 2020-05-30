@@ -35,11 +35,7 @@ export const Fade = styled.div<{ side: string; size: string }>`
   height: ${(p) => (p.side === "bottom" || p.side === "top" ? p.size : "100%")};
   z-index: 1;
   pointer-events: none;
-  background-image: linear-gradient(
-    to ${(p) => p.side},
-    rgba(251, 251, 251, 00),
-    rgba(251, 251, 251, 1) 100%
-  );
+  background-image: linear-gradient(to ${(p) => p.side}, #fefefe00, #fefefeff);
   ${(p) => p.side}: 0px;
 `;
 
@@ -57,7 +53,13 @@ const InfoWrapper = styled.div`
   margin: 20px 10px 10px 30px;
 `;
 
-export const JourneyMap = (props: { journey: Journey; train: Train }) => {
+interface JoruneyMapProps {
+  journey: Journey;
+  train: Train;
+  isPortable?: boolean;
+}
+
+export const JourneyMap = (props: JoruneyMapProps) => {
   const { journey, train } = props;
   const scroller: MutableRefObject<ScrollContainer> = useRef();
   const trainPosition = journey.stops.findIndex((s, i) => {
@@ -84,9 +86,11 @@ export const JourneyMap = (props: { journey: Journey; train: Train }) => {
 
   return (
     <Wrapper>
-      <InfoWrapper>
-        <JourneyInfo journey={props.journey} train={train} />
-      </InfoWrapper>
+      {props.isPortable ? null : (
+        <InfoWrapper>
+          <JourneyInfo journey={props.journey} train={train} />
+        </InfoWrapper>
+      )}
       <Fade side="left" size="50px" />
       <ScrollContainer
         ref={scroller}
