@@ -142,67 +142,73 @@ const JourneyButton = styled.button`
   }
 `;
 
+const renderHeader = (train: Train) => {
+  const { Destination, Destinationtime, Origin, Origintime } = train;
+  return (
+    <Header>
+      <Station area="origin">
+        <StationName weight={600} color={black}>
+          {Origin}
+        </StationName>
+        <StationTime weight={700} color={mediumGrey}>
+          {Origintime}
+        </StationTime>
+      </Station>
+      <Arrow>
+        <ArrowRight stroke={black} size={24} />
+      </Arrow>
+      <Station area="destination">
+        <StationName weight={600} color={black}>
+          {Destination}
+        </StationName>
+        <StationTime weight={700} color={mediumGrey}>
+          {Destinationtime}
+        </StationTime>
+      </Station>
+    </Header>
+  );
+};
+
+const renderFooter = (train: Train) => {
+  const { Exparrival, Expdepart } = train;
+  return (
+    <Footer>
+      <Times>
+        {Exparrival ? (
+          <TimeEntry>
+            <StationTime weight={700} color={lightBlack}>
+              {Exparrival}
+            </StationTime>
+            <StationName weight={400} color={black}>
+              Arriving
+            </StationName>
+          </TimeEntry>
+        ) : null}
+        {Expdepart ? (
+          <TimeEntry>
+            <StationTime weight={700} color={lightBlack}>
+              {Expdepart}
+            </StationTime>
+            <StationName weight={400} color={black}>
+              Departing
+            </StationName>
+          </TimeEntry>
+        ) : null}
+      </Times>
+    </Footer>
+  );
+};
+
 export const MobileTrainCard = (props: { train: Train }) => {
-  const {
-    Destination,
-    Destinationtime,
-    Origin,
-    Origintime,
-    Exparrival,
-    Expdepart,
-  } = props.train;
   return (
     <TrainCard>
-      <Header>
-        <Station area="origin">
-          <StationName weight={600} color={black}>
-            {Origin}
-          </StationName>
-          <StationTime weight={700} color={mediumGrey}>
-            {Origintime}
-          </StationTime>
-        </Station>
-        <Arrow>
-          <ArrowRight stroke={black} size={24} />
-        </Arrow>
-        <Station area="destination">
-          <StationName weight={600} color={black}>
-            {Destination}
-          </StationName>
-          <StationTime weight={700} color={mediumGrey}>
-            {Destinationtime}
-          </StationTime>
-        </Station>
-      </Header>
+      {renderHeader(props.train)}
       <Divider />
-      <Footer>
-        <Times>
-          {Exparrival ? (
-            <TimeEntry>
-              <StationTime weight={700} color={lightBlack}>
-                {Exparrival}
-              </StationTime>
-              <StationName weight={400} color={black}>
-                Arriving
-              </StationName>
-            </TimeEntry>
-          ) : null}
-          {Expdepart ? (
-            <TimeEntry>
-              <StationTime weight={700} color={lightBlack}>
-                {Expdepart}
-              </StationTime>
-              <StationName weight={400} color={black}>
-                Departing
-              </StationName>
-            </TimeEntry>
-          ) : null}
-        </Times>
-        <JourneyButton>
-          <Map stroke={lightBlack} size={24} />
-          <div>Live Journey</div>
-        </JourneyButton>
-      </Footer>
+      {renderFooter(props.train)}
+      <JourneyButton>
+        <Map stroke={lightBlack} size={24} />
+        <div>Live Journey</div>
+      </JourneyButton>
     </TrainCard>
   );
 };
