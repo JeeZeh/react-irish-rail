@@ -4,12 +4,12 @@ import styled from "styled-components";
 import { FuseResult } from "fuse.js";
 import { Fade } from "./JourneyMap";
 import { FixedSizeList as List } from "react-window";
+import { useWindowSize } from "../hooks/useWindowSize";
 
 export interface FuzzyOverlayProps {
   fuzzyList: FuseResult<Station>[];
   cursor: number;
   onFuzzySelect: (refIndex: number) => void;
-  isPortable: boolean;
 }
 
 export const ItemList = styled.div`
@@ -41,11 +41,13 @@ const FuzzyList = styled(ItemList)<{ isPortable?: boolean }>`
 `;
 
 export const FuzzyOverlay = (props: FuzzyOverlayProps) => {
+  const isPortable = useWindowSize().width < 900;
+
   const handleClick = (e) => {
     props.onFuzzySelect(e.target.getAttribute("data-index"));
   };
 
-  const { fuzzyList, isPortable, cursor } = props;
+  const { fuzzyList, cursor } = props;
 
   const Item = ({ index, style }) => {
     const station: FuseResult<Station> = fuzzyList[index];
@@ -70,10 +72,7 @@ export const FuzzyOverlay = (props: FuzzyOverlayProps) => {
         <Fade side="top" size={props.fuzzyList.length < 3 ? "0px" : "20px"} />
       ) : null}
       <List
-        height={Math.min(
-          props.isPortable ? 120 : 300,
-          props.fuzzyList.length * 40
-        )}
+        height={Math.min(isPortable ? 120 : 300, props.fuzzyList.length * 40)}
         itemCount={props.fuzzyList.length}
         itemSize={40}
         width={"100%"}

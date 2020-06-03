@@ -8,6 +8,7 @@ import { FixedSizeList as List } from "react-window";
 import { LoadingSpinner } from "./LoadingSpinner";
 import moment = require("moment");
 import { testJourney } from "../api/JourneyLoader";
+import { useWindowSize } from "../hooks/useWindowSize";
 
 const Wrapper = styled.div<{ isPortable?: boolean; margin?: string }>`
   margin: ${(p) => (!p.isPortable ? "10px" : 0)};
@@ -77,7 +78,6 @@ const InfoWrapper = styled.div`
 
 interface JoruneyMapProps {
   train: Train;
-  isPortable?: boolean;
   backgroundColor?: string;
 }
 
@@ -88,7 +88,8 @@ const Stop = styled.div<{ isPortable?: boolean }>`
 `;
 
 export const JourneyMap = (props: JoruneyMapProps) => {
-  const { train, isPortable, backgroundColor } = props;
+  const { train, backgroundColor } = props;
+  const isPortable = useWindowSize().width < 900;
   const scrollerMargin = isPortable ? 0 : 30;
   const itemSize = 30;
   const [journey, setJourney] = useState<Journey>(null);
@@ -103,7 +104,7 @@ export const JourneyMap = (props: JoruneyMapProps) => {
     IrishRailApi.getTrainJourney(train.Traincode, date)
       .then((j) => {
         setTrainPosition(
-          testJourney().stops.findIndex((s, i) => {
+          j.stops.findIndex((s, i) => {
             return (
               (i < j.stops.length - 1 &&
                 s.Departure &&
@@ -114,7 +115,7 @@ export const JourneyMap = (props: JoruneyMapProps) => {
         );
         return j;
       })
-      .then((j) => setTimeout(() => setJourney(testJourney), 2000));
+      .then((j) => setTimeout(() => setJourney(j), 2000));
   }, []);
 
   const StopItem = ({ index, style }) => {
@@ -122,7 +123,6 @@ export const JourneyMap = (props: JoruneyMapProps) => {
     return (
       <Stop style={style} key={index} data-index={index}>
         <JourneyStop
-          isPortable={isPortable}
           station={stop}
           stopNumber={index}
           trainPosition={trainPosition}
@@ -145,6 +145,7 @@ export const JourneyMap = (props: JoruneyMapProps) => {
             size={14}
             height="100%"
             width="100%"
+            delay={300}
           />
         </InfoWrapper>
       )}
@@ -175,7 +176,13 @@ export const JourneyMap = (props: JoruneyMapProps) => {
           </List>
         </Map>
       ) : (
-        <LoadingSpinner color="#515773" size={16} height="270px" width="100%" />
+        <LoadingSpinner
+          color="#515773"
+          size={16}
+          height="270px"
+          width="100%"
+          delay={300}
+        />
       )}
 
       <Fade

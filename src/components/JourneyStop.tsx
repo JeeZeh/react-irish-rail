@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { Movement, Train } from "../api/IrishRailApi";
 import moment = require("moment");
+import { useWindowSize } from "../hooks/useWindowSize";
 
 interface JourneyStopProps {
   station: Movement | any;
@@ -10,7 +11,6 @@ interface JourneyStopProps {
   journeyLength: number;
   train: Train;
   forceShowTime?: boolean;
-  isPortable?: boolean;
 }
 
 export const Dot = styled.div<{ isPortable?: boolean }>`
@@ -114,9 +114,9 @@ export const JourneyStop = (props: JourneyStopProps) => {
     trainPosition,
     forceShowTime,
     train,
-    isPortable,
   } = props;
 
+  const isPortable = useWindowSize().width < 900;
   let time: string | React.ReactElement = "";
   let classes = "";
 

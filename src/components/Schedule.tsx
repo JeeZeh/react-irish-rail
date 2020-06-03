@@ -1,23 +1,17 @@
 import * as React from "react";
-import { createRef, Suspense } from "react";
+import { useRef, useState, useEffect, MutableRefObject } from "react";
 import { hot } from "react-hot-loader";
 import IrishRailApi, { Train, Station } from "../api/IrishRailApi";
 import styled from "styled-components";
 import { X } from "react-feather";
 import ScheduleTable from "./ScheduleTable";
 import { FavouriteHeart } from "./FavouriteStations";
-
-export interface TrainScheduleState {
-  error: any;
-  isLoaded: boolean;
-  stationData: Train[];
-}
+import { useWindowSize } from "../hooks/useWindowSize";
 
 export interface TrainScheduleProps {
   station: Station;
   lookahead: number;
   handleStationClose: () => void;
-  isPortable: boolean;
 }
 
 export const Card = styled.div<{ isPortable?: boolean }>`
@@ -105,92 +99,72 @@ export const CardBody = styled.div`
   grid-area: body;
 `;
 
-class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
-  private schedule: React.MutableRefObject<HTMLDivElement>;
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
-      stationData: [],
-    };
-    this.schedule = createRef();
-  }
+export const Schedule = (props: TrainScheduleProps) => {
+  const { station, lookahead, handleStationClose } = props;
+  const isPortable = useWindowSize().width < 900;
+  const schedule = useRef<HTMLDivElement>();
 
-  componentDidMount() {
-    this.fetchStationData();
-  }
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [stationData, setStationData] = useState<Train[]>(null);
 
-  componentDidUpdate(prevProps: TrainScheduleProps) {
-    if (
-      prevProps.station?.StationCode !== this.props.station?.StationCode ||
-      prevProps.lookahead !== this.props.lookahead
-    ) {
-      this.fetchStationData();
-    }
-  }
+  useEffect(() => {
+    fetchStationData();
+  }, [lookahead, station]);
 
-  fetchStationData() {
-    const { station, lookahead } = this.props;
+  const fetchStationData = () => {
+    const { station, lookahead } = props;
     if (!station) return;
 
     IrishRailApi.getTrainsForStation(station, lookahead)
-      .then((r) => this.setState({ isLoaded: true, stationData: r }))
-      .catch((error) => this.setState({ isLoaded: true, error }));
-  }
+      .then(setStationData)
+      .catch(setError)
+      .finally(() => setIsLoaded(true));
+  };
 
-  handleKeyDown = (e) => {
-    console.log(e.keyCode);
+  const handleKeyDown = (e) => {
     if (e.keyCode === 27) {
-      this.props.handleStationClose();
+      props.handleStationClose();
     }
   };
 
-  render() {
-    const { error, isLoaded, stationData } = this.state;
-    const { station, lookahead, handleStationClose, isPortable } = this.props;
-    if (!station || !isLoaded) return null;
-    if (error) return <div>Error: {error.message}</div>;
+  if (!station || !isLoaded) return null;
+  if (error) return <div>Error: {error.message}</div>;
 
-    return (
-      <Card
-        onKeyDown={this.handleKeyDown}
-        tabIndex={-1}
-        ref={this.schedule}
-        isPortable={isPortable}
-      >
-        <CardToolbar isPortable={isPortable}>
-          <FavouriteHeart
-            stationName={station.StationDesc}
-            gridColumn={isPortable ? 3 : 1}
-          />
-          <CardHeader isPortable={isPortable}>
-            {this.props.station.StationDesc}
-          </CardHeader>
-          {isPortable ? null : (
-            <CardToolbarButton gridColumn={3} onClick={handleStationClose}>
-              <X size={32} />
-            </CardToolbarButton>
-          )}
-        </CardToolbar>
-
-        {stationData.length !== 0 ? (
-          <CardBody>
-            <Error>
-              No trains due at {station.StationDesc} for the next {lookahead}{" "}
-              minutes
-            </Error>
-          </CardBody>
-        ) : (
-          <CardBody>
-            {isLoaded ? (
-              <ScheduleTable trainData={stationData} isPortable={isPortable} />
-            ) : null}
-          </CardBody>
+  return (
+    <Card
+      onKeyDown={handleKeyDown}
+      tabIndex={-1}
+      ref={schedule}
+      isPortable={isPortable}
+    >
+      <CardToolbar isPortable={isPortable}>
+        <FavouriteHeart
+          stationName={station.StationDesc}
+          gridColumn={isPortable ? 3 : 1}
+        />
+        <CardHeader isPortable={isPortable}>{station.StationDesc}</CardHeader>
+        {isPortable ? null : (
+          <CardToolbarButton gridColumn={3} onClick={handleStationClose}>
+            <X size={32} />
+          </CardToolbarButton>
         )}
-      </Card>
-    );
-  }
-}
+      </CardToolbar>
+
+      {stationData.length === 0 ? (
+        <CardBody>
+          <Error>
+            No trains due at {station.StationDesc} for the next {lookahead}{" "}
+            minutes
+          </Error>
+        </CardBody>
+      ) : (
+        <CardBody>
+          {isLoaded ? <ScheduleTable trainData={stationData} /> : null}
+        </CardBody>
+      )}
+    </Card>
+  );
+};
 
 export default hot(module)(Schedule);

@@ -9,6 +9,7 @@ interface LoadingSpinnerProps {
   color: string;
   size: number;
   loading?: boolean;
+  delay?: number;
 }
 
 const Spinner = styled.div<{ props: LoadingSpinnerProps }>`
@@ -27,11 +28,17 @@ const Spinner = styled.div<{ props: LoadingSpinnerProps }>`
 `;
 
 export const LoadingSpinner = (props: LoadingSpinnerProps) => {
-  const { size, color, loading } = props;
+  const { size, color, loading, delay } = props;
   const [fade, setFade] = useState(false);
+  const [ready, setReady] = useState(false);
+
   useEffect(() => {
-    setFade(true);
     console.log("mounting");
+
+    setTimeout(() => {
+      setReady(true);
+      setFade(true);
+    }, delay);
 
     return () => {
       console.log("unmounting");
@@ -41,12 +48,14 @@ export const LoadingSpinner = (props: LoadingSpinnerProps) => {
 
   return (
     <Spinner props={props} className={fade ? "visible" : null}>
-      <BeatLoader
-        size={size}
-        color={color}
-        loading={true}
-        css={"margin: 0;"}
-      ></BeatLoader>
+      {ready && (
+        <BeatLoader
+          size={size}
+          color={color}
+          loading={true}
+          css={"margin: 0;"}
+        />
+      )}
     </Spinner>
   );
 };

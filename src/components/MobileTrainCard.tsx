@@ -251,11 +251,7 @@ export const MobileTrainCard = (props: { train: Train }) => {
         easing={"ease-in-out"}
         lazyRender={true}
       >
-        <JourneyMap
-          train={train}
-          isPortable={true}
-          backgroundColor={veryLightGrey}
-        />
+        <JourneyMap train={train} backgroundColor={veryLightGrey} />
       </Collapsible>
       <Divider className={open ? "fade" : null} ref={bottomRef} />
       {renderFooter(train, handleMapButtonClick, open)}

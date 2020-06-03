@@ -186,8 +186,7 @@ export const Prompt = styled.p`
 export const App = () => {
   const timeoutLength = 5000;
   const lookaheadOptions = [30, 60, 90, 120];
-  const size = useWindowSize();
-  const isPortable = size.width < 900;
+  const isPortable = useWindowSize().width < 900;
   const [lookahead, setLookahead] = useState(90);
   const [state, setState] = useState<AppState>({
     station: null,
@@ -281,7 +280,6 @@ export const App = () => {
               stationList={stationList}
               station={state.station}
               onStationChange={onStationChange}
-              isPortable={isPortable}
             />
           </div>
           <div>
@@ -347,7 +345,6 @@ export const App = () => {
             station={station}
             lookahead={lookahead}
             handleStationClose={onStationClose}
-            isPortable={isPortable}
           />
         </ScheduleWrapper>
       ) : isPortable ? null : (

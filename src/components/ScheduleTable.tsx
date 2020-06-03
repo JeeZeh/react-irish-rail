@@ -8,15 +8,11 @@ import { JourneyMap } from "./JourneyMap";
 import Collapsible from "react-collapsible";
 import { ArrowDown, ArrowUp } from "react-feather";
 import { MobileTrainCard } from "./MobileTrainCard";
+import { useWindowSize } from "../hooks/useWindowSize";
 
 interface TrainColumn {
   dispName: string;
   propName: string;
-}
-
-export interface ScheduleTableProps {
-  trainData: Train[];
-  isPortable: boolean;
 }
 
 const Table = styled.div`
@@ -77,16 +73,16 @@ const Info = styled.div`
   transition: height 0.1s ease-out;
 `;
 
-const ScheduleTable = (props: ScheduleTableProps) => {
+const ScheduleTable = (props: { trainData: Train[] }) => {
   const originalTrainData = [...props.trainData];
-  const { isPortable, trainData } = props;
+  const isPortable = useWindowSize().width < 900;
+  const { trainData } = props;
   const defaultSort = "Expdepart";
-  const [journeys, setJourneys] = useState(new Map<string, Journey>());
   const [sort, setSort] = useState({ col: defaultSort, dir: 1 }); // 1 = Ascending, -1 Descending
   const [sortedTrainData, setSortedTrainData] = useState([
     ...originalTrainData,
   ]);
-  const columns = props.isPortable
+  const columns = isPortable
     ? headings.slice(0, headings.length - 2)
     : headings;
 
@@ -149,7 +145,6 @@ const ScheduleTable = (props: ScheduleTableProps) => {
     //         {journeys.has(code) ? (
     //           <JourneyMap
     //             journey={journeys.get(code)}
-    //             isPortable={isPortable}
     //             train={train}
     //           />
     //         ) : (
@@ -182,12 +177,12 @@ const ScheduleTable = (props: ScheduleTableProps) => {
 
   return (
     <Table>
-      {!props.isPortable ? renderHeader() : null}
+      {!isPortable ? renderHeader() : null}
       <Body>
+        {/* {renderTrain(testTrain)}
         {renderTrain(testTrain)}
-        {renderTrain(testTrain)}
-        {renderTrain(testTrain)}
-        {props.trainData.map((t) => renderTrain(t))}
+        {renderTrain(testTrain)} */}
+        {trainData.map((t) => renderTrain(t))}
       </Body>
     </Table>
   );

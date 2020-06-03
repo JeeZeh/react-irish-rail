@@ -4,6 +4,7 @@ import * as Fuse from "fuse.js/dist/fuse";
 import { Station } from "../api/IrishRailApi";
 import styled from "styled-components";
 import { FuzzyOverlay } from "./FuzzyOverlay";
+import { useWindowSize } from "../hooks/useWindowSize";
 
 export interface StationSearchState {
   fuseMatch: Fuse.FuseResult<Station>[];
@@ -18,7 +19,6 @@ export interface StationSearchProps {
   stationList: Station[];
   station: Station;
   onStationChange: (station: Station) => void;
-  isPortable: boolean;
 }
 
 const Search = styled.div`
@@ -76,6 +76,8 @@ export const StationSearch = (props: StationSearchProps) => {
     mouseOver: false,
   });
 
+  const isPortable = useWindowSize().width < 900;
+
   useEffect(() => {
     setState({ ...state, fuse: new Fuse(props.stationList, FUSE_OPTIONS) });
   }, []);
@@ -129,7 +131,7 @@ export const StationSearch = (props: StationSearchProps) => {
       onMouseEnter={() => setState({ ...state, mouseOver: true })}
       onMouseLeave={() => setState({ ...state, mouseOver: false })}
     >
-      <SearchFlex isPortable={props.isPortable}>
+      <SearchFlex isPortable={isPortable}>
         <Input
           onChange={handleChange}
           onKeyDown={handleKeyDown}
@@ -142,7 +144,6 @@ export const StationSearch = (props: StationSearchProps) => {
             onFuzzySelect={handleFuzzySelect}
             fuzzyList={fuseMatch}
             cursor={cursor}
-            isPortable={props.isPortable}
           />
         ) : null}
       </SearchFlex>
