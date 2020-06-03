@@ -6,6 +6,8 @@ import { About } from "./About";
 import { XCircle } from "react-feather";
 import { Card } from "./Schedule";
 import { H1A } from "./App";
+import { Divider } from "./MobileTrainCard";
+import { FavouriteStations } from "./FavouriteStations";
 
 const Overlay = styled.div`
   position: fixed;
@@ -75,7 +77,12 @@ const CloseText = styled(CloseItem)`
   font-size: 1.5em;
 `;
 
-export const ModalInfo = (props: { handleCloseModal: () => void }) => {
+interface ModalMenuProps {
+  handleCloseModal: () => void;
+  onFavouriteSelect: (e) => void;
+}
+
+export const ModalMenu = (props: ModalMenuProps) => {
   const [fade, setFade] = useState(false);
   useEffect(() => setFade(true), []);
 
@@ -88,6 +95,13 @@ export const ModalInfo = (props: { handleCloseModal: () => void }) => {
             <XCircle size={32} />
           </CloseItem>
         </CloseModal>
+        <InfoCard>
+          <H1A>Favourites</H1A>
+          <FavouriteStations
+            handleClick={props.onFavouriteSelect}
+            asGrid={true}
+          />
+        </InfoCard>
         <InfoCard>
           <H1A margin="0 0 10px 0">Map Key</H1A>
           <JourneyKey />

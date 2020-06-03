@@ -14,6 +14,7 @@ export interface FuzzyOverlayProps {
 
 export const ItemList = styled.div`
   background: white;
+  position: relative;
   border: 1px rgba(0, 0, 0, 0.2) solid;
   overflow: hidden;
   border-radius: 5px;

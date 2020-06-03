@@ -3,15 +3,15 @@ import { useState, useEffect } from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
 import styled from "styled-components";
-import { Compass, Search } from "react-feather";
-import Schedule from "./Schedule";
+import { Compass, Search, Menu } from "react-feather";
+import Schedule, { Card } from "./Schedule";
 import { StationSearch } from "./StationSearch";
 import IrishRailApi, { Station } from "../api/IrishRailApi";
 import { SearchParameters } from "./SearchParameters";
 import { JourneyKey } from "./JourneyKey";
 import { FavouriteStations } from "./FavouriteStations";
 import { useWindowSize } from "../hooks/useWindowSize";
-import { ModalInfo } from "./ModalInfo";
+import { ModalMenu } from "./ModalMenu";
 import { About } from "./About";
 import { ErrorDialogue } from "./ErrorDialogue";
 
@@ -22,7 +22,7 @@ interface AppState {
   error: any;
 }
 
-const FavouritesList = styled.div`
+export const FavouritesList = styled.div`
   grid-area: schedule;
   width: 250px;
 
@@ -155,6 +155,9 @@ const ModalButton = styled.button`
   cursor: pointer;
   user-select: none;
   position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   right: 20px;
   bottom: 20px;
   background: #fefefe;
@@ -171,6 +174,13 @@ const ModalButton = styled.button`
   & svg {
     color: #444;
   }
+`;
+
+export const Prompt = styled.p`
+  font-style: italic;
+  max-width: 320px;
+  font-size: 16px;
+  font-weight: 600;
 `;
 
 export const App = () => {
@@ -231,6 +241,10 @@ export const App = () => {
     } else {
       console.error("Couldn't find station", e.target.innerHTML);
     }
+
+    if (modalOpen) {
+      setModelOpen(false);
+    }
   };
 
   const onStationClose = () => {
@@ -257,40 +271,9 @@ export const App = () => {
     );
   };
 
-  const { station, stationList, error, waiting } = state;
-
-  if (error) {
-    console.error(error);
-    return (
-      <Body>
-        {renderHeader()}
-        <ErrorDialogue />
-      </Body>
-    );
-  }
-
-  if (waiting) return <Body>{renderHeader()}</Body>;
-
-  return (
-    <Body>
-      {renderHeader()}
-
-      {isPortable ? null : (
-        <KeyWrapper>
-          <H3A margin={"0 0 10px 0"}>Map Key</H3A>
-          <JourneyKey />
-        </KeyWrapper>
-      )}
-
-      {isPortable ? (
-        <ModalButton onClick={handleOpenModal}>
-          <Compass size={32} />
-        </ModalButton>
-      ) : null}
-
-      {modalOpen ? <ModalInfo handleCloseModal={handleCloseModal} /> : null}
-
-      {stationList ? (
+  const renderSearch = () => {
+    if (stationList) {
+      return (
         <SearchWrapper>
           <div>
             <SearchHeading>Find trains at</SearchHeading>
@@ -309,8 +292,55 @@ export const App = () => {
               onLookaheadChange={setLookahead}
             />
           </div>
+          {isPortable ? (
+            <Prompt>
+              You can find your favourites in the menu at the bottom right.
+            </Prompt>
+          ) : null}
         </SearchWrapper>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const { station, stationList, error, waiting } = state;
+
+  if (error) {
+    console.error(error);
+    return (
+      <Body>
+        {renderHeader()}
+        <ErrorDialogue />
+      </Body>
+    );
+  }
+
+  if (waiting) return <Body>{renderHeader()}</Body>;
+
+  return (
+    <Body>
+      {renderHeader()}
+      {isPortable ? null : (
+        <KeyWrapper>
+          <H3A margin={"0 0 10px 0"}>Map Key</H3A>
+          <JourneyKey />
+        </KeyWrapper>
+      )}
+      {isPortable ? (
+        <ModalButton onClick={handleOpenModal}>
+          <Menu size={28} />
+        </ModalButton>
       ) : null}
+      {modalOpen ? (
+        <ModalMenu
+          handleCloseModal={handleCloseModal}
+          onFavouriteSelect={onFavouriteSelect}
+        />
+      ) : null}
+
+      {renderSearch()}
+
       {station ? (
         <ScheduleWrapper>
           <Schedule
@@ -320,7 +350,7 @@ export const App = () => {
             isPortable={isPortable}
           />
         </ScheduleWrapper>
-      ) : (
+      ) : isPortable ? null : (
         <FavouritesList>
           <FavouriteStations handleClick={onFavouriteSelect} />
         </FavouritesList>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { createRef } from "react";
+import { createRef, Suspense } from "react";
 import { hot } from "react-hot-loader";
 import IrishRailApi, { Train, Station } from "../api/IrishRailApi";
 import styled from "styled-components";
@@ -136,8 +136,7 @@ class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
 
     IrishRailApi.getTrainsForStation(station, lookahead)
       .then((r) => this.setState({ isLoaded: true, stationData: r }))
-      .catch((error) => this.setState({ isLoaded: true, error }))
-      .then((_) => this.schedule.current.focus());
+      .catch((error) => this.setState({ isLoaded: true, error }));
   }
 
   handleKeyDown = (e) => {
@@ -175,7 +174,7 @@ class Schedule extends React.Component<TrainScheduleProps, TrainScheduleState> {
           )}
         </CardToolbar>
 
-        {stationData.length === 0 ? (
+        {stationData.length !== 0 ? (
           <CardBody>
             <Error>
               No trains due at {station.StationDesc} for the next {lookahead}{" "}

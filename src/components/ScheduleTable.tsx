@@ -79,6 +79,7 @@ const Info = styled.div`
 
 const ScheduleTable = (props: ScheduleTableProps) => {
   const originalTrainData = [...props.trainData];
+  const { isPortable, trainData } = props;
   const defaultSort = "Expdepart";
   const [journeys, setJourneys] = useState(new Map<string, Journey>());
   const [sort, setSort] = useState({ col: defaultSort, dir: 1 }); // 1 = Ascending, -1 Descending
@@ -88,17 +89,6 @@ const ScheduleTable = (props: ScheduleTableProps) => {
   const columns = props.isPortable
     ? headings.slice(0, headings.length - 2)
     : headings;
-
-  const handleTrainClick = (e) => {
-    const trainCode = e.currentTarget.getAttribute("data-traincode");
-    let date = Moment().locale("en-gb").format("ll");
-    if (!journeys.has(trainCode)) {
-      IrishRailApi.getTrainJourney(trainCode, date).then((j) => {
-        const newJourneys = journeys.set(trainCode, j);
-        setJourneys(new Map(newJourneys));
-      });
-    }
-  };
 
   // Re-sort the train data when the user updates the sorting params
   useEffect(() => {
@@ -115,7 +105,7 @@ const ScheduleTable = (props: ScheduleTableProps) => {
   }, [sort]);
 
   // Updates the sorting direction based on the selected heading
-  const handleSort = (e, isPortable?: boolean) => {
+  const handleSort = (e) => {
     if (isPortable) {
       return;
     }
@@ -132,54 +122,50 @@ const ScheduleTable = (props: ScheduleTableProps) => {
     console.log("Updated sorting");
   };
 
-  const renderTrain = (train: Train, isPortable?: boolean) => {
+  const renderTrain = (train: Train) => {
     const code = train.Traincode;
 
     if (isPortable) return <MobileTrainCard train={train} key={code} />;
 
-    return (
-      <Row key={code}>
-        <Collapsible
-          transitionTime={180}
-          easing={"ease-out"}
-          trigger={
-            <Train
-              key={code}
-              onClick={handleTrainClick}
-              data-traincode={code}
-              isPortable={isPortable}
-            >
-              {columns.map((c) => (
-                <div key={c.propName}>{train[c.propName]}</div>
-              ))}
-            </Train>
-          }
-        >
-          <Info key={code + "info"}>
-            {journeys.has(code) ? (
-              <JourneyMap
-                journey={journeys.get(code)}
-                isPortable={isPortable}
-                train={train}
-              />
-            ) : (
-              <div>LOADING</div>
-            )}
-          </Info>
-        </Collapsible>
-      </Row>
-    );
+    // return (
+    //   <Row key={code}>
+    //     <Collapsible
+    //       transitionTime={180}
+    //       easing={"ease-out"}
+    //       trigger={
+    //         <Train
+    //           key={code}
+    //           onClick={handleTrainClick}
+    //           data-traincode={code}
+    //           isPortable={isPortable}
+    //         >
+    //           {columns.map((c) => (
+    //             <div key={c.propName}>{train[c.propName]}</div>
+    //           ))}
+    //         </Train>
+    //       }
+    //     >
+    //       <Info key={code + "info"}>
+    //         {journeys.has(code) ? (
+    //           <JourneyMap
+    //             journey={journeys.get(code)}
+    //             isPortable={isPortable}
+    //             train={train}
+    //           />
+    //         ) : (
+    //           <div>LOADING</div>
+    //         )}
+    //       </Info>
+    //     </Collapsible>
+    //   </Row>
+    // );
   };
 
-  const renderHeader = (isPortable?: boolean) => {
+  const renderHeader = () => {
     return (
       <Train className="header" isPortable={isPortable}>
         {columns.map((c, i) => (
-          <div
-            onClick={(e) => handleSort(e, isPortable)}
-            key={i}
-            data-col={c.propName}
-          >
+          <div onClick={(e) => handleSort(e)} key={i} data-col={c.propName}>
             {c.dispName}{" "}
             {sort.col === c.propName && sort.dir !== 0 && !isPortable ? (
               sort.dir === -1 ? (
@@ -196,9 +182,12 @@ const ScheduleTable = (props: ScheduleTableProps) => {
 
   return (
     <Table>
-      {!props.isPortable ? renderHeader(props.isPortable) : null}
+      {!props.isPortable ? renderHeader() : null}
       <Body>
-        {props.trainData.map((t) => renderTrain(t, props.isPortable))}
+        {renderTrain(testTrain)}
+        {renderTrain(testTrain)}
+        {renderTrain(testTrain)}
+        {props.trainData.map((t) => renderTrain(t))}
       </Body>
     </Table>
   );

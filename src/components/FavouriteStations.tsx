@@ -1,9 +1,11 @@
 import * as React from "react";
 import { ItemList, ListItem } from "./FuzzyOverlay";
-import { SearchHeading } from "./App";
+import { JourneyButton } from "./MobileTrainCard";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Heart } from "react-feather";
+import { FixedSizeList as List } from "react-window";
 import styled from "styled-components";
+import { Fade } from "./JourneyMap";
 
 const FavouriteHeartWrapper = styled.div<{ gridColumn: number }>`
   cursor: pointer;
@@ -20,6 +22,7 @@ const FavouriteHeartWrapper = styled.div<{ gridColumn: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
   &:hover {
     opacity: 1;
@@ -63,20 +66,69 @@ export const FavouriteHeart = (props: {
   );
 };
 
-export const FavouriteStations = (props: { handleClick: (e) => void }) => {
-  const [favourites, _] = useLocalStorage<string[]>("favourites", []);
+const MobileWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
 
+const MobileListItem = styled(JourneyButton)`
+  grid-area: none;
+  display: flex;
+  width: auto;
+  box-shadow: none;
+  margin: 5px;
+  height: 40px;
+`;
+
+export const FavouriteStations = (props: {
+  handleClick: (e) => void;
+  asGrid?: boolean;
+}) => {
+  const [favourites, _] = useLocalStorage<string[]>("favourites", []);
+  const itemSize = 50;
   const { handleClick } = props;
   if (favourites.length === 0) return null;
 
-  return (
-    <div>
-      <SearchHeading>Favourites</SearchHeading>
-      <ItemList>
+  const Item = ({ index, style }) => {
+    const favourite = favourites[index];
+
+    if (props.asGrid) {
+      return (
+        <MobileListItem onClick={handleClick} style={style} key={index}>
+          {favourite}
+        </MobileListItem>
+      );
+    }
+
+    return (
+      <ListItem onClick={handleClick} style={style} key={index}>
+        {favourite}
+      </ListItem>
+    );
+  };
+
+  if (props.asGrid) {
+    return (
+      <MobileWrap>
         {favourites.map((f, i) => (
-          <ListItem key={i} onClick={handleClick} children={f} />
+          <MobileListItem key={i} onClick={handleClick} children={f} />
         ))}
-      </ItemList>
-    </div>
+      </MobileWrap>
+    );
+  }
+
+  return (
+    <ItemList>
+      <Fade side="top" size={favourites.length < 3 ? "0px" : "20px"} />
+      <List
+        height={Math.min(5 * itemSize, favourites.length * itemSize)}
+        itemCount={favourites.length}
+        itemSize={itemSize}
+        width={"100%"}
+      >
+        {Item}
+      </List>
+      <Fade side="bottom" size={favourites.length < 3 ? "0px" : "20px"} />
+    </ItemList>
   );
 };

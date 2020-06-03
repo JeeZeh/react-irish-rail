@@ -1,11 +1,12 @@
 import * as React from "react";
-import { useEffect, useRef, MutableRefObject } from "react";
-import { ArrowRight, Map } from "react-feather";
+import { useState, useRef } from "react";
+import { ArrowRight, Map, X, ChevronUp } from "react-feather";
 import styled from "styled-components";
 import { Journey, Train } from "../api/IrishRailApi";
-import ScrollContainer from "react-indiana-drag-scroll";
-import { JourneyStop } from "./JourneyStop";
-import { JourneyInfo } from "./JourneyInfo";
+import Collapsible from "react-collapsible";
+import { JourneyMap } from "./JourneyMap";
+import { initJourneyLoader } from "../api/JourneyLoader";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 const black = "#222";
 const lightBlack = "#444";
@@ -17,13 +18,9 @@ const veryLightGrey = "#F4F4F4";
 const nearlyWhite = "#FAFAFA";
 
 const TrainCard = styled.div`
-  display: grid;
-  grid-template-areas:
-    "header"
-    "divider"
-    "footer";
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 160px;
   padding: 10px 15px;
   margin-bottom: 10px;
   background-color: ${veryLightGrey};
@@ -43,14 +40,22 @@ const Header = styled.div`
   justify-content: flex-start;
   padding-top: 5px;
   width: 100%;
+  margin-bottom: 10px;
 `;
 
-const Divider = styled.div`
+export const Divider = styled.div<{ margin?: string }>`
   grid-area: divider;
   height: 2px;
   background-color: ${lightGrey};
   width: 100%;
   align-self: center;
+  opacity: 0;
+  margin: ${(p) => p.margin ?? 0};
+  transition: opacity 0.2s ease-in;
+
+  &.fade {
+    opacity: 1;
+  }
 `;
 
 const Footer = styled.div`
@@ -59,6 +64,7 @@ const Footer = styled.div`
   grid-template-areas: "times button";
   grid-template-columns: "50% 50%";
   width: 100%;
+  margin-top: 10px;
 `;
 
 const Arrow = styled.div`
@@ -114,22 +120,24 @@ const TimeEntry = styled.div`
   }
 `;
 
-const JourneyButton = styled.button`
+export const JourneyButton = styled.button`
   grid-area: button;
   height: 40px;
   background-color: ${nearlyWhite};
   outline: none;
   border: 2px solid ${mediumGrey};
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: ${black};
   padding: 10px;
   justify-content: space-between;
-  justify-self: center;
+  justify-self: flex-end;
+  margin-right: 5px;
   align-items: center;
   align-self: center;
   cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
   display: flex;
   flex-direction: row;
@@ -138,7 +146,7 @@ const JourneyButton = styled.button`
   }
 
   @media only screen and (max-width: 380px) {
-    font-size: 14px;
+    font-size: 16px;
   }
 `;
 
@@ -169,7 +177,7 @@ const renderHeader = (train: Train) => {
   );
 };
 
-const renderFooter = (train: Train) => {
+const renderFooter = (train: Train, onClick, open: boolean) => {
   const { Exparrival, Expdepart } = train;
   return (
     <Footer>
@@ -195,20 +203,62 @@ const renderFooter = (train: Train) => {
           </TimeEntry>
         ) : null}
       </Times>
+      <JourneyButton onClick={onClick}>
+        {!open ? (
+          <Map stroke={lightBlack} size={24} />
+        ) : (
+          <ChevronUp stroke={lightBlack} size={24} />
+        )}
+        <div>{!open ? "Show" : "Hide"} Journey</div>
+      </JourneyButton>
     </Footer>
   );
 };
 
 export const MobileTrainCard = (props: { train: Train }) => {
+  const { train } = props;
+  const [open, setOpen] = useState(false);
+  const bottomRef = useRef<HTMLHRElement>();
+
+  const handleMapButtonClick = () => {
+    const top = bottomRef.current.getBoundingClientRect().top;
+    console.log(top);
+    if (!open) {
+      if (top > 270) {
+        window.scrollTo({
+          behavior: "smooth",
+          top: bottomRef.current.offsetTop + 170,
+        });
+      } else if (top < 80) {
+        window.scrollBy({
+          behavior: "smooth",
+          top: -(80 - top),
+        });
+      }
+    }
+
+    setOpen(!open);
+  };
+
   return (
     <TrainCard>
-      {renderHeader(props.train)}
-      <Divider />
-      {renderFooter(props.train)}
-      <JourneyButton>
-        <Map stroke={lightBlack} size={24} />
-        <div>Live Journey</div>
-      </JourneyButton>
+      {renderHeader(train)}
+
+      <Collapsible
+        trigger={<Divider className={open ? "fade" : null} />}
+        open={open}
+        transitionTime={220}
+        easing={"ease-in-out"}
+        lazyRender={true}
+      >
+        <JourneyMap
+          train={train}
+          isPortable={true}
+          backgroundColor={veryLightGrey}
+        />
+      </Collapsible>
+      <Divider className={open ? "fade" : null} ref={bottomRef} />
+      {renderFooter(train, handleMapButtonClick, open)}
     </TrainCard>
   );
 };

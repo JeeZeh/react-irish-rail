@@ -8,17 +8,19 @@ interface JourneyStopProps {
   stopNumber: number;
   trainPosition: number;
   journeyLength: number;
-  forceShowTime?: boolean;
   train: Train;
+  forceShowTime?: boolean;
+  isPortable?: boolean;
 }
 
-export const Dot = styled.div`
+export const Dot = styled.div<{ isPortable?: boolean }>`
   height: 10px;
   width: 10px;
   border-radius: 5px;
-  border: 2px solid #444;
+  border: 3px solid #444;
   font-size: 1em;
   font-weight: 900;
+  writing-mode: inherit;
 
   &.departed,
   &.arrived {
@@ -26,29 +28,27 @@ export const Dot = styled.div`
   }
 
   &.future {
-    border-width: 1px;
+    border-width: 2px;
   }
 
   &.delayed {
-    writing-mode: vertical-lr;
-    border: none;
     color: darkorange;
-    align-self: flex-start;
+    align-self: ${(p) => (p.isPortable ? "center" : "flex-start")};
+    border: none;
   }
 
   &.early {
-    writing-mode: vertical-lr;
-    align-self: flex-start;
+    align-self: ${(p) => (p.isPortable ? "center" : "flex-start")};
     border: none;
     color: darkblue;
   }
 `;
 
-export const Name = styled.div`
+export const Name = styled.div<{ isPortable?: boolean }>`
   font-weight: 600;
   user-select: none;
-  writing-mode: vertical-lr;
-  margin-top: 5px;
+  writing-mode: inherit;
+  ${(p) => (!p.isPortable ? "margin-top" : "margin-left")}: 10px;
 
   &.arrived {
     font-weight: 700;
@@ -59,28 +59,11 @@ export const Name = styled.div`
   }
 `;
 
-export const OffSchedule = styled.div`
-  position: absolute;
-  font-weight: 700;
-  transform: translateX(-85%);
-  height: 250%;
-  border: 1px solid #ddd;
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 5px;
-  opacity: 0;
-  transition: opacity 0.08s ease-out;
-
-  &:hover {
-    opacity: 1;
-  }
-`;
-
-export const Time = styled.div`
+export const Time = styled.div<{ isPortable?: boolean }>`
   position: relative;
   display: inline-flex;
+  align-items: ${(p) => (p.isPortable ? "center" : null)};
   font-weight: 800;
-  writing-mode: vertical-lr;
   transition: opacity 0.1s ease-out;
   opacity: 0;
 
@@ -90,7 +73,7 @@ export const Time = styled.div`
 
   &::before {
     content: "·  ";
-    margin: 5px 0;
+    margin: ${(p) => (p.isPortable ? "0 5px" : "5px 0")};
   }
 
   &.delayed {
@@ -102,13 +85,13 @@ export const Time = styled.div`
   }
 `;
 
-export const StationDiv = styled.div`
+export const StationDiv = styled.div<{ isPortable?: boolean }>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${(p) => (p.isPortable ? "row" : "column")};
   align-items: center;
-  width: 40px;
-  padding: 0 8px;
-  transform: rotate(225deg);
+  width: 100%;
+  writing-mode: ${(p) => (p.isPortable ? "horizontal-tb" : "vertical-lr")};
+  transform: ${(p) => (!p.isPortable ? "rotate(225deg)" : null)};
 
   &.departed {
     opacity: 0.2;
@@ -131,6 +114,7 @@ export const JourneyStop = (props: JourneyStopProps) => {
     trainPosition,
     forceShowTime,
     train,
+    isPortable,
   } = props;
 
   let time: string | React.ReactElement = "";
@@ -170,7 +154,7 @@ export const JourneyStop = (props: JourneyStopProps) => {
     if (stopNumber < trainPosition) {
       classNames.push("departed");
     } else if (stopNumber == trainPosition) {
-      classNames.push(!station.Arrival ? "approaching" : "arrived");
+      classNames.push(station.Arrival ? "arrived" : null);
     } else {
       classNames.push("future");
     }
@@ -209,12 +193,16 @@ export const JourneyStop = (props: JourneyStopProps) => {
   classes = getClasses();
 
   return (
-    <StationDiv className={classes}>
+    <StationDiv className={classes} isPortable={isPortable}>
       <Dot className={classes}>
         {classes.includes("early") || classes.includes("delayed") ? "!" : null}
       </Dot>
-      <Name className={classes}>{station.LocationFullName}</Name>
-      <Time className={classes}>{time}</Time>
+      <Name className={classes} isPortable={isPortable}>
+        {station.LocationFullName}
+      </Name>
+      <Time className={classes} isPortable={isPortable}>
+        {time}
+      </Time>
     </StationDiv>
   );
 };
