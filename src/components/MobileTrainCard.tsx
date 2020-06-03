@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ArrowRight, Map, X, ChevronUp } from "react-feather";
 import styled from "styled-components";
 import { Journey, Train } from "../api/IrishRailApi";
@@ -215,8 +215,13 @@ const renderFooter = (train: Train, onClick, open: boolean) => {
   );
 };
 
-export const MobileTrainCard = (props: { train: Train }) => {
-  const { train } = props;
+interface MobileTrainCardProps {
+  train: Train;
+  getJourney: (journeyCode: string) => Promise<Journey>;
+}
+
+export const MobileTrainCard = (props: MobileTrainCardProps) => {
+  const { train, getJourney } = props;
   const [open, setOpen] = useState(false);
   const bottomRef = useRef<HTMLHRElement>();
 
@@ -251,7 +256,11 @@ export const MobileTrainCard = (props: { train: Train }) => {
         easing={"ease-in-out"}
         lazyRender={true}
       >
-        <JourneyMap train={train} backgroundColor={veryLightGrey} />
+        <JourneyMap
+          train={train}
+          getJourney={getJourney}
+          backgroundColor={veryLightGrey}
+        />
       </Collapsible>
       <Divider className={open ? "fade" : null} ref={bottomRef} />
       {renderFooter(train, handleMapButtonClick, open)}

@@ -1,12 +1,10 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import IrishRailApi, { Journey, Train } from "../api/IrishRailApi";
+import { Journey, Train } from "../api/IrishRailApi";
 import { JourneyStop } from "./JourneyStop";
 import { JourneyInfo } from "./JourneyInfo";
-import { FixedSizeList as List } from "react-window";
 import { LoadingSpinner } from "./LoadingSpinner";
-import moment = require("moment");
 import { testJourney } from "../api/JourneyLoader";
 import { useWindowSize } from "../hooks/useWindowSize";
 
@@ -14,19 +12,10 @@ const Wrapper = styled.div<{ isPortable?: boolean; margin?: string }>`
   margin: ${(p) => (!p.isPortable ? "10px" : 0)};
   display: ${(p) => (p.isPortable ? "flex" : "grid")};
   grid-template-areas: "map info";
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 890px auto;
   position: relative;
   align-content: center;
   width: 100%;
-
-  & .scroller::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* make scrollbar transparent */
-  }
-
-  & .scroller {
-    margin: ${(p) => (p.margin ? p.margin : 0)};
-  }
 `;
 
 export const Fade = styled.div<{
@@ -58,6 +47,7 @@ const Map = styled.div<{ isPortable?: boolean }>`
   padding-left: ${(p) => (!p.isPortable ? "140px" : 0)};
   width: 100%;
   height: ${(p) => (!p.isPortable ? "300px" : "auto")};
+  ${(p) => (p.isPortable ? "overflow-y: scroll" : "overflow-x: scroll")};
 
   & > div {
     margin: ${(p) => (p.isPortable ? "5px" : "0")};
@@ -71,6 +61,10 @@ const Map = styled.div<{ isPortable?: boolean }>`
   }
 `;
 
+const StationList = styled.div`
+  display: flex;
+`;
+
 const InfoWrapper = styled.div`
   grid-area: info;
   margin: 20px 10px 10px 30px;
@@ -79,6 +73,8 @@ const InfoWrapper = styled.div`
 interface JoruneyMapProps {
   train: Train;
   backgroundColor?: string;
+  getJourney?: (journeyCode: string) => Promise<Journey>;
+  journeyProp?: Journey;
 }
 
 const Stop = styled.div<{ isPortable?: boolean }>`
@@ -88,40 +84,47 @@ const Stop = styled.div<{ isPortable?: boolean }>`
 `;
 
 export const JourneyMap = (props: JoruneyMapProps) => {
-  const { train, backgroundColor } = props;
+  const { train, backgroundColor, getJourney, journeyProp } = props;
   const isPortable = useWindowSize().width < 900;
   const scrollerMargin = isPortable ? 0 : 30;
   const itemSize = 30;
-  const [journey, setJourney] = useState<Journey>(null);
-  const [trainPosition, setTrainPosition] = useState<number>(-1);
+  const [journey, setJourney] = useState<Journey>(journeyProp);
   const [fade, setFade] = useState(false);
+
   useEffect(() => {
     if (journey) setFade(true);
   }, [journey]);
 
+  const calcTrainPosition = (journey: Journey): number => {
+    if (!journey) return -1;
+    return journey.stops.findIndex((s, i) => {
+      return (
+        (i < journey.stops.length - 1 &&
+          s.Departure &&
+          !journey.stops[i + 1].Arrival) ||
+        (s.Arrival && !s.Departure)
+      );
+    });
+  };
+
+  const [trainPosition, setTrainPosition] = useState<number>(
+    calcTrainPosition(journeyProp)
+  );
+
   useEffect(() => {
-    let date = moment().locale("en-gb").format("ll");
-    IrishRailApi.getTrainJourney(train.Traincode, date)
-      .then((j) => {
-        setTrainPosition(
-          j.stops.findIndex((s, i) => {
-            return (
-              (i < j.stops.length - 1 &&
-                s.Departure &&
-                !j.stops[i + 1].Arrival) ||
-              (s.Arrival && !s.Departure)
-            );
-          })
-        );
-        return j;
-      })
-      .then((j) => setTimeout(() => setJourney(j), 2000));
+    if (!journeyProp) {
+      getJourney(train.Traincode)
+        .then((j) => {
+          setTrainPosition(calcTrainPosition(j));
+          return j;
+        })
+        .then((j) => setTimeout(() => setJourney(j), 2000));
+    }
   }, []);
 
-  const StopItem = ({ index, style }) => {
-    const stop = journey.stops[index];
+  const renderStop = (stop, index) => {
     return (
-      <Stop style={style} key={index} data-index={index}>
+      <Stop key={index} data-index={index}>
         <JourneyStop
           station={stop}
           stopNumber={index}
@@ -130,51 +133,42 @@ export const JourneyMap = (props: JoruneyMapProps) => {
           train={train}
           key={index}
         />
+        {stop}
       </Stop>
+    );
+  };
+
+  const renderInfo = () => {
+    if (isPortable) return null;
+    return (
+      <InfoWrapper>
+        <JourneyInfo journey={journey} train={train} />
+      </InfoWrapper>
     );
   };
 
   return (
     <Wrapper isPortable={isPortable} margin={`${scrollerMargin}px 0`}>
-      {isPortable ? null : (
-        <InfoWrapper>
-          <JourneyInfo journey={journey} train={train} />
-
-          <LoadingSpinner
-            color="#5e9cd6"
-            size={14}
-            height="100%"
-            width="100%"
-            delay={300}
-          />
-        </InfoWrapper>
-      )}
-      <Fade
-        side={isPortable ? "top" : "left"}
-        size={`${itemSize / 3}px`}
-        backgroundColor={backgroundColor}
-        offset={`${scrollerMargin}px`}
-      />
-
       {journey ? (
-        <Map isPortable={isPortable} className={fade ? "visible" : null}>
-          <List
-            height={
-              isPortable
-                ? Math.min(itemSize * 9, journey.stops.length * itemSize)
-                : "100%"
-            }
-            initialScrollOffset={
-              trainPosition > 1 ? (trainPosition - 2) * itemSize : 0
-            }
-            width={!isPortable ? "100%" : null}
-            itemCount={journey.stops.length}
-            itemSize={itemSize}
-            className="scroller"
-          >
-            {StopItem}
-          </List>
-        </Map>
+        <>
+          {" "}
+          {renderInfo()}
+          <Fade
+            side={isPortable ? "top" : "left"}
+            size={`${itemSize / 3}px`}
+            backgroundColor={backgroundColor}
+            offset={`${scrollerMargin}px`}
+          />
+          <Map isPortable={isPortable} className={fade ? "visible" : null}>
+            {journey.stops.map((s, i) => renderStop(s, i))}
+          </Map>
+          <Fade
+            side={isPortable ? "bottom" : "right"}
+            size={`${itemSize / 3}px`}
+            backgroundColor={backgroundColor}
+            offset={`${scrollerMargin}px`}
+          />
+        </>
       ) : (
         <LoadingSpinner
           color="#515773"
@@ -184,13 +178,6 @@ export const JourneyMap = (props: JoruneyMapProps) => {
           delay={300}
         />
       )}
-
-      <Fade
-        side={isPortable ? "bottom" : "right"}
-        size={`${itemSize / 3}px`}
-        backgroundColor={backgroundColor}
-        offset={`${scrollerMargin}px`}
-      />
     </Wrapper>
   );
 };

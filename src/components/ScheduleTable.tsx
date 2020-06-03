@@ -9,11 +9,7 @@ import Collapsible from "react-collapsible";
 import { ArrowDown, ArrowUp } from "react-feather";
 import { MobileTrainCard } from "./MobileTrainCard";
 import { useWindowSize } from "../hooks/useWindowSize";
-
-interface TrainColumn {
-  dispName: string;
-  propName: string;
-}
+import { DesktopTrainCard } from "./DesktopTrainCard";
 
 const Table = styled.div`
   display: flex;
@@ -28,34 +24,23 @@ const Table = styled.div`
   }
 `;
 
-const Row = styled.div`
-  padding-top: 15px;
-  transition: opacity 0.08s ease-out;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 15px;
-  transition: all 0.25s ease-in-out;
-`;
-
-const Train = styled.div<{ isPortable?: boolean }>`
+export const DesktopTrainRow = styled.div<{ header?: boolean }>`
   display: grid;
-  grid-template-areas: ${(p) =>
-    p.isPortable ? "due dep from to" : "due dep from to term last"};
-  grid-template-columns: ${(p) =>
-    p.isPortable ? "1fr 1.5fr 2.5fr 2.5fr" : "1fr 1.5fr 2.5fr 2.5fr 1fr 2.5fr"};
+  grid-template-areas: due dep from to term last;
+  grid-template-columns: 1fr 1.5fr 2.5fr 2.5fr 1fr 2.5fr;
 
   &:not(.header):hover {
     opacity: 0.8;
   }
-  &.header {
-    color: #444;
-    font-weight: 700;
-    user-select: none;
-    cursor: pointer;
-  }
+
+  color: #444;
+  font-weight: 700;
+  user-select: none;
+  cursor: pointer;
 `;
 
 const Body = styled.div`
-  ${Train} {
+  ${DesktopTrainRow} {
     cursor: pointer;
   }
 
@@ -64,14 +49,10 @@ const Body = styled.div`
   }
 `;
 
-const Info = styled.div`
-  grid-area: info;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  transition: height 0.1s ease-out;
-`;
+interface JourneyCache {
+  journey: Journey;
+  time: number;
+}
 
 const ScheduleTable = (props: { trainData: Train[] }) => {
   const originalTrainData = [...props.trainData];
@@ -79,12 +60,12 @@ const ScheduleTable = (props: { trainData: Train[] }) => {
   const { trainData } = props;
   const defaultSort = "Expdepart";
   const [sort, setSort] = useState({ col: defaultSort, dir: 1 }); // 1 = Ascending, -1 Descending
+  const [journeyCache, setJourneyCache] = useState(
+    new Map<string, JourneyCache>()
+  );
   const [sortedTrainData, setSortedTrainData] = useState([
     ...originalTrainData,
   ]);
-  const columns = isPortable
-    ? headings.slice(0, headings.length - 2)
-    : headings;
 
   // Re-sort the train data when the user updates the sorting params
   useEffect(() => {
@@ -118,48 +99,39 @@ const ScheduleTable = (props: { trainData: Train[] }) => {
     console.log("Updated sorting");
   };
 
+  const getJourney = async (journeyCode: string): Promise<Journey> => {
+    const invalidateCacheAfter = 3000; // Invalidate after 3s
+    let time = Date.now();
+    let cachedJourney = journeyCache.get(journeyCode) ?? null;
+    if (!cachedJourney || cachedJourney.time > invalidateCacheAfter) {
+      const date = Moment().locale("en-gb").format("ll");
+      const journey = await IrishRailApi.getTrainJourney(journeyCode, date);
+      setJourneyCache(
+        new Map(journeyCache.set(journeyCode, { journey, time }))
+      );
+      return journey;
+    }
+
+    return cachedJourney.journey;
+  };
+
   const renderTrain = (train: Train) => {
     const code = train.Traincode;
 
-    if (isPortable) return <MobileTrainCard train={train} key={code} />;
+    if (isPortable)
+      return (
+        <MobileTrainCard train={train} getJourney={getJourney} key={code} />
+      );
 
-    // return (
-    //   <Row key={code}>
-    //     <Collapsible
-    //       transitionTime={180}
-    //       easing={"ease-out"}
-    //       trigger={
-    //         <Train
-    //           key={code}
-    //           onClick={handleTrainClick}
-    //           data-traincode={code}
-    //           isPortable={isPortable}
-    //         >
-    //           {columns.map((c) => (
-    //             <div key={c.propName}>{train[c.propName]}</div>
-    //           ))}
-    //         </Train>
-    //       }
-    //     >
-    //       <Info key={code + "info"}>
-    //         {journeys.has(code) ? (
-    //           <JourneyMap
-    //             journey={journeys.get(code)}
-    //             train={train}
-    //           />
-    //         ) : (
-    //           <div>LOADING</div>
-    //         )}
-    //       </Info>
-    //     </Collapsible>
-    //   </Row>
-    // );
+    return (
+      <DesktopTrainCard train={train} getJourney={getJourney} key={code} />
+    );
   };
 
   const renderHeader = () => {
     return (
-      <Train className="header" isPortable={isPortable}>
-        {columns.map((c, i) => (
+      <DesktopTrainRow header={true}>
+        {scheduleColumns.map((c, i) => (
           <div onClick={(e) => handleSort(e)} key={i} data-col={c.propName}>
             {c.dispName}{" "}
             {sort.col === c.propName && sort.dir !== 0 && !isPortable ? (
@@ -171,26 +143,48 @@ const ScheduleTable = (props: { trainData: Train[] }) => {
             ) : null}
           </div>
         ))}
-      </Train>
+      </DesktopTrainRow>
     );
   };
 
   return (
     <Table>
       {!isPortable ? renderHeader() : null}
-      <Body>
-        {/* {renderTrain(testTrain)}
-        {renderTrain(testTrain)}
-        {renderTrain(testTrain)} */}
-        {trainData.map((t) => renderTrain(t))}
-      </Body>
+      <Body>{trainData.map((t) => renderTrain(t))}</Body>
     </Table>
   );
 };
 
 export default hot(module)(ScheduleTable);
 
-const headings: TrainColumn[] = [
+const testTrain: Train = {
+  Servertime: null,
+  Traincode: null,
+  Stationfullname: null,
+  Stationcode: null,
+  Querytime: null,
+  Traindate: null,
+  Origin: "Dublin Connolly",
+  Destination: "Limerick Junction",
+  Origintime: "13:42",
+  Destinationtime: "15:55",
+  Status: null,
+  Lastlocation: null,
+  Duein: null,
+  Late: null,
+  Exparrival: "14:26",
+  Expdepart: "14:30",
+  Scharrival: null,
+  Schdepart: null,
+  Direction: null,
+  Traintype: null,
+  Locationtype: null,
+};
+
+export const scheduleColumns: Array<{
+  dispName: string;
+  propName: string;
+}> = [
   {
     dispName: "Due",
     propName: "Exparrival",
@@ -216,27 +210,3 @@ const headings: TrainColumn[] = [
     propName: "Lastlocation",
   },
 ];
-
-const testTrain: Train = {
-  Servertime: null,
-  Traincode: null,
-  Stationfullname: null,
-  Stationcode: null,
-  Querytime: null,
-  Traindate: null,
-  Origin: "Dublin Connolly",
-  Destination: "Limerick Junction",
-  Origintime: "13:42",
-  Destinationtime: "15:55",
-  Status: null,
-  Lastlocation: null,
-  Duein: null,
-  Late: null,
-  Exparrival: "14:26",
-  Expdepart: "14:30",
-  Scharrival: null,
-  Schdepart: null,
-  Direction: null,
-  Traintype: null,
-  Locationtype: null,
-};

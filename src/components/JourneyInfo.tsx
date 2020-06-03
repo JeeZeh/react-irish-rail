@@ -35,6 +35,8 @@ const Value = styled.div`
 
 export const JourneyInfo = (props: { journey: Journey; train: Train }) => {
   const { journey, train } = props;
+
+  if (!journey) return null;
   return (
     <Info>
       <Header>Journey Information</Header>
