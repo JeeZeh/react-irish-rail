@@ -10,6 +10,7 @@ import { ArrowDown, ArrowUp } from "react-feather";
 import { MobileTrainCard } from "./MobileTrainCard";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { DesktopTrainCard } from "./DesktopTrainCard";
+import { testJourney } from "../api/JourneyLoader";
 
 const Table = styled.div`
   display: flex;
@@ -26,7 +27,7 @@ const Table = styled.div`
 
 export const DesktopTrainRow = styled.div<{ header?: boolean }>`
   display: grid;
-  grid-template-areas: due dep from to term last;
+  grid-template-areas: "due dep from to term last";
   grid-template-columns: 1fr 1.5fr 2.5fr 2.5fr 1fr 2.5fr;
 
   &:not(.header):hover {
@@ -34,7 +35,7 @@ export const DesktopTrainRow = styled.div<{ header?: boolean }>`
   }
 
   color: #444;
-  font-weight: 700;
+  font-weight: ${(p) => (p.header ? 700 : 500)};
   user-select: none;
   cursor: pointer;
 `;
@@ -47,6 +48,11 @@ const Body = styled.div`
   & > div:last-child {
     border-bottom: none;
   }
+`;
+
+const ColumnHeader = styled.div`
+  display: flex;
+  height: 30px;
 `;
 
 interface JourneyCache {
@@ -100,6 +106,7 @@ const ScheduleTable = (props: { trainData: Train[] }) => {
   };
 
   const getJourney = async (journeyCode: string): Promise<Journey> => {
+    // return testJourney();
     const invalidateCacheAfter = 3000; // Invalidate after 3s
     let time = Date.now();
     let cachedJourney = journeyCache.get(journeyCode) ?? null;
@@ -132,8 +139,12 @@ const ScheduleTable = (props: { trainData: Train[] }) => {
     return (
       <DesktopTrainRow header={true}>
         {scheduleColumns.map((c, i) => (
-          <div onClick={(e) => handleSort(e)} key={i} data-col={c.propName}>
-            {c.dispName}{" "}
+          <ColumnHeader
+            onClick={(e) => handleSort(e)}
+            key={i}
+            data-col={c.propName}
+          >
+            <div>{c.dispName}</div>
             {sort.col === c.propName && sort.dir !== 0 && !isPortable ? (
               sort.dir === -1 ? (
                 <ArrowUp />
@@ -141,7 +152,7 @@ const ScheduleTable = (props: { trainData: Train[] }) => {
                 <ArrowDown />
               )
             ) : null}
-          </div>
+          </ColumnHeader>
         ))}
       </DesktopTrainRow>
     );
@@ -150,7 +161,8 @@ const ScheduleTable = (props: { trainData: Train[] }) => {
   return (
     <Table>
       {!isPortable ? renderHeader() : null}
-      <Body>{trainData.map((t) => renderTrain(t))}</Body>
+      <Body>{sortedTrainData.map(renderTrain)}</Body>
+      {/* <Body>{[testTrain, testTrain, testTrain].map(renderTrain)}</Body> */}
     </Table>
   );
 };

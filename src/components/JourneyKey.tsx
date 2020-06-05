@@ -9,6 +9,7 @@ const Key = styled.div`
   flex-direction: column;
   cursor: default;
   user-select: none;
+  width: 300px;
   transition: opacity 0.1s ease-out;
   writing-mode: horizontal-tb;
 
@@ -31,6 +32,8 @@ const Key = styled.div`
     width: 100%;
     transform: none;
     height: 20px;
+    width: 100%;
+    flex-direction: column;
   }
 
   & ${Name} {

@@ -229,10 +229,12 @@ export const MobileTrainCard = (props: MobileTrainCardProps) => {
     const top = bottomRef.current.getBoundingClientRect().top;
     console.log(top);
     if (!open) {
-      if (top > 270) {
-        window.scrollTo({
+      console.log(top, top + 450, window.innerHeight);
+
+      if (top + 450 > window.innerHeight) {
+        window.scrollBy({
           behavior: "smooth",
-          top: bottomRef.current.offsetTop + 170,
+          top: top + 450 - window.innerHeight,
         });
       } else if (top < 80) {
         window.scrollBy({
@@ -260,6 +262,7 @@ export const MobileTrainCard = (props: MobileTrainCardProps) => {
           train={train}
           getJourney={getJourney}
           backgroundColor={veryLightGrey}
+          load={open}
         />
       </Collapsible>
       <Divider className={open ? "fade" : null} ref={bottomRef} />

@@ -7,7 +7,7 @@ const portNumber = 3000;
 const sourceDir = "dist";
 
 const whitelist = [
-  "http://localhost:8080",
+  "http://localhost:3333",
   "https://react-rail.herokuapp.com/",
 ];
 

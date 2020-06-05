@@ -31,15 +31,20 @@ export const Dot = styled.div<{ isPortable?: boolean }>`
     border-width: 2px;
   }
 
+  &.delayed,
+  &.early {
+    align-self: "center";
+    border: none;
+    ${(p) => (!p.isPortable ? "width: auto" : null)};
+    ${(p) => (p.isPortable ? "text-align: center" : null)};
+    ${(p) => (p.isPortable ? "height: auto" : null)};
+  }
+
   &.delayed {
     color: darkorange;
-    align-self: ${(p) => (p.isPortable ? "center" : "flex-start")};
-    border: none;
   }
 
   &.early {
-    align-self: ${(p) => (p.isPortable ? "center" : "flex-start")};
-    border: none;
     color: darkblue;
   }
 `;
@@ -48,7 +53,7 @@ export const Name = styled.div<{ isPortable?: boolean }>`
   font-weight: 600;
   user-select: none;
   writing-mode: inherit;
-  ${(p) => (!p.isPortable ? "margin-top" : "margin-left")}: 10px;
+  ${(p) => (!p.isPortable ? "margin-top" : "margin-left")}: 5px;
 
   &.arrived {
     font-weight: 700;
@@ -72,7 +77,7 @@ export const Time = styled.div<{ isPortable?: boolean }>`
   }
 
   &::before {
-    content: "·  ";
+    content: " · ";
     margin: ${(p) => (p.isPortable ? "0 5px" : "5px 0")};
   }
 
@@ -87,11 +92,14 @@ export const Time = styled.div<{ isPortable?: boolean }>`
 
 export const StationDiv = styled.div<{ isPortable?: boolean }>`
   display: flex;
-  flex-direction: ${(p) => (p.isPortable ? "row" : "column")};
+  flex-direction: "row";
   align-items: center;
-  width: 100%;
+  width: ${(p) => (p.isPortable ? "100%" : null)};
+  height: ${(p) => (!p.isPortable ? "100%" : null)};
+  margin: ${(p) => (p.isPortable ? "2px" : "0 4px")};
   writing-mode: ${(p) => (p.isPortable ? "horizontal-tb" : "vertical-lr")};
-  transform: ${(p) => (!p.isPortable ? "rotate(225deg)" : null)};
+  transform: ${(p) =>
+    !p.isPortable ? "rotate(225deg) translateY(-35px)" : null};
 
   &.departed {
     opacity: 0.2;
@@ -117,6 +125,7 @@ export const JourneyStop = (props: JourneyStopProps) => {
   } = props;
 
   const isPortable = useWindowSize().width < 900;
+
   let time: string | React.ReactElement = "";
   let classes = "";
 
@@ -189,16 +198,29 @@ export const JourneyStop = (props: JourneyStopProps) => {
     return classNames.join(" ");
   };
 
+  const smallify = (name: string): string => {
+    return name
+      .replace(/\band\b/gi, "&")
+      .replace(/\bpark\b/gi, "Pk.")
+      .replace(/\bnorth\b/gi, "N.")
+      .replace(/\bsouth\b/gi, "S.")
+      .replace(/\beast\b/gi, "E.")
+      .replace(/\bwest\b/gi, "W.")
+      .replace(/\bparkway\b/gi, "Pkway.")
+      .replace(/\bjunction\b/gi, "Jnct.")
+      .replace(/\bbridge\b/gi, "Brdg.");
+  };
+
   time = getTime();
   classes = getClasses();
 
   return (
     <StationDiv className={classes} isPortable={isPortable}>
-      <Dot className={classes}>
+      <Dot className={classes} isPortable={isPortable}>
         {classes.includes("early") || classes.includes("delayed") ? "!" : null}
       </Dot>
       <Name className={classes} isPortable={isPortable}>
-        {station.LocationFullName}
+        {smallify(station.LocationFullName)}
       </Name>
       <Time className={classes} isPortable={isPortable}>
         {time}
