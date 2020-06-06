@@ -262,7 +262,7 @@ export const MobileTrainCard = (props: MobileTrainCardProps) => {
           train={train}
           getJourney={getJourney}
           backgroundColor={veryLightGrey}
-          load={open}
+          open={open}
         />
       </Collapsible>
       <Divider className={open ? "fade" : null} ref={bottomRef} />

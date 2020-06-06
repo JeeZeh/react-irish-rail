@@ -26,7 +26,6 @@ const Spinner = styled.div<{ props: LoadingSpinnerProps }>`
     opacity: 1;
   }
 `;
-
 export const LoadingSpinner = (props: LoadingSpinnerProps) => {
   const { size, color, loading, delay } = props;
   const [fade, setFade] = useState(false);
@@ -38,6 +37,7 @@ export const LoadingSpinner = (props: LoadingSpinnerProps) => {
     setTimeout(() => {
       setReady(true);
       setFade(true);
+      console.log("fade delay");
     }, delay);
 
     return () => {

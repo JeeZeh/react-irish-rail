@@ -28,7 +28,6 @@ export const DesktopTrainCard = (props: {
   getJourney: (journeyCode: string) => Promise<Journey>;
 }) => {
   const { train, getJourney } = props;
-  const [journey, setJourney] = useState<Journey>(null);
   const [open, setOpen] = useState(false);
 
   return (
@@ -49,12 +48,7 @@ export const DesktopTrainCard = (props: {
         }
       >
         <Info key={train.Traincode + "info"}>
-          <JourneyMap
-            getJourney={getJourney}
-            journeyProp={journey}
-            train={train}
-            load={open}
-          />
+          <JourneyMap getJourney={getJourney} train={train} open={open} />
         </Info>
       </Collapsible>
     </Row>

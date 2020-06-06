@@ -25,6 +25,11 @@ const Key = styled.div`
 
   & ${Dot} {
     writing-mode: horizontal-tb;
+
+    &.delayed,
+    &.early {
+      height: auto;
+    }
   }
 
   & ${StationDiv} {

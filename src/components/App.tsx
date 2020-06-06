@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
 import styled from "styled-components";
-import { Compass, Search, Menu } from "react-feather";
-import Schedule, { Card } from "./Schedule";
+import { Menu } from "react-feather";
+import Schedule from "./Schedule";
 import { StationSearch } from "./StationSearch";
 import IrishRailApi, { Station } from "../api/IrishRailApi";
 import { SearchParameters } from "./SearchParameters";
@@ -15,15 +15,9 @@ import { ModalMenu } from "./ModalMenu";
 import { About } from "./About";
 import { ErrorDialogue } from "./ErrorDialogue";
 
-interface AppState {
-  station: Station;
-  stationList: Station[];
-  waiting: boolean;
-  error: any;
-}
-
 export const FavouritesList = styled.div`
   grid-area: schedule;
+  margin-top: 30px;
   width: 250px;
 
   @media only screen and (max-width: 900px) {
@@ -42,7 +36,7 @@ const SearchWrapper = styled.div`
   width: 90%;
 
   & > div {
-    width: 40%;
+    width: 45%;
   }
 
   @media only screen and (max-width: 1205px) {
@@ -188,46 +182,30 @@ export const App = () => {
   const lookaheadOptions = [30, 60, 90, 120];
   const isPortable = useWindowSize().width < 900;
   const [lookahead, setLookahead] = useState(90);
-  const [state, setState] = useState<AppState>({
-    station: null,
-    stationList: null,
-    waiting: true,
-    error: null,
-  });
+  const [station, setStation] = useState<Station>(null);
+  const [stationList, setStationList] = useState<Station[]>(null);
+  const [waiting, setWaiting] = useState<boolean>(false);
+  const [error, setError] = useState<any>(null);
 
   const [modalOpen, setModelOpen] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(errorTimeout, timeoutLength);
     IrishRailApi.getStations()
-      .then((stationList) => {
-        setState({
-          ...state,
-          waiting: false,
-          stationList,
-        });
+      .then(setStationList)
+      .then(() => {
+        setError(false);
         clearTimeout(timeout);
       })
-      .catch((error) => {
-        setState({
-          ...state,
-          waiting: false,
-          error,
-        });
-        clearTimeout(timeout);
-      });
+      .catch(setError)
+      .finally(() => setWaiting(false));
   }, []);
 
   const errorTimeout = () => {
-    setState({
-      ...state,
-      waiting: false,
-      error: new Error("Timout from endpoint, showing error dialogue for now"),
-    });
-  };
-
-  const onStationChange = (station: Station) => {
-    setState({ ...state, station });
+    setWaiting(false);
+    setError(
+      error ?? new Error("Timout from endpoint, showing error dialogue for now")
+    );
   };
 
   const onFavouriteSelect = (e) => {
@@ -236,7 +214,7 @@ export const App = () => {
     );
 
     if (station) {
-      setState({ ...state, station });
+      setStation(station);
     } else {
       console.error("Couldn't find station", e.target.innerHTML);
     }
@@ -244,18 +222,6 @@ export const App = () => {
     if (modalOpen) {
       setModelOpen(false);
     }
-  };
-
-  const onStationClose = () => {
-    setState({ ...state, station: null });
-  };
-
-  const handleCloseModal = () => {
-    setModelOpen(false);
-  };
-
-  const handleOpenModal = () => {
-    setModelOpen(true);
   };
 
   const renderHeader = () => {
@@ -278,8 +244,8 @@ export const App = () => {
             <SearchHeading>Find trains at</SearchHeading>
             <StationSearch
               stationList={stationList}
-              station={state.station}
-              onStationChange={onStationChange}
+              station={station}
+              onStationChange={setStation}
             />
           </div>
           <div>
@@ -301,8 +267,6 @@ export const App = () => {
       return null;
     }
   };
-
-  const { station, stationList, error, waiting } = state;
 
   if (error) {
     console.error(error);
@@ -326,13 +290,13 @@ export const App = () => {
         </KeyWrapper>
       )}
       {isPortable ? (
-        <ModalButton onClick={handleOpenModal}>
+        <ModalButton onClick={() => setModelOpen(true)}>
           <Menu size={28} />
         </ModalButton>
       ) : null}
       {modalOpen ? (
         <ModalMenu
-          handleCloseModal={handleCloseModal}
+          handleCloseModal={() => setModelOpen(false)}
           onFavouriteSelect={onFavouriteSelect}
         />
       ) : null}
@@ -344,12 +308,13 @@ export const App = () => {
           <Schedule
             station={station}
             lookahead={lookahead}
-            handleStationClose={onStationClose}
+            handleStationClose={() => setStation(null)}
           />
         </ScheduleWrapper>
       ) : isPortable ? null : (
         <FavouritesList>
-          <FavouriteStations handleClick={onFavouriteSelect} />
+          <SearchHeading>Favourite Stations</SearchHeading>
+          <FavouriteStations handleClick={onFavouriteSelect} asGrid={true} />
         </FavouritesList>
       )}
     </Body>

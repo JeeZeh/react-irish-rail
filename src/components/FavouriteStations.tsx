@@ -78,6 +78,13 @@ const MobileListItem = styled(JourneyButton)`
   box-shadow: none;
   margin: 5px;
   height: 40px;
+  transition: box-shadow 0.2s ease-out, opacity 0.2s ease-out;
+  opacity: 1;
+
+  &:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    opacity: 0.8;
+  }
 `;
 
 export const FavouriteStations = (props: {

@@ -4,8 +4,6 @@ import { hot } from "react-hot-loader";
 import IrishRailApi, { Train, Journey } from "../api/IrishRailApi";
 import * as Moment from "moment";
 import styled from "styled-components";
-import { JourneyMap } from "./JourneyMap";
-import Collapsible from "react-collapsible";
 import { ArrowDown, ArrowUp } from "react-feather";
 import { MobileTrainCard } from "./MobileTrainCard";
 import { useWindowSize } from "../hooks/useWindowSize";
@@ -53,6 +51,9 @@ const Body = styled.div`
 const ColumnHeader = styled.div`
   display: flex;
   height: 30px;
+  & > svg {
+    margin-left: 5px;
+  }
 `;
 
 interface JourneyCache {
@@ -60,30 +61,33 @@ interface JourneyCache {
   time: number;
 }
 
-const ScheduleTable = (props: { trainData: Train[] }) => {
-  const originalTrainData = [...props.trainData];
+const ScheduleTable = (props: { stationTrains: Train[] }) => {
   const isPortable = useWindowSize().width < 900;
-  const { trainData } = props;
+  const { stationTrains } = props;
   const defaultSort = "Expdepart";
+  console.log("Station set to", props.stationTrains[0].Stationfullname);
   const [sort, setSort] = useState({ col: defaultSort, dir: 1 }); // 1 = Ascending, -1 Descending
   const [journeyCache, setJourneyCache] = useState(
     new Map<string, JourneyCache>()
   );
-  const [sortedTrainData, setSortedTrainData] = useState([
-    ...originalTrainData,
-  ]);
+  const [sortedTrainData, setSortedTrainData] = useState<Train[]>(null);
+
+  useEffect(() => {
+    setSortedTrainData(stationTrains);
+  }, [stationTrains]);
 
   // Re-sort the train data when the user updates the sorting params
   useEffect(() => {
     const { col, dir } = sort;
     if (col && dir !== 0) {
       console.log("sorting by:", col, dir);
-      sortedTrainData.sort((a, b) => {
-        return (a[col] >= b[col] ? 1 : -1) * dir;
-      });
-      setSortedTrainData([...sortedTrainData]);
+      setSortedTrainData(
+        [...stationTrains].sort((a, b) => {
+          return (a[col] >= b[col] ? 1 : -1) * dir;
+        })
+      );
     } else {
-      setSortedTrainData([...originalTrainData]);
+      setSortedTrainData([...stationTrains]);
     }
   }, [sort]);
 
@@ -161,7 +165,7 @@ const ScheduleTable = (props: { trainData: Train[] }) => {
   return (
     <Table>
       {!isPortable ? renderHeader() : null}
-      <Body>{sortedTrainData.map(renderTrain)}</Body>
+      <Body>{sortedTrainData && sortedTrainData.map(renderTrain)}</Body>
       {/* <Body>{[testTrain, testTrain, testTrain].map(renderTrain)}</Body> */}
     </Table>
   );

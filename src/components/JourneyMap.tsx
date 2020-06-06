@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState, useRef } from "react";
-import styled, { isStyledComponent } from "styled-components";
+import styled from "styled-components";
 import { Journey, Train, Movement } from "../api/IrishRailApi";
 import { JourneyStop } from "./JourneyStop";
 import { JourneyInfo } from "./JourneyInfo";
@@ -49,13 +49,14 @@ const Map = styled.div<{
   width?: number;
 }>`
   grid-area: map;
+  font-family: "Lato", Helvetica, sans-serif;
   display: flex;
   flex-direction: ${(p) => (p.isPortable ? "column" : "row")};
   align-items: center;
   justify-content: ${(p) => (p.center ? "center" : "null")};
   padding-left: ${(p) => (!p.isPortable ? "140px" : 0)};
   height: ${(p) => (p.isPortable ? "270px" : "300px")};
-  width: ${(p) => (p.width ? p.width + "px" : "100%")};
+  width: ${(p) => (p.width ? p.width + "px" : "auto")};
   overflow-x: ${(p) => (p.isPortable ? "hidden" : "scroll")};
   overflow-y: ${(p) => (p.isPortable ? "scroll" : "hidden")};
 
@@ -87,7 +88,7 @@ const Map = styled.div<{
   }
 
   opacity: 0;
-  transition: opacity 0.1s ease-out;
+  transition: opacity 0.3s ease-out;
 
   &.visible {
     opacity: 1;
@@ -104,11 +105,11 @@ interface JoruneyMapProps {
   backgroundColor?: string;
   getJourney?: (journeyCode: string) => Promise<Journey>;
   journeyProp?: Journey;
-  load?: boolean;
+  open?: boolean;
 }
 
 export const JourneyMap = (props: JoruneyMapProps) => {
-  const { train, backgroundColor, getJourney, journeyProp, load } = props;
+  const { train, backgroundColor, getJourney, journeyProp, open } = props;
   const width = useWindowSize().width;
   const isPortable = width < 900;
   const scrollerMargin = isPortable ? 0 : 30;
@@ -149,29 +150,29 @@ export const JourneyMap = (props: JoruneyMapProps) => {
         60;
 
       if (isPortable) scrollDiv.scrollTo(0, scrollOffset);
-      else scrollDiv.scrollTo(scrollOffset, 0);
+      else scrollDiv.scrollTo(scrollOffset - 80, 0);
     }
   };
 
   useEffect(() => {
     scrollToTrainPosition();
     if (journey) setFade(true);
+
+    return () => setFade(false);
   }, [journey]);
 
   useEffect(() => {
-    console.log(load);
-    if (load) {
+    if (open) {
       setJourney(journeyProp);
       if (!journeyProp) {
-        getJourney(train.Traincode)
-          .then((j) => {
-            setTrainPosition(calcTrainPosition(j));
-            return j;
-          })
-          .then((j) => setTimeout(() => setJourney(j), 2000));
+        getJourney(train.Traincode).then((j) => {
+          setTrainPosition(calcTrainPosition(j));
+          setJourney(j);
+        });
+        // .then((j) => setTimeout(() => setJourney(j), 2000));
       }
     }
-  }, [load]);
+  }, [open]);
 
   const renderStop = (stop: Movement, index) => {
     return (
@@ -227,13 +228,15 @@ export const JourneyMap = (props: JoruneyMapProps) => {
           />
         </>
       ) : (
-        <LoadingSpinner
-          color="#515773"
-          size={16}
-          height="270px"
-          width="100%"
-          delay={300}
-        />
+        open && (
+          <LoadingSpinner
+            color="#515773"
+            size={16}
+            height="270px"
+            width="100%"
+            delay={500}
+          />
+        )
       )}
     </Wrapper>
   );

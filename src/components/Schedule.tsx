@@ -106,7 +106,7 @@ export const Schedule = (props: TrainScheduleProps) => {
 
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [stationData, setStationData] = useState<Train[]>(null);
+  const [stationTrains, setStationTrains] = useState<Train[]>(null);
 
   useEffect(() => {
     fetchStationData();
@@ -117,7 +117,7 @@ export const Schedule = (props: TrainScheduleProps) => {
     if (!station) return;
 
     IrishRailApi.getTrainsForStation(station, lookahead)
-      .then(setStationData)
+      .then(setStationTrains)
       .catch(setError)
       .finally(() => setIsLoaded(true));
   };
@@ -151,7 +151,7 @@ export const Schedule = (props: TrainScheduleProps) => {
         )}
       </CardToolbar>
 
-      {stationData.length === 0 ? (
+      {stationTrains.length === 0 ? (
         <CardBody>
           <Error>
             No trains due at {station.StationDesc} for the next {lookahead}{" "}
@@ -160,7 +160,7 @@ export const Schedule = (props: TrainScheduleProps) => {
         </CardBody>
       ) : (
         <CardBody>
-          {isLoaded ? <ScheduleTable trainData={stationData} /> : null}
+          {isLoaded ? <ScheduleTable stationTrains={stationTrains} /> : null}
         </CardBody>
       )}
     </Card>
