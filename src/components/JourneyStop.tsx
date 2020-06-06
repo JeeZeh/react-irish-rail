@@ -114,6 +114,26 @@ export const StationDiv = styled.div<{ isPortable?: boolean }>`
   }
 `;
 
+
+export const smallify = (name: string, lite?: boolean): string => {
+  name = name
+    .replace(/\band\b/gi, "&")
+    .replace(/\bnorth\b/gi, "N.")
+    .replace(/\bsouth\b/gi, "S.")
+    .replace(/\beast\b/gi, "E.")
+    .replace(/\bwest\b/gi, "W.");
+
+  if (!lite)
+    name = name
+      .replace(/\bpark\b/gi, "Pk.")
+      .replace(/\bparkway\b/gi, "Pkway.")
+      .replace(/\bjunction\b/gi, "Jnct.")
+      .replace(/\bbridge\b/gi, "Brdg.");
+
+  return name;
+};
+
+
 export const JourneyStop = (props: JourneyStopProps) => {
   const {
     station,
@@ -196,19 +216,6 @@ export const JourneyStop = (props: JourneyStopProps) => {
     }
 
     return classNames.join(" ");
-  };
-
-  const smallify = (name: string): string => {
-    return name
-      .replace(/\band\b/gi, "&")
-      .replace(/\bpark\b/gi, "Pk.")
-      .replace(/\bnorth\b/gi, "N.")
-      .replace(/\bsouth\b/gi, "S.")
-      .replace(/\beast\b/gi, "E.")
-      .replace(/\bwest\b/gi, "W.")
-      .replace(/\bparkway\b/gi, "Pkway.")
-      .replace(/\bjunction\b/gi, "Jnct.")
-      .replace(/\bbridge\b/gi, "Brdg.");
   };
 
   time = getTime();

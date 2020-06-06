@@ -2,14 +2,15 @@ import * as React from "react";
 import styled from "styled-components";
 import { Time, StationDiv, Name, Dot } from "./JourneyStop";
 import { Divider } from "./MobileTrainCard";
+import { useWindowSize } from "../hooks/useWindowSize";
 
-const Key = styled.div`
+const Key = styled.div<{ isPortable?: boolean }>`
   grid-area: key;
   display: flex;
   flex-direction: column;
   cursor: default;
+  width: ${(p) => (p.isPortable ? "auto" : "300px")};
   user-select: none;
-  width: 300px;
   transition: opacity 0.1s ease-out;
   writing-mode: horizontal-tb;
 
@@ -55,8 +56,9 @@ const Key = styled.div`
 `;
 
 export const JourneyKey = () => {
+  const isPortable = useWindowSize().width < 900;
   return (
-    <Key>
+    <Key isPortable={isPortable}>
       <StationDiv className="departed">
         <Dot className="departed" />
         <Name className="departed">Departed</Name>

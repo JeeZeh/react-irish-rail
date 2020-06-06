@@ -1,11 +1,9 @@
 import * as React from "react";
-import { ItemList, ListItem } from "./FuzzyOverlay";
 import { JourneyButton } from "./MobileTrainCard";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Heart } from "react-feather";
-import { FixedSizeList as List } from "react-window";
 import styled from "styled-components";
-import { Fade } from "./JourneyMap";
+import { smallify } from "./JourneyStop";
 
 const FavouriteHeartWrapper = styled.div<{ gridColumn: number }>`
   cursor: pointer;
@@ -92,50 +90,14 @@ export const FavouriteStations = (props: {
   asGrid?: boolean;
 }) => {
   const [favourites, _] = useLocalStorage<string[]>("favourites", []);
-  const itemSize = 50;
   const { handleClick } = props;
   if (favourites.length === 0) return null;
 
-  const Item = ({ index, style }) => {
-    const favourite = favourites[index];
-
-    if (props.asGrid) {
-      return (
-        <MobileListItem onClick={handleClick} style={style} key={index}>
-          {favourite}
-        </MobileListItem>
-      );
-    }
-
-    return (
-      <ListItem onClick={handleClick} style={style} key={index}>
-        {favourite}
-      </ListItem>
-    );
-  };
-
-  if (props.asGrid) {
-    return (
-      <MobileWrap>
-        {favourites.map((f, i) => (
-          <MobileListItem key={i} onClick={handleClick} children={f} />
-        ))}
-      </MobileWrap>
-    );
-  }
-
   return (
-    <ItemList>
-      <Fade side="top" size={favourites.length < 3 ? "0px" : "20px"} />
-      <List
-        height={Math.min(5 * itemSize, favourites.length * itemSize)}
-        itemCount={favourites.length}
-        itemSize={itemSize}
-        width={"100%"}
-      >
-        {Item}
-      </List>
-      <Fade side="bottom" size={favourites.length < 3 ? "0px" : "20px"} />
-    </ItemList>
+    <MobileWrap>
+      {favourites.map((f, i) => (
+        <MobileListItem key={i} onClick={handleClick} children={smallify(f)} />
+      ))}
+    </MobileWrap>
   );
 };

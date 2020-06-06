@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { X } from "react-feather";
 import ScheduleTable from "./ScheduleTable";
 import { FavouriteHeart } from "./FavouriteStations";
+import { smallify } from "./JourneyStop";
 import { useWindowSize } from "../hooks/useWindowSize";
 
 export interface TrainScheduleProps {
@@ -143,7 +144,9 @@ export const Schedule = (props: TrainScheduleProps) => {
           stationName={station.StationDesc}
           gridColumn={isPortable ? 3 : 1}
         />
-        <CardHeader isPortable={isPortable}>{station.StationDesc}</CardHeader>
+        <CardHeader isPortable={isPortable}>
+          {smallify(station.StationDesc, true)}
+        </CardHeader>
         {isPortable ? null : (
           <CardToolbarButton gridColumn={3} onClick={handleStationClose}>
             <X size={32} />

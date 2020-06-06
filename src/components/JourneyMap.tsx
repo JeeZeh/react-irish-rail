@@ -13,12 +13,12 @@ const Wrapper = styled.div<{
   margin?: string;
   loaded?: boolean;
 }>`
-  margin: ${(p) => (!p.isPortable ? "10px" : 0)};
+  margin: ${(p) => (!p.isPortable ? "10px" : "0 0 0 5px")};
   display: ${(p) => (p.isPortable ? "flex" : "grid")};
   grid-template-areas: "map info";
   position: relative;
   align-content: center;
-  justify-content: ${(p) => (p.loaded ? "space-around" : "center")};
+  justify-content: ${(p) => (p.loaded ? "space-between" : "center")};
   width: 100%;
 `;
 
