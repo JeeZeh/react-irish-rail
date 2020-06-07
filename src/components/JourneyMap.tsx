@@ -56,7 +56,7 @@ const Map = styled.div<{
   justify-content: ${(p) => (p.center ? "center" : "null")};
   padding-left: ${(p) => (!p.isPortable ? "140px" : 0)};
   height: ${(p) => (p.isPortable ? "270px" : "300px")};
-  width: ${(p) => (p.width ? p.width + "px" : "auto")};
+  width: ${(p) => (p.width ? p.width + "px" : p.isPortable ? "100%" : "auto")};
   overflow-x: ${(p) => (p.isPortable ? "hidden" : "scroll")};
   overflow-y: ${(p) => (p.isPortable ? "scroll" : "hidden")};
 
