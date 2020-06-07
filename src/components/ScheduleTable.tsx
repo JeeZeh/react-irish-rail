@@ -111,10 +111,12 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
 
   const getJourney = async (journeyCode: string): Promise<Journey> => {
     // return testJourney();
+    console.log("Caching");
+
     const invalidateCacheAfter = 30000; // Invalidate after 30s
     let time = Date.now();
     let cachedJourney = journeyCache.get(journeyCode) ?? null;
-    if (!cachedJourney || cachedJourney.time > invalidateCacheAfter) {
+    if (!cachedJourney || time - cachedJourney.time > invalidateCacheAfter) {
       const date = Moment().locale("en-gb").format("ll");
       const journey = await IrishRailApi.getTrainJourney(journeyCode, date);
       setJourneyCache(
