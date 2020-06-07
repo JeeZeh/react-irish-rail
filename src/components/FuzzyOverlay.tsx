@@ -41,7 +41,7 @@ const FuzzyList = styled(ItemList)<{ isPortable?: boolean }>`
 `;
 
 export const FuzzyOverlay = (props: FuzzyOverlayProps) => {
-  const isPortable = useWindowSize().width < 900;
+  const isPortable = useWindowSize().width <= 1000;
 
   const handleClick = (e) => {
     props.onFuzzySelect(e.target.getAttribute("data-index"));

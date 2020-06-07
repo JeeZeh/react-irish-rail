@@ -76,7 +76,7 @@ export const StationSearch = (props: StationSearchProps) => {
     mouseOver: false,
   });
 
-  const isPortable = useWindowSize().width < 900;
+  const isPortable = useWindowSize().width <= 1000;
 
   useEffect(() => {
     setState({ ...state, fuse: new Fuse(props.stationList, FUSE_OPTIONS) });

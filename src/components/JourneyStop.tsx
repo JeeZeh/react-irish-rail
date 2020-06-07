@@ -114,7 +114,6 @@ export const StationDiv = styled.div<{ isPortable?: boolean }>`
   }
 `;
 
-
 export const smallify = (name: string, lite?: boolean): string => {
   name = name
     .replace(/\band\b/gi, "&")
@@ -133,7 +132,6 @@ export const smallify = (name: string, lite?: boolean): string => {
   return name;
 };
 
-
 export const JourneyStop = (props: JourneyStopProps) => {
   const {
     station,
@@ -144,7 +142,7 @@ export const JourneyStop = (props: JourneyStopProps) => {
     train,
   } = props;
 
-  const isPortable = useWindowSize().width < 900;
+  const isPortable = useWindowSize().width <= 1000;
 
   let time: string | React.ReactElement = "";
   let classes = "";

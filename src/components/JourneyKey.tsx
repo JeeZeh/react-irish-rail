@@ -56,7 +56,7 @@ const Key = styled.div<{ isPortable?: boolean }>`
 `;
 
 export const JourneyKey = () => {
-  const isPortable = useWindowSize().width < 900;
+  const isPortable = useWindowSize().width <= 1000;
   return (
     <Key isPortable={isPortable}>
       <StationDiv className="departed">

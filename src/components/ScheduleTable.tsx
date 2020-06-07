@@ -18,7 +18,7 @@ const Table = styled.div`
   font-family: "Lato", sans-serif;
   transition: border 0.08s ease-out;
 
-  @media only screen and (max-width: 900px) {
+  @media only screen and (max-width: 1000px) {
     padding: 0;
   }
 `;
@@ -62,7 +62,7 @@ interface JourneyCache {
 }
 
 const ScheduleTable = (props: { stationTrains: Train[] }) => {
-  const isPortable = useWindowSize().width < 900;
+  const isPortable = useWindowSize().width <= 1000;
   const { stationTrains } = props;
   const defaultSort = "Expdepart";
   console.log("Station set to", props.stationTrains[0].Stationfullname);

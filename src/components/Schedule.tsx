@@ -32,7 +32,7 @@ export const Card = styled.div<{ isPortable?: boolean }>`
     outline: none;
   }
 
-  @media only screen and (max-width: 900px) {
+  @media only screen and (max-width: 1000px) {
     max-width: 400px;
     margin: auto;
   }
@@ -52,7 +52,7 @@ export const CardHeader = styled.div<{ isPortable: boolean }>`
   align-self: center;
   padding-left: ${(p) => (p.isPortable ? 0 : 15)}px;
 
-  @media only screen and (max-width: 900px) {
+  @media only screen and (max-width: 1000px) {
     font-size: 1.6em;
   }
   @media only screen and (max-width: 400px) {
@@ -102,7 +102,7 @@ export const CardBody = styled.div`
 
 export const Schedule = (props: TrainScheduleProps) => {
   const { station, lookahead, handleStationClose } = props;
-  const isPortable = useWindowSize().width < 900;
+  const isPortable = useWindowSize().width <= 1000;
   const schedule = useRef<HTMLDivElement>();
 
   const [error, setError] = useState(null);

@@ -111,7 +111,7 @@ interface JoruneyMapProps {
 export const JourneyMap = (props: JoruneyMapProps) => {
   const { train, backgroundColor, getJourney, journeyProp, open } = props;
   const width = useWindowSize().width;
-  const isPortable = width < 900;
+  const isPortable = width <= 1000;
   const scrollerMargin = isPortable ? 0 : 30;
   const itemSize = 30;
   const [journey, setJourney] = useState<Journey>(null);

@@ -20,7 +20,7 @@ export const FavouritesList = styled.div`
   margin-top: 30px;
   width: 250px;
 
-  @media only screen and (max-width: 900px) {
+  @media only screen and (max-width: 1000px) {
     align-items: center;
     justify-self: center;
     text-align: center;
@@ -48,7 +48,7 @@ const SearchWrapper = styled.div`
     }
   }
 
-  @media only screen and (max-width: 900px) {
+  @media only screen and (max-width: 1000px) {
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -89,7 +89,7 @@ const Body = styled.div`
   @media only screen and (max-width: 1000px) {
     grid-template-columns: 5fr 3fr;
   }
-  @media only screen and (max-width: 900px) {
+  @media only screen and (max-width: 1000px) {
     grid-template-columns: auto;
     grid-template-areas:
       "head"
@@ -132,11 +132,15 @@ const Head = styled.div`
   align-items: flex-start;
   height: 100%;
 
-  @media only screen and (max-width: 900px) {
+  @media only screen and (max-width: 1000px) {
     padding: 15px 0;
     text-align: center;
     width: 100%;
     align-items: center;
+  }
+
+  @media only screen and (max-width: 1205px) {
+    padding-right: 5px;
   }
 `;
 
@@ -180,7 +184,7 @@ export const Prompt = styled.p`
 export const App = () => {
   const timeoutLength = 5000;
   const lookaheadOptions = [30, 60, 90, 120];
-  const isPortable = useWindowSize().width < 900;
+  const isPortable = useWindowSize().width <= 1000;
   const [lookahead, setLookahead] = useState(90);
   const [station, setStation] = useState<Station>(null);
   const [stationList, setStationList] = useState<Station[]>(null);
