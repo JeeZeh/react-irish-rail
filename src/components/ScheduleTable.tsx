@@ -111,7 +111,7 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
 
   const getJourney = async (journeyCode: string): Promise<Journey> => {
     // return testJourney();
-    const invalidateCacheAfter = 3000; // Invalidate after 3s
+    const invalidateCacheAfter = 30000; // Invalidate after 30s
     let time = Date.now();
     let cachedJourney = journeyCache.get(journeyCode) ?? null;
     if (!cachedJourney || cachedJourney.time > invalidateCacheAfter) {
