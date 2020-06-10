@@ -99,7 +99,7 @@ const CollapseWrap = styled.div<{ isPortable?: boolean }>`
   border: ${(p) => (p.isPortable ? `1px solid ${lightGrey}` : null)};
   outline: none;
   border-radius: 5px;
-  margin-top: 10px;
+  margin-top: 20px;
   width: ${(p) => (p.isPortable ? "100%" : "330px")};
 
   box-shadow: ${(p) => (p.isPortable ? `0 4px 0 ${lightGrey}` : null)};
