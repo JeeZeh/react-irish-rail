@@ -7,15 +7,14 @@ import Collapsible from "react-collapsible";
 import { JourneyMap } from "./JourneyMap";
 import { initJourneyLoader } from "../api/JourneyLoader";
 import { LoadingSpinner } from "./LoadingSpinner";
-
-const black = "#222";
-const lightBlack = "#444";
-const darkGrey = "#666";
-const subtleGrey = "#AAA";
-const mediumGrey = "#888";
-const lightGrey = "#CCC";
-const veryLightGrey = "#F4F4F4";
-const nearlyWhite = "#FAFAFA";
+import {
+  veryLightGrey,
+  lightGrey,
+  nearlyWhite,
+  mediumGrey,
+  black,
+  lightBlack,
+} from "./SharedStyles";
 
 const TrainCard = styled.div`
   display: flex;
@@ -125,7 +124,7 @@ export const JourneyButton = styled.button`
   height: 40px;
   background-color: ${nearlyWhite};
   outline: none;
-  border: 2px solid ${mediumGrey};
+  border: 1px solid ${lightGrey};
   border-radius: 4px;
   font-size: 18px;
   font-weight: 600;
@@ -137,7 +136,7 @@ export const JourneyButton = styled.button`
   align-items: center;
   align-self: center;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 0 ${lightGrey};
 
   display: flex;
   flex-direction: row;

@@ -96,13 +96,6 @@ export const ModalMenu = (props: ModalMenuProps) => {
           </CloseItem>
         </CloseModal>
         <InfoCard>
-          <H1A>Favourites</H1A>
-          <FavouriteStations
-            handleClick={props.onFavouriteSelect}
-            asGrid={true}
-          />
-        </InfoCard>
-        <InfoCard>
           <H1A margin="0 0 10px 0">Map Key</H1A>
           <JourneyKey />
         </InfoCard>

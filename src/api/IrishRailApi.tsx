@@ -1,5 +1,6 @@
 import * as parser from "fast-xml-parser";
 import * as he from "he";
+import { smallify } from "../components/JourneyStop";
 
 export default class IrishRailApi {
   private static API = window.location.host.includes("localhost")
@@ -153,6 +154,8 @@ export default class IrishRailApi {
     if (train.Origin === train.Stationfullname) {
       train.Exparrival = "";
     }
+
+    train.Lastlocation = smallify(train.Lastlocation);
     return train;
   }
 

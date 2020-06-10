@@ -34,7 +34,7 @@ export const LoadingSpinner = (props: LoadingSpinnerProps) => {
   useEffect(() => {
     console.log("mounting");
 
-    setTimeout(() => {
+    const fadeInTimeout = setTimeout(() => {
       setReady(true);
       setFade(true);
       console.log("fade delay");
@@ -42,6 +42,7 @@ export const LoadingSpinner = (props: LoadingSpinnerProps) => {
 
     return () => {
       console.log("unmounting");
+      clearTimeout(fadeInTimeout);
       setFade(false);
     };
   }, []);
