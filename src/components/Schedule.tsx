@@ -118,18 +118,18 @@ export const Schedule = (props: TrainScheduleProps) => {
   const [stationTrains, setStationTrains] = useState<Train[]>(null);
 
   useEffect(() => {
+    setIsLoaded(false);
     fetchStationData();
   }, [lookahead, station]);
 
   const fetchStationData = () => {
     const { station, lookahead } = props;
     if (!station) return;
-    setIsLoaded(false);
 
     IrishRailApi.getTrainsForStation(station, lookahead)
       .then(setStationTrains)
       .catch(setError)
-      .finally(() => setIsLoaded(true));
+      .finally(() => setTimeout(setIsLoaded(true), 0));
   };
 
   const handleKeyDown = (e) => {

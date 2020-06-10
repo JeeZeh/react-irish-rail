@@ -9,7 +9,7 @@ const rootEl = document.getElementById("root");
 const Root = styled.div`
   background-color: #fbfbfb;
   width: 100%;
-  min-height: 100vh;
+  min-height: 101vh;
 
   * {
     box-sizing: border-box;

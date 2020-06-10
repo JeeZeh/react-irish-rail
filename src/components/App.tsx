@@ -24,35 +24,35 @@ const SearchWrapper = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 10px;
   opacity: 0;
   transition: opacity 0.1s ease-out;
-
-  width: 90%;
 
   &.visible {
     opacity: 1;
   }
 
   & > div {
-    width: 45%;
+    width: 400px;
   }
 
   @media only screen and (max-width: 1205px) {
-    flex-direction: column;
-    justify-content: flex-start;
     & > div {
-      margin: 10px 0;
-      width: 100%;
+      width: 350px;
+      margin: 10px 10px 0 0;
     }
   }
 
   @media only screen and (max-width: 1000px) {
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    flex-direction: column;
     margin: auto;
-    width: 400px;
+    & > div {
+      margin: 10px 0;
+    }
+  }
+  @media only screen and (max-width: 400px) {
+    & > div {
+      width: 300px;
+    }
   }
 `;
 
@@ -118,11 +118,6 @@ const Head = styled.div`
   @media only screen and (max-width: 1205px) {
     padding-right: 5px;
   }
-`;
-
-export const SearchHeading = styled(H3A)`
-  font-weight: 700;
-  margin: 10px 0;
 `;
 
 const ModalButton = styled.button`
@@ -221,28 +216,29 @@ export const App = () => {
       <>
         <SearchWrapper className={stationList ? "visible" : null}>
           <div>
-            <SearchHeading>Find trains at</SearchHeading>
+            <H3A weight={700} margin="0 0 10px 0">
+              View upcoming trains at a station
+            </H3A>
             <StationSearch
               stationList={stationList}
               station={station}
               onStationChange={setStation}
             />
-          </div>
-          <div>
-            <SearchHeading>In the next</SearchHeading>
             <SearchParameters
               lookaheadOptions={lookaheadOptions}
               lookahead={lookahead}
               onLookaheadChange={setLookahead}
             />
           </div>
-          {stationList && (
-            <FavouriteStations
-              onFavouriteSelect={onFavouriteSelect}
-              forceOpen={!station || !isPortable}
-              favourites={favourites}
-            />
-          )}
+          <div>
+            {stationList && (
+              <FavouriteStations
+                onFavouriteSelect={onFavouriteSelect}
+                forceOpen={!station || !isPortable}
+                favourites={favourites}
+              />
+            )}
+          </div>
         </SearchWrapper>
         {!stationList && (
           <LoadingSpinner

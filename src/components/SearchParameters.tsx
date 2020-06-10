@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
-import { lightBlack, lightGrey } from "./SharedStyles";
+import { lightBlack, lightGrey, mediumGrey, subtleGrey } from "./SharedStyles";
+import { useWindowSize } from "../hooks/useWindowSize";
 
 interface SearchParamerersProps {
   lookaheadOptions: number[];
@@ -8,16 +9,18 @@ interface SearchParamerersProps {
   onLookaheadChange: (lookahead: number) => void;
 }
 
-const RadioSelect = styled.div`
+const RadioSelect = styled.div<{ isPortable?: boolean }>`
   display: inline-flex;
   flex-direction: row;
   border: 1px solid ${lightGrey};
-  border-radius: 5px;
+  border-radius: 0 0 5px 5px;
+  border-top-color: ${subtleGrey};
   background-color: whitesmoke;
   box-shadow: 0 4px 0 ${lightGrey};
   grid-area: paramsbar;
   justify-content: space-evenly;
   width: 100%;
+  height: 50px;
   max-width: 400px;
   overflow: hidden;
   user-select: none;
@@ -26,6 +29,8 @@ const RadioSelect = styled.div`
 const RadioButton = styled.button<{ selected?: boolean }>`
   font-size: 1em;
   display: flex;
+  justify-content: center;
+  width: 100%;
   align-items: center;
   font-weight: bold;
   overflow: hidden;
@@ -39,6 +44,7 @@ const RadioButton = styled.button<{ selected?: boolean }>`
 
 export const SearchParameters = (props: SearchParamerersProps) => {
   const { lookaheadOptions } = props;
+  const isPortable = useWindowSize().width <= 1000;
 
   const handleClick = (e) => {
     const newValue = parseInt(e.target.getAttribute("data-value"));
@@ -48,7 +54,7 @@ export const SearchParameters = (props: SearchParamerersProps) => {
   };
 
   return (
-    <RadioSelect>
+    <RadioSelect isPortable={isPortable}>
       {lookaheadOptions.map((o, i) => {
         return (
           <RadioButton

@@ -227,7 +227,7 @@ export const JourneyMap = (props: JoruneyMapProps) => {
           <LoadingSpinner
             color="#515773"
             size={16}
-            height="270px"
+            height="300px"
             width="100%"
             delay={500}
           />
