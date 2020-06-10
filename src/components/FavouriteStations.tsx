@@ -90,7 +90,7 @@ const OpenFavouriteStationButton = styled(JourneyButton)<{
   opacity: 1;
 
   &:hover {
-    opacity: 0.8;
+    opacity: ${(p) => (!p.isPortable ? 0.8 : 1)};
   }
 `;
 
@@ -129,20 +129,24 @@ const FavouritesCollapseHeader = styled(H3A)`
 `;
 
 export const FavouriteStations = (props: {
-  handleClick: (e) => void;
+  onFavouriteSelect: (e) => void;
   forceOpen?: boolean;
   favourites: string[];
 }) => {
-  const { handleClick, forceOpen, favourites } = props;
+  const { onFavouriteSelect, forceOpen, favourites } = props;
   const [favouritesList, _] = useState(favourites);
   if (favourites.length === 0) return null;
   const isPortable = useWindowSize().width <= 1000;
   const [open, setOpen] = useState(forceOpen ?? false);
+  const handleClick = (e) => {
+    onFavouriteSelect(e);
+    setOpen(false);
+  };
 
   return (
     <CollapseWrap isPortable={isPortable}>
       <Collapsible
-        open={forceOpen ?? false}
+        open={isPortable ? open : true}
         triggerDisabled={forceOpen ?? false}
         onOpening={() => setOpen(true)}
         onClosing={() => setOpen(false)}

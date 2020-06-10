@@ -238,7 +238,7 @@ export const App = () => {
           </div>
           {stationList && (
             <FavouriteStations
-              handleClick={onFavouriteSelect}
+              onFavouriteSelect={onFavouriteSelect}
               forceOpen={!station || !isPortable}
               favourites={favourites}
             />
