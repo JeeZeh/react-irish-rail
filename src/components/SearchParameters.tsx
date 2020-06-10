@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { SearchHeading } from "./App";
+import { lightBlack, lightGrey } from "./SharedStyles";
 
 interface SearchParamerersProps {
   lookaheadOptions: number[];
@@ -11,11 +11,13 @@ interface SearchParamerersProps {
 const RadioSelect = styled.div`
   display: inline-flex;
   flex-direction: row;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid ${lightGrey};
   border-radius: 5px;
   background-color: whitesmoke;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 0 ${lightGrey};
   grid-area: paramsbar;
+  justify-content: center;
+  width: 100%;
   overflow: hidden;
   user-select: none;
 `;

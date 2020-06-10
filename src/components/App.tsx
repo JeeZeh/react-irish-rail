@@ -14,24 +14,16 @@ import { useWindowSize } from "../hooks/useWindowSize";
 import { ModalMenu } from "./ModalMenu";
 import { About } from "./About";
 import { ErrorDialogue } from "./ErrorDialogue";
-
-export const FavouritesList = styled.div`
-  grid-area: schedule;
-  margin-top: 30px;
-  width: 250px;
-
-  @media only screen and (max-width: 900px) {
-    align-items: center;
-    justify-self: center;
-    text-align: center;
-  }
-`;
+import { lightGrey } from "./SharedStyles";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 const SearchWrapper = styled.div`
   grid-area: search;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 10px;
 
   width: 90%;
 
@@ -75,6 +67,7 @@ const Body = styled.div`
   grid-template-areas:
     "head key"
     "search key"
+    "favourites favourites"
     "schedule schedule";
   grid-template-columns: 7fr 2fr;
   margin: auto auto;
@@ -95,6 +88,7 @@ const Body = styled.div`
       "head"
       "key"
       "search"
+      "favourites"
       "schedule";
 
     padding: 0;
@@ -113,8 +107,8 @@ export const H1A = styled.h1<{ margin?: string }>`
   }
 `;
 
-export const H3A = styled.h3<{ margin?: string }>`
-  font-weight: 500;
+export const H3A = styled.h3<{ margin?: string; weight?: number }>`
+  font-weight: ${(p) => p.weight ?? 500};
   font-size: 1.3em;
   margin: ${(p) => p.margin ?? 0}; /* "10px 0 0 10px" */
 
@@ -159,7 +153,7 @@ const ModalButton = styled.button`
   width: 56px;
   height: 56px;
   border-radius: 10px;
-  box-shadow: 0 3px 8px #00000022;
+  box-shadow: 0 4px 4px ${lightGrey};
   z-index: 9;
   &:focus {
     outline: none;
@@ -186,7 +180,7 @@ export const App = () => {
   const [stationList, setStationList] = useState<Station[]>(null);
   const [waiting, setWaiting] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
-
+  const [favourites, _] = useLocalStorage<string[]>("favourites", []);
   const [modalOpen, setModelOpen] = useState(false);
 
   useEffect(() => {
@@ -256,11 +250,13 @@ export const App = () => {
               onLookaheadChange={setLookahead}
             />
           </div>
-          {isPortable ? (
-            <Prompt>
-              You can find your favourites in the menu at the bottom right.
-            </Prompt>
-          ) : null}
+          {stationList && (
+            <FavouriteStations
+              handleClick={onFavouriteSelect}
+              forceOpen={!station || !isPortable}
+              favourites={favourites}
+            />
+          )}
         </SearchWrapper>
       );
     } else {
@@ -303,7 +299,7 @@ export const App = () => {
 
       {renderSearch()}
 
-      {station ? (
+      {station && (
         <ScheduleWrapper>
           <Schedule
             station={station}
@@ -311,11 +307,6 @@ export const App = () => {
             handleStationClose={() => setStation(null)}
           />
         </ScheduleWrapper>
-      ) : isPortable ? null : (
-        <FavouritesList>
-          <SearchHeading>Favourite Stations</SearchHeading>
-          <FavouriteStations handleClick={onFavouriteSelect} asGrid={true} />
-        </FavouritesList>
       )}
     </Body>
   );

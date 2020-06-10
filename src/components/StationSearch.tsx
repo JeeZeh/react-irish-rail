@@ -5,6 +5,7 @@ import { Station } from "../api/IrishRailApi";
 import styled from "styled-components";
 import { FuzzyOverlay } from "./FuzzyOverlay";
 import { useWindowSize } from "../hooks/useWindowSize";
+import { lightGrey } from "./SharedStyles";
 
 export interface StationSearchState {
   fuseMatch: Fuse.FuseResult<Station>[];
@@ -34,10 +35,10 @@ const Input = styled.input`
   width: 100%;
   display: inline-block;
   padding: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid ${lightGrey};
   border-radius: 5px;
   outline: none;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 0 ${lightGrey};
   transition: all 0.1s ease-out;
 
   &:focus {

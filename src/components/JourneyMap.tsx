@@ -187,15 +187,6 @@ export const JourneyMap = (props: JoruneyMapProps) => {
     );
   };
 
-  const renderInfo = () => {
-    if (isPortable) return null;
-    return (
-      <InfoWrapper>
-        <JourneyInfo journey={journey} train={train} />
-      </InfoWrapper>
-    );
-  };
-
   return (
     <Wrapper
       isPortable={isPortable}
@@ -204,7 +195,11 @@ export const JourneyMap = (props: JoruneyMapProps) => {
     >
       {journey ? (
         <>
-          {renderInfo()}
+          {!isPortable && (
+            <InfoWrapper>
+              <JourneyInfo journey={journey} train={train} />
+            </InfoWrapper>
+          )}
           <Fade
             side={isPortable ? "top" : "left"}
             size={`${itemSize / 3}px`}

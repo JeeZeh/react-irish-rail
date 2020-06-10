@@ -8,6 +8,8 @@ import ScheduleTable from "./ScheduleTable";
 import { FavouriteHeart } from "./FavouriteStations";
 import { smallify } from "./JourneyStop";
 import { useWindowSize } from "../hooks/useWindowSize";
+import { subtleGrey, lightGrey, mediumGrey } from "./SharedStyles";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 export interface TrainScheduleProps {
   station: Station;
@@ -15,7 +17,7 @@ export interface TrainScheduleProps {
   handleStationClose: () => void;
 }
 
-export const Card = styled.div<{ isPortable?: boolean }>`
+export const Card = styled.div<{ isPortable?: boolean; fades?: boolean }>`
   background-color: #fefefe;
   display: grid;
   grid-template-areas:
@@ -28,8 +30,15 @@ export const Card = styled.div<{ isPortable?: boolean }>`
   border: 1px solid #ddd;
   border-radius: 8px;
   position: relative;
+  opacity: ${(p) => (p.fades ? 0 : 1)};
+  transition: opacity 0.2s ease-out;
+
   &:focus {
     outline: none;
+  }
+
+  &.visible {
+    opacity: 1;
   }
 
   @media only screen and (max-width: 900px) {
@@ -65,10 +74,10 @@ const CardToolbarButton = styled.div<{ gridColumn: number }>`
   justify-self: center;
   cursor: pointer;
   background-color: white;
-  border: 2px solid #444;
-  height: 60px;
-  width: 60px;
-  border-radius: 30px;
+  border: 1px solid ${subtleGrey};
+  height: 50px;
+  width: 50px;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,8 +85,8 @@ const CardToolbarButton = styled.div<{ gridColumn: number }>`
   align-self: center;
   grid-row: 1;
   opacity: 0.8;
-  transition: opacity 0.2s ease-out;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.1s ease-out;
+  box-shadow: 0 2px 0 ${subtleGrey};
 
   &:hover {
     opacity: 1;
@@ -104,7 +113,6 @@ export const Schedule = (props: TrainScheduleProps) => {
   const { station, lookahead, handleStationClose } = props;
   const isPortable = useWindowSize().width < 900;
   const schedule = useRef<HTMLDivElement>();
-
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [stationTrains, setStationTrains] = useState<Train[]>(null);
@@ -116,6 +124,7 @@ export const Schedule = (props: TrainScheduleProps) => {
   const fetchStationData = () => {
     const { station, lookahead } = props;
     if (!station) return;
+    setIsLoaded(false);
 
     IrishRailApi.getTrainsForStation(station, lookahead)
       .then(setStationTrains)
@@ -128,45 +137,58 @@ export const Schedule = (props: TrainScheduleProps) => {
       props.handleStationClose();
     }
   };
-
-  if (!station || !isLoaded) return null;
+  if (!station) return null;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <Card
-      onKeyDown={handleKeyDown}
-      tabIndex={-1}
-      ref={schedule}
-      isPortable={isPortable}
-    >
-      <CardToolbar isPortable={isPortable}>
-        <FavouriteHeart
-          stationName={station.StationDesc}
-          gridColumn={isPortable ? 3 : 1}
-        />
-        <CardHeader isPortable={isPortable}>
-          {smallify(station.StationDesc, true)}
-        </CardHeader>
-        {isPortable ? null : (
-          <CardToolbarButton gridColumn={3} onClick={handleStationClose}>
-            <X size={32} />
-          </CardToolbarButton>
-        )}
-      </CardToolbar>
+    <>
+      <Card
+        onKeyDown={handleKeyDown}
+        tabIndex={-1}
+        ref={schedule}
+        isPortable={isPortable}
+        fades={true}
+        className={isLoaded ? "visible" : null}
+      >
+        <CardToolbar isPortable={isPortable}>
+          <FavouriteHeart
+            stationName={station.StationDesc}
+            gridColumn={isPortable ? 3 : 1}
+          />
+          <CardHeader isPortable={isPortable}>
+            {smallify(station.StationDesc, true)}
+          </CardHeader>
+          {isPortable ? null : (
+            <CardToolbarButton gridColumn={3} onClick={handleStationClose}>
+              <X size={32} />
+            </CardToolbarButton>
+          )}
+        </CardToolbar>
 
-      {stationTrains.length === 0 ? (
-        <CardBody>
-          <Error>
-            No trains due at {station.StationDesc} for the next {lookahead}{" "}
-            minutes
-          </Error>
-        </CardBody>
-      ) : (
-        <CardBody>
-          {isLoaded ? <ScheduleTable stationTrains={stationTrains} /> : null}
-        </CardBody>
+        {stationTrains?.length === 0 ? (
+          <CardBody>
+            <Error>
+              No trains due at {station.StationDesc} for the next {lookahead}{" "}
+              minutes
+            </Error>
+          </CardBody>
+        ) : (
+          <CardBody>
+            {isLoaded ? <ScheduleTable stationTrains={stationTrains} /> : null}
+          </CardBody>
+        )}
+      </Card>
+
+      {!isLoaded && (
+        <LoadingSpinner
+          color="#515773"
+          size={16}
+          height="270px"
+          width="100%"
+          delay={0}
+        />
       )}
-    </Card>
+    </>
   );
 };
 

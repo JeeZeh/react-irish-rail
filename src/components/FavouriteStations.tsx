@@ -1,9 +1,14 @@
 import * as React from "react";
+import { useState } from "react";
 import { JourneyButton } from "./MobileTrainCard";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { Heart } from "react-feather";
+import { Heart, ChevronsDown } from "react-feather";
 import styled from "styled-components";
 import { smallify } from "./JourneyStop";
+import Collapsible from "react-collapsible";
+import { H3A, Prompt } from "./App";
+import { subtleGrey, black, lightGrey } from "./SharedStyles";
+import { useWindowSize } from "../hooks/useWindowSize";
 
 const FavouriteHeartWrapper = styled.div<{ gridColumn: number }>`
   cursor: pointer;
@@ -13,14 +18,14 @@ const FavouriteHeartWrapper = styled.div<{ gridColumn: number }>`
   fill: none;
   transition: all 0.2s ease-out;
   background-color: white;
-  border: 2px solid #444;
-  height: 60px;
-  width: 60px;
-  border-radius: 30px;
+  border: 1px solid ${subtleGrey};
+  height: 50px;
+  width: 50px;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 0 ${subtleGrey};
 
   &:hover {
     opacity: 1;
@@ -56,7 +61,7 @@ export const FavouriteHeart = (props: {
       onClick={(_) => handleFavouriteClick(stationName)}
     >
       <Heart
-        size={32}
+        size={28}
         fill={favourites.includes(stationName) ? "pink" : null}
         opacity={favourites.includes(stationName) ? "pink" : null}
       />
@@ -64,12 +69,15 @@ export const FavouriteHeart = (props: {
   );
 };
 
-const MobileWrap = styled.div`
+const ListWrap = styled.div<{ isPortable?: boolean }>`
   display: flex;
   flex-wrap: wrap;
+  padding: ${(p) => (p.isPortable ? "0 15px 15px 15px" : "5px 0")};
 `;
 
-const MobileListItem = styled(JourneyButton)`
+const OpenFavouriteStationButton = styled(JourneyButton)<{
+  isPortable?: boolean;
+}>`
   grid-area: none;
   display: flex;
   width: auto;
@@ -77,27 +85,90 @@ const MobileListItem = styled(JourneyButton)`
   margin: 5px;
   height: 40px;
   transition: box-shadow 0.2s ease-out, opacity 0.2s ease-out;
+  box-shadow: ${(p) => (!p.isPortable ? `0 2px 0 ${lightGrey}` : null)};
+
   opacity: 1;
 
   &:hover {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     opacity: 0.8;
+  }
+`;
+
+const CollapseWrap = styled.div<{ isPortable?: boolean }>`
+  grid-area: favourites;
+  justify-self: ${(p) => (p.isPortable ? "center" : "flex-start")};
+  border: ${(p) => (p.isPortable ? `1px solid ${lightGrey}` : null)};
+  outline: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  width: ${(p) => (p.isPortable ? "100%" : "330px")};
+
+  box-shadow: ${(p) => (p.isPortable ? `0 4px 0 ${lightGrey}` : null)};
+`;
+
+const CollapseHeader = styled.div<{ open?: boolean; isPortable?: boolean }>`
+  display: flex;
+  cursor: ${(p) => (p.isPortable ? "pointer" : "default")};
+  justify-content: space-between;
+  padding: ${(p) => (p.isPortable ? "15px 20px" : 0)};
+
+  align-items: center;
+  color: ${black};
+  & > div {
+    display: flex;
+    align-items: center;
+    transform: ${(p) => (p.open ? "rotate(180deg)" : null)};
+    transition: transform 0.18s ease-out;
+    margin-left: 10px;
   }
 `;
 
 export const FavouriteStations = (props: {
   handleClick: (e) => void;
-  asGrid?: boolean;
+  forceOpen?: boolean;
+  favourites: string[];
 }) => {
-  const [favourites, _] = useLocalStorage<string[]>("favourites", []);
-  const { handleClick } = props;
+  const { handleClick, forceOpen, favourites } = props;
+  const [favouritesList, _] = useState(favourites);
   if (favourites.length === 0) return null;
+  const isPortable = useWindowSize().width <= 1000;
+  const [open, setOpen] = useState(forceOpen ?? false);
 
   return (
-    <MobileWrap>
-      {favourites.map((f, i) => (
-        <MobileListItem key={i} onClick={handleClick} children={smallify(f)} />
-      ))}
-    </MobileWrap>
+    <CollapseWrap isPortable={isPortable}>
+      <Collapsible
+        open={forceOpen ?? false}
+        triggerDisabled={forceOpen ?? false}
+        onOpening={() => setOpen(true)}
+        onClosing={() => setOpen(false)}
+        trigger={
+          <CollapseHeader open={open} isPortable={isPortable}>
+            <H3A weight={700}>Favourite Stations</H3A>
+            {!forceOpen && (
+              <div>
+                <ChevronsDown size={30} />
+              </div>
+            )}
+          </CollapseHeader>
+        }
+        transitionTime={180}
+        easing={"ease-out"}
+      >
+        <ListWrap isPortable={isPortable}>
+          {favouritesList.map((f, i) => (
+            <OpenFavouriteStationButton
+              key={i}
+              onClick={handleClick}
+              children={smallify(f)}
+            />
+          ))}
+          {favouritesList.length === 0 && (
+            <Prompt>
+              Favourited stations will appear here for quick access!
+            </Prompt>
+          )}
+        </ListWrap>
+      </Collapsible>
+    </CollapseWrap>
   );
 };
