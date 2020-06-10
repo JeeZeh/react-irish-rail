@@ -29,7 +29,7 @@ const Search = styled.div`
   width: 100%;
 `;
 
-const Input = styled.input`
+const Input = styled.input<{ isPortable?: boolean }>`
   background: whitesmoke;
   font-size: 0.95em;
   width: 100%;
@@ -40,12 +40,12 @@ const Input = styled.input`
   border-radius: 5px 5px 0 0;
   border-bottom: none;
   outline: none;
-  /* box-shadow: 0 4px 0 ${lightGrey}; */
+  box-shadow: ${(p) => (!p.isPortable ? `0 4px 4px ${lightGrey}` : null)};
   transition: all 0.1s ease-out;
 
   &:focus {
     background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.6);
+    border: 1px solid ${subtleGrey};
     border-bottom: none;
     transition: all 0.05s ease-out;
   }
@@ -142,6 +142,7 @@ export const StationSearch = (props: StationSearchProps) => {
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           value={state.input}
+          isPortable={isPortable}
           placeholder="Type a station name"
           aria-label="Input box for searching a station"
         />

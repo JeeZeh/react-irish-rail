@@ -35,6 +35,7 @@ export const Fade = styled.div<{
   height: ${(p) => (p.side === "bottom" || p.side === "top" ? p.size : "100%")};
   z-index: 1;
   pointer-events: none;
+  overflow: hidden;
   background-image: linear-gradient(
     to ${(p) => p.side},
     ${(p) => (p.backgroundColor ? p.backgroundColor : "#fefefe")}00,

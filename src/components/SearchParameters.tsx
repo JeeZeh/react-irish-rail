@@ -16,7 +16,6 @@ const RadioSelect = styled.div<{ isPortable?: boolean }>`
   border-radius: 0 0 5px 5px;
   border-top-color: ${subtleGrey};
   background-color: whitesmoke;
-  box-shadow: 0 4px 0 ${lightGrey};
   grid-area: paramsbar;
   justify-content: space-evenly;
   width: 100%;
@@ -24,6 +23,9 @@ const RadioSelect = styled.div<{ isPortable?: boolean }>`
   max-width: 400px;
   overflow: hidden;
   user-select: none;
+  z-index: 1;
+  box-shadow: ${(p) => (!p.isPortable ? `0 4px 4px ${lightGrey}` : null)};
+  ${(p) => (!p.isPortable ? "position: relative" : null)};
 `;
 
 const RadioButton = styled.button<{ selected?: boolean }>`

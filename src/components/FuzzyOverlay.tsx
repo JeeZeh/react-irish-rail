@@ -5,6 +5,7 @@ import { FuseResult } from "fuse.js";
 import { Fade } from "./JourneyMap";
 import { FixedSizeList as List } from "react-window";
 import { useWindowSize } from "../hooks/useWindowSize";
+import { lightGrey, lightBlack, darkGrey, subtleGrey } from "./SharedStyles";
 
 export interface FuzzyOverlayProps {
   fuzzyList: FuseResult<Station>[];
@@ -12,12 +13,12 @@ export interface FuzzyOverlayProps {
   onFuzzySelect: (refIndex: number) => void;
 }
 
-export const ItemList = styled.div`
+export const ItemList = styled.div<{ isPortable?: boolean }>`
   background: white;
   position: relative;
-  border: 1px rgba(0, 0, 0, 0.2) solid;
+  border: 1px solid ${subtleGrey};
   overflow: hidden;
-  border-radius: 5px;
+  border-radius: ${(p) => (p.isPortable ? "5px" : "0 0 5px 5px")};
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 `;
 

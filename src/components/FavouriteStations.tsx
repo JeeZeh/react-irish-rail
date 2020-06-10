@@ -6,8 +6,7 @@ import { Heart, ChevronsDown } from "react-feather";
 import styled from "styled-components";
 import { smallify } from "./JourneyStop";
 import Collapsible from "react-collapsible";
-import { Prompt } from "./App";
-import { subtleGrey, black, lightGrey, H3A } from "./SharedStyles";
+import { subtleGrey, black, lightGrey, H3A, mediumGrey } from "./SharedStyles";
 import { useWindowSize } from "../hooks/useWindowSize";
 
 const FavouriteHeartWrapper = styled.div<{ gridColumn: number }>`
@@ -69,6 +68,20 @@ export const FavouriteHeart = (props: {
   );
 };
 
+export const Prompt = styled.p<{ isPortable?: boolean }>`
+  max-width: 320px;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  color: ${subtleGrey};
+  margin: ${(p) => (p.isPortable ? "auto" : "0")};
+
+  & svg {
+    margin: 0 5px;
+  }
+`;
+
 const ListWrap = styled.div<{ isPortable?: boolean }>`
   display: flex;
   flex-wrap: wrap;
@@ -112,6 +125,7 @@ const CollapseHeader = styled.div<{ open?: boolean; isPortable?: boolean }>`
 
   align-items: center;
   color: ${black};
+  height: ${(p) => (p.isPortable ? "60px" : "auto")};
   & > div {
     display: flex;
     align-items: center;
@@ -134,7 +148,6 @@ export const FavouriteStations = (props: {
 }) => {
   const { onFavouriteSelect, forceOpen, favourites } = props;
   const [favouritesList, _] = useState(favourites);
-  if (favourites.length === 0) return null;
   const isPortable = useWindowSize().width <= 1000;
   const [open, setOpen] = useState(forceOpen ?? false);
   const handleClick = (e) => {
@@ -173,8 +186,8 @@ export const FavouriteStations = (props: {
             />
           ))}
           {favouritesList.length === 0 && (
-            <Prompt>
-              Favourited stations will appear here for quick access!
+            <Prompt isPortable={isPortable}>
+              Favourite <Heart size={16} /> a station to see it here
             </Prompt>
           )}
         </ListWrap>

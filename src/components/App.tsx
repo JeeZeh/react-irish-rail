@@ -38,7 +38,7 @@ const SearchWrapper = styled.div`
   @media only screen and (max-width: 1205px) {
     & > div {
       width: 350px;
-      margin: 10px 10px 0 0;
+      margin: 20px 20px 0 0;
     }
   }
 
@@ -143,13 +143,6 @@ const ModalButton = styled.button`
   & svg {
     color: #444;
   }
-`;
-
-export const Prompt = styled.p`
-  font-style: italic;
-  max-width: 320px;
-  font-size: 16px;
-  font-weight: 600;
 `;
 
 export const App = () => {
