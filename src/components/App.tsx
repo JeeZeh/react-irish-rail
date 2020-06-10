@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
 import styled from "styled-components";
-import { Menu } from "react-feather";
+import { Info } from "react-feather";
 import Schedule from "./Schedule";
 import { StationSearch } from "./StationSearch";
 import IrishRailApi, { Station } from "../api/IrishRailApi";
@@ -276,7 +276,7 @@ export const App = () => {
       )}
       {isPortable ? (
         <ModalButton onClick={() => setModelOpen(true)}>
-          <Menu size={28} />
+          <Info size={28} />
         </ModalButton>
       ) : null}
       {modalOpen ? (
