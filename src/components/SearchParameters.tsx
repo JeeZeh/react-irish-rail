@@ -16,8 +16,9 @@ const RadioSelect = styled.div`
   background-color: whitesmoke;
   box-shadow: 0 4px 0 ${lightGrey};
   grid-area: paramsbar;
-  justify-content: center;
+  justify-content: space-evenly;
   width: 100%;
+  max-width: 400px;
   overflow: hidden;
   user-select: none;
 `;

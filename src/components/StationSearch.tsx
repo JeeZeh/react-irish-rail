@@ -80,8 +80,10 @@ export const StationSearch = (props: StationSearchProps) => {
   const isPortable = useWindowSize().width <= 1000;
 
   useEffect(() => {
-    setState({ ...state, fuse: new Fuse(props.stationList, FUSE_OPTIONS) });
-  }, []);
+    if (props.stationList) {
+      setState({ ...state, fuse: new Fuse(props.stationList, FUSE_OPTIONS) });
+    }
+  }, [props.stationList]);
 
   const handleKeyDown = (e) => {
     const { cursor, fuseMatch } = state;

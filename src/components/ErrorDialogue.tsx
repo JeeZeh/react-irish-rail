@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import { LifeBuoy } from "react-feather";
-import { H1A } from "./App";
+import { H1A } from "./SharedStyles";
 
 const Error = styled.div`
   text-align: center;

@@ -6,8 +6,8 @@ import { Heart, ChevronsDown } from "react-feather";
 import styled from "styled-components";
 import { smallify } from "./JourneyStop";
 import Collapsible from "react-collapsible";
-import { H3A, Prompt } from "./App";
-import { subtleGrey, black, lightGrey } from "./SharedStyles";
+import { Prompt } from "./App";
+import { subtleGrey, black, lightGrey, H3A } from "./SharedStyles";
 import { useWindowSize } from "../hooks/useWindowSize";
 
 const FavouriteHeartWrapper = styled.div<{ gridColumn: number }>`
@@ -95,7 +95,6 @@ const OpenFavouriteStationButton = styled(JourneyButton)<{
 `;
 
 const CollapseWrap = styled.div<{ isPortable?: boolean }>`
-  grid-area: favourites;
   justify-self: ${(p) => (p.isPortable ? "center" : "flex-start")};
   border: ${(p) => (p.isPortable ? `1px solid ${lightGrey}` : null)};
   outline: none;
@@ -123,6 +122,12 @@ const CollapseHeader = styled.div<{ open?: boolean; isPortable?: boolean }>`
   }
 `;
 
+const FavouritesCollapseHeader = styled(H3A)`
+  @media only screen and (max-width: 400px) {
+    font-size: 1.2em;
+  }
+`;
+
 export const FavouriteStations = (props: {
   handleClick: (e) => void;
   forceOpen?: boolean;
@@ -143,7 +148,9 @@ export const FavouriteStations = (props: {
         onClosing={() => setOpen(false)}
         trigger={
           <CollapseHeader open={open} isPortable={isPortable}>
-            <H3A weight={700}>Favourite Stations</H3A>
+            <FavouritesCollapseHeader weight={700}>
+              Favourite Stations
+            </FavouritesCollapseHeader>
             {!forceOpen && (
               <div>
                 <ChevronsDown size={30} />

@@ -14,7 +14,7 @@ import { useWindowSize } from "../hooks/useWindowSize";
 import { ModalMenu } from "./ModalMenu";
 import { About } from "./About";
 import { ErrorDialogue } from "./ErrorDialogue";
-import { lightGrey } from "./SharedStyles";
+import { lightGrey, H3A, H1A } from "./SharedStyles";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LoadingSpinner } from "./LoadingSpinner";
 
@@ -22,10 +22,17 @@ const SearchWrapper = styled.div`
   grid-area: search;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 10px;
+  opacity: 0;
+  transition: opacity 0.1s ease-out;
 
   width: 90%;
+
+  &.visible {
+    opacity: 1;
+  }
 
   & > div {
     width: 45%;
@@ -45,15 +52,14 @@ const SearchWrapper = styled.div`
     justify-content: center;
     text-align: center;
     margin: auto;
-    & > div {
-      width: 320px;
-    }
+    width: 400px;
   }
 `;
 
 const ScheduleWrapper = styled.div`
   margin-top: 20px;
   grid-area: schedule;
+  margin-bottom: 400px;
 `;
 
 const KeyWrapper = styled.div`
@@ -67,7 +73,6 @@ const Body = styled.div`
   grid-template-areas:
     "head key"
     "search key"
-    "favourites favourites"
     "schedule schedule";
   grid-template-columns: 7fr 2fr;
   margin: auto auto;
@@ -88,32 +93,9 @@ const Body = styled.div`
       "head"
       "key"
       "search"
-      "favourites"
       "schedule";
 
     padding: 0;
-  }
-`;
-
-export const H1A = styled.h1<{ margin?: string }>`
-  font-weight: 700;
-  margin: ${(p) => p.margin ?? 0};
-  @media only screen and (max-width: 500px) {
-    font-size: 2em;
-  }
-
-  @media only screen and (max-width: 400px) {
-    font-size: 1.4em;
-  }
-`;
-
-export const H3A = styled.h3<{ margin?: string; weight?: number }>`
-  font-weight: ${(p) => p.weight ?? 500};
-  font-size: 1.3em;
-  margin: ${(p) => p.margin ?? 0}; /* "10px 0 0 10px" */
-
-  @media only screen and (max-width: 400px) {
-    font-size: 1em;
   }
 `;
 
@@ -235,9 +217,9 @@ export const App = () => {
   };
 
   const renderSearch = () => {
-    if (stationList) {
-      return (
-        <SearchWrapper>
+    return (
+      <>
+        <SearchWrapper className={stationList ? "visible" : null}>
           <div>
             <SearchHeading>Find trains at</SearchHeading>
             <StationSearch
@@ -262,10 +244,17 @@ export const App = () => {
             />
           )}
         </SearchWrapper>
-      );
-    } else {
-      return null;
-    }
+        {!stationList && (
+          <LoadingSpinner
+            color="#515773"
+            size={16}
+            height="270px"
+            width="100%"
+            delay={0}
+          />
+        )}
+      </>
+    );
   };
 
   if (error) {

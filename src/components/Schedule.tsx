@@ -37,6 +37,10 @@ export const Card = styled.div<{ isPortable?: boolean; fades?: boolean }>`
     outline: none;
   }
 
+  &.visible {
+    opacity: 1;
+  }
+
   @media only screen and (max-width: 1000px) {
     max-width: 400px;
     margin: auto;

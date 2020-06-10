@@ -5,9 +5,9 @@ import { JourneyKey } from "./JourneyKey";
 import { About } from "./About";
 import { XCircle } from "react-feather";
 import { Card } from "./Schedule";
-import { H1A } from "./App";
 import { Divider } from "./MobileTrainCard";
 import { FavouriteStations } from "./FavouriteStations";
+import { H1A } from "./SharedStyles";
 
 const Overlay = styled.div`
   position: fixed;
