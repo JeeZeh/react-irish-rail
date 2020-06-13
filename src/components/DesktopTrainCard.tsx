@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Journey, Train } from "../api/IrishRailApi";
 import Collapsible from "react-collapsible";
 import { JourneyMap } from "./JourneyMap";
+import moment = require("moment");
 
 const Row = styled.div`
   padding-top: 15px;
@@ -42,7 +43,11 @@ export const DesktopTrainCard = (props: {
             data-traincode={train.Traincode}
           >
             {scheduleColumns.map((c) => (
-              <div key={c.propName}>{train[c.propName]}</div>
+              <div key={c.propName}>
+                {moment.isMoment(train[c.propName])
+                  ? (train[c.propName] as moment.Moment).format("HH:mm")
+                  : train[c.propName]}
+              </div>
             ))}
           </DesktopTrainRow>
         }

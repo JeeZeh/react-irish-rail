@@ -8,7 +8,6 @@ import { ArrowDown, ArrowUp } from "react-feather";
 import { MobileTrainCard } from "./MobileTrainCard";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { DesktopTrainCard } from "./DesktopTrainCard";
-import { testJourney } from "../api/JourneyLoader";
 
 const Table = styled.div`
   display: flex;
@@ -64,8 +63,7 @@ interface JourneyCache {
 const ScheduleTable = (props: { stationTrains: Train[] }) => {
   const isPortable = useWindowSize().width <= 1000;
   const { stationTrains } = props;
-  const defaultSort = "Expdepart";
-  console.log("Station set to", props.stationTrains[0].Stationfullname);
+  const defaultSort = "Exparrive";
   const [sort, setSort] = useState({ col: defaultSort, dir: 1 }); // 1 = Ascending, -1 Descending
   const [journeyCache, setJourneyCache] = useState(
     new Map<string, JourneyCache>()
@@ -80,7 +78,6 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
   useEffect(() => {
     const { col, dir } = sort;
     if (col && dir !== 0) {
-      console.log("sorting by:", col, dir);
       setSortedTrainData(
         [...stationTrains].sort((a, b) => {
           return (a[col] >= b[col] ? 1 : -1) * dir;
@@ -106,13 +103,9 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
     } else {
       setSort({ col, dir: 1 });
     }
-    console.log("Updated sorting");
   };
 
   const getJourney = async (journeyCode: string): Promise<Journey> => {
-    // return testJourney();
-    console.log("Caching");
-
     const invalidateCacheAfter = 30000; // Invalidate after 30s
     let time = Date.now();
     let cachedJourney = journeyCache.get(journeyCode) ?? null;
@@ -175,29 +168,29 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
 
 export default hot(module)(ScheduleTable);
 
-const testTrain: Train = {
-  Servertime: null,
-  Traincode: null,
-  Stationfullname: null,
-  Stationcode: null,
-  Querytime: null,
-  Traindate: null,
-  Origin: "Dublin Connolly",
-  Destination: "Limerick Junction",
-  Origintime: "13:42",
-  Destinationtime: "15:55",
-  Status: null,
-  Lastlocation: null,
-  Duein: null,
-  Late: null,
-  Exparrival: "14:26",
-  Expdepart: "14:30",
-  Scharrival: null,
-  Schdepart: null,
-  Direction: null,
-  Traintype: null,
-  Locationtype: null,
-};
+// const testTrain: Train = {
+//   Servertime: null,
+//   Traincode: null,
+//   Stationfullname: null,
+//   Stationcode: null,
+//   Querytime: null,
+//   Traindate: null,
+//   Origin: "Dublin Connolly",
+//   Destination: "Limerick Junction",
+//   Origintime: "13:42",
+//   Destinationtime: "15:55",
+//   Status: null,
+//   Lastlocation: null,
+//   Duein: null,
+//   Late: null,
+//   Exparrival: "14:26",
+//   Expdepart: "14:30",
+//   Scharrival: null,
+//   Schdepart: null,
+//   Direction: null,
+//   Traintype: null,
+//   Locationtype: null,
+// };
 
 export const scheduleColumns: Array<{
   dispName: string;

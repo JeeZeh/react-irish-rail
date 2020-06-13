@@ -32,7 +32,7 @@ export const useLocalStorage = <T,>(key, initialValue): [T, (x: T) => void] => {
       window.localStorage.setItem(key, JSON.stringify(valueToStore));
     } catch (error) {
       // A more advanced implementation would handle the error case
-      console.log(error);
+      console.error(error);
     }
   };
   return [storedValue, setValue];

@@ -111,8 +111,6 @@ export const StationSearch = (props: StationSearchProps) => {
 
   const handleChange = (e) => {
     const pattern = e.target.value;
-    console.log(state.fuse);
-
     setState({
       ...state,
       input: pattern,

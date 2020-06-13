@@ -48,7 +48,6 @@ export const FavouriteHeart = (props: {
     } else {
       favSet.add(stationName);
     }
-    console.log(favSet, stationName);
 
     setFavourites(Array.from(favSet));
   };

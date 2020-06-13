@@ -1,6 +1,7 @@
 import * as parser from "fast-xml-parser";
 import * as he from "he";
 import { smallify } from "../components/JourneyStop";
+import moment = require("moment");
 
 export default class IrishRailApi {
   private static API = window.location.host.includes("localhost")
@@ -106,9 +107,23 @@ export default class IrishRailApi {
   private static parseXmlTrainJourney(xml: string): Journey {
     const parsedXml = parser.parse(xml, this.XML_OPTIONS);
     if (parsedXml.ArrayOfObjTrainMovements[0]) {
-      const movements: Movement[] =
+      let movements: Movement[] =
         parsedXml.ArrayOfObjTrainMovements[0].objTrainMovements;
-      return { stops: movements.filter((loc) => loc.LocationType !== "T") };
+
+      movements = movements
+        .filter((loc) => loc.LocationType !== "T")
+        .map((m) => {
+          stopDateProps.forEach((prop) => {
+            if (m[prop]) {
+              m[prop] = moment(
+                `${m.TrainDate} ${m[prop]}`,
+                "DD MMM YYYY HH:mm:SS"
+              );
+            }
+          });
+          return m;
+        });
+      return { stops: movements };
     }
     return { stops: [] };
   }
@@ -122,7 +137,7 @@ export default class IrishRailApi {
       try {
         const response = await fetch(endpoint);
         const stationData = this.parseXmlStationData(await response.text()).map(
-          this.cleanData
+          this.cleanTrainData
         );
         resolve(stationData);
       } catch (error) {
@@ -147,13 +162,22 @@ export default class IrishRailApi {
     });
   }
 
-  private static cleanData(train: Train) {
+  private static cleanTrainData(train: Train) {
     if (train.Destination === train.Stationfullname) {
-      train.Expdepart = "";
+      train.Expdepart = train.Exparrival;
     }
     if (train.Origin === train.Stationfullname) {
-      train.Exparrival = "";
+      train.Exparrival = train.Expdepart;
     }
+
+    trainDateProps.forEach((prop) => {
+      if (train.hasOwnProperty(prop)) {
+        train[prop] = moment(
+          `${train.Traindate} ${train[prop]}`,
+          "DD MMM YYYY HH:mm"
+        );
+      }
+    });
 
     train.Lastlocation = smallify(train.Lastlocation);
     return train;
@@ -182,16 +206,16 @@ export interface Train {
   Traindate: string;
   Origin: string;
   Destination: string;
-  Origintime: string;
-  Destinationtime: string;
+  Origintime: moment.Moment;
+  Destinationtime: moment.Moment;
   Status: string;
   Lastlocation: string;
   Duein: number;
   Late: number;
-  Exparrival: string;
-  Expdepart: string;
-  Scharrival: string;
-  Schdepart: string;
+  Exparrival: moment.Moment;
+  Expdepart: moment.Moment;
+  Scharrival: moment.Moment;
+  Schdepart: moment.Moment;
   Direction: string;
   Traintype: string;
   Locationtype: string;
@@ -210,12 +234,12 @@ export interface Movement {
   LocationType: string;
   TrainOrigin: string;
   TrainDestination: string;
-  ScheduledArrival: string;
-  ScheduledDeparture: string;
-  ExpectedArrival: string;
-  ExpectedDeparture: string;
-  Arrival: string;
-  Departure: string;
+  ScheduledArrival: moment.Moment;
+  ScheduledDeparture: moment.Moment;
+  ExpectedArrival: moment.Moment;
+  ExpectedDeparture: moment.Moment;
+  Arrival: moment.Moment;
+  Departure: moment.Moment;
   AutoArrival: number;
   AutoDepart: number;
   StopType: string;
@@ -229,3 +253,21 @@ export interface Station {
   StationLongitude: number;
   StationId: number;
 }
+
+const trainDateProps = [
+  "Exparrival",
+  "Expdepart",
+  "Destinationtime",
+  "Origintime",
+  "Scharrival",
+  "Schdepart",
+];
+
+const stopDateProps = [
+  "ExpectedArrival",
+  "ExpectedDeparture",
+  "Arrival",
+  "Departure",
+  "ScheduledArrival",
+  "ScheduledDeparture",
+];

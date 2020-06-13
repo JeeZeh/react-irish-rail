@@ -41,11 +41,11 @@ export const JourneyInfo = (props: { journey: Journey; train: Train }) => {
     <Info>
       <Header>Journey Information</Header>
       <Entry>
-        <Title>Origin · {train.Origintime}</Title>
+        <Title>Origin · {train.Origintime.format("HH:mm")}</Title>
         <Value>{train.Origin}</Value>
       </Entry>
       <Entry>
-        <Title>Destination · {train.Destinationtime}</Title>
+        <Title>Destination · {train.Destinationtime.format("HH:mm")}</Title>
         <Value>{train.Destination}</Value>
       </Entry>
       <Entry>

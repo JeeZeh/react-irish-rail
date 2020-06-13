@@ -5,7 +5,7 @@ import IrishRailApi, { Train, Station } from "../api/IrishRailApi";
 import styled from "styled-components";
 import { X } from "react-feather";
 import ScheduleTable from "./ScheduleTable";
-import { FavouriteHeart } from "./FavouriteStations";
+import { FavouriteHeart, Prompt } from "./FavouriteStations";
 import { smallify } from "./JourneyStop";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { subtleGrey, lightGrey, mediumGrey } from "./SharedStyles";
@@ -13,8 +13,10 @@ import { LoadingSpinner } from "./LoadingSpinner";
 
 export interface TrainScheduleProps {
   station: Station;
+  stationTrains: Train[];
   lookahead: number;
   handleStationClose: () => void;
+  onError: () => void;
 }
 
 export const Card = styled.div<{ isPortable?: boolean; fades?: boolean }>`
@@ -30,15 +32,9 @@ export const Card = styled.div<{ isPortable?: boolean; fades?: boolean }>`
   border: 1px solid #ddd;
   border-radius: 8px;
   position: relative;
-  opacity: ${(p) => (p.fades ? 0 : 1)};
-  transition: opacity 0.2s ease-out;
 
   &:focus {
     outline: none;
-  }
-
-  &.visible {
-    opacity: 1;
   }
 
   @media only screen and (max-width: 1000px) {
@@ -110,35 +106,16 @@ export const CardBody = styled.div`
 `;
 
 export const Schedule = (props: TrainScheduleProps) => {
-  const { station, lookahead, handleStationClose } = props;
+  const { station, lookahead, stationTrains, handleStationClose } = props;
   const isPortable = useWindowSize().width <= 1000;
   const schedule = useRef<HTMLDivElement>();
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [stationTrains, setStationTrains] = useState<Train[]>(null);
-
-  useEffect(() => {
-    setIsLoaded(false);
-    fetchStationData();
-  }, [lookahead, station]);
-
-  const fetchStationData = () => {
-    const { station, lookahead } = props;
-    if (!station) return;
-
-    IrishRailApi.getTrainsForStation(station, lookahead)
-      .then(setStationTrains)
-      .catch(setError)
-      .finally(() => setTimeout(setIsLoaded(true), 0));
-  };
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 27) {
       props.handleStationClose();
     }
   };
-  if (!station) return null;
-  if (error) return <div>Error: {error.message}</div>;
+  if (!station || !stationTrains) return null;
 
   return (
     <>
@@ -148,7 +125,6 @@ export const Schedule = (props: TrainScheduleProps) => {
         ref={schedule}
         isPortable={isPortable}
         fades={true}
-        className={isLoaded ? "visible" : null}
       >
         <CardToolbar isPortable={isPortable}>
           <FavouriteHeart
@@ -165,7 +141,7 @@ export const Schedule = (props: TrainScheduleProps) => {
           )}
         </CardToolbar>
 
-        {stationTrains?.length === 0 ? (
+        {stationTrains.length === 0 ? (
           <CardBody>
             <Error>
               No trains due at {station.StationDesc} for the next {lookahead}{" "}
@@ -174,20 +150,10 @@ export const Schedule = (props: TrainScheduleProps) => {
           </CardBody>
         ) : (
           <CardBody>
-            {isLoaded ? <ScheduleTable stationTrains={stationTrains} /> : null}
+            <ScheduleTable stationTrains={stationTrains} />
           </CardBody>
         )}
       </Card>
-
-      {!isLoaded && (
-        <LoadingSpinner
-          color="#515773"
-          size={16}
-          height="270px"
-          width="100%"
-          delay={0}
-        />
-      )}
     </>
   );
 };

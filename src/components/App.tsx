@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Info } from "react-feather";
 import Schedule from "./Schedule";
 import { StationSearch } from "./StationSearch";
-import IrishRailApi, { Station } from "../api/IrishRailApi";
+import IrishRailApi, { Station, Train } from "../api/IrishRailApi";
 import { SearchParameters } from "./SearchParameters";
 import { JourneyKey } from "./JourneyKey";
 import { FavouriteStations } from "./FavouriteStations";
@@ -60,6 +60,16 @@ const ScheduleWrapper = styled.div`
   margin-top: 20px;
   grid-area: schedule;
   margin-bottom: 400px;
+
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+  &.visible {
+    opacity: 1;
+  }
+`;
+
+const ScheduleSpinnerWrapper = styled.div`
+  grid-area: schedule;
 `;
 
 const KeyWrapper = styled.div`
@@ -151,11 +161,13 @@ export const App = () => {
   const isPortable = useWindowSize().width <= 1000;
   const [lookahead, setLookahead] = useState(90);
   const [station, setStation] = useState<Station>(null);
+  const [stationTrains, setStationTrains] = useState<Train[]>(null);
   const [stationList, setStationList] = useState<Station[]>(null);
   const [waiting, setWaiting] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
   const [favourites, _] = useLocalStorage<string[]>("favourites", []);
   const [modalOpen, setModelOpen] = useState(false);
+  const [scheduleFadedOut, setScheduleFadedOut] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(errorTimeout, timeoutLength);
@@ -172,8 +184,41 @@ export const App = () => {
   const errorTimeout = () => {
     setWaiting(false);
     setError(
-      error ?? new Error("Timout from endpoint, showing error dialogue for now")
+      error
+        ? error
+        : new Error("Timout from endpoint, showing error dialogue for now")
     );
+  };
+
+  // Station Data handling
+  useEffect(() => {
+    changeStation(station);
+  }, [lookahead]);
+
+  const changeStation = (station: Station) => {
+    if (station) {
+      Promise.all([
+        asyncFadeout(true),
+        IrishRailApi.getTrainsForStation(station, lookahead),
+      ]).then(([_, trains]) => {
+        setStation(station);
+        setStationTrains(trains);
+        asyncFadeout(false, 50);
+      });
+    }
+  };
+
+  const asyncFadeout = (
+    fadeOut: boolean,
+    timeMs: number = 200
+  ): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+      if (fadeOut) setScheduleFadedOut(fadeOut);
+      setTimeout(() => {
+        if (!fadeOut) setScheduleFadedOut(fadeOut);
+        resolve(true);
+      }, timeMs);
+    });
   };
 
   const onFavouriteSelect = (e) => {
@@ -181,15 +226,7 @@ export const App = () => {
       (s) => s.StationDesc === e.target.innerHTML
     );
 
-    if (station) {
-      setStation(station);
-    } else {
-      console.error("Couldn't find station", e.target.innerHTML);
-    }
-
-    if (modalOpen) {
-      setModelOpen(false);
-    }
+    changeStation(station);
   };
 
   const renderHeader = () => {
@@ -215,7 +252,7 @@ export const App = () => {
             <StationSearch
               stationList={stationList}
               station={station}
-              onStationChange={setStation}
+              onStationChange={changeStation}
             />
             <SearchParameters
               lookaheadOptions={lookaheadOptions}
@@ -234,13 +271,15 @@ export const App = () => {
           </div>
         </SearchWrapper>
         {!stationList && (
-          <LoadingSpinner
-            color="#515773"
-            size={16}
-            height="270px"
-            width="100%"
-            delay={0}
-          />
+          <ScheduleSpinnerWrapper>
+            <LoadingSpinner
+              color="#515773"
+              size={16}
+              height="270px"
+              width="100%"
+              delay={0}
+            />
+          </ScheduleSpinnerWrapper>
         )}
       </>
     );
@@ -281,14 +320,28 @@ export const App = () => {
 
       {renderSearch()}
 
-      {station && (
-        <ScheduleWrapper>
-          <Schedule
-            station={station}
-            lookahead={lookahead}
-            handleStationClose={() => setStation(null)}
+      <ScheduleWrapper className={!scheduleFadedOut ? "visible" : null}>
+        <Schedule
+          station={station}
+          lookahead={lookahead}
+          onError={errorTimeout}
+          handleStationClose={() => {
+            asyncFadeout(true).then(() => setStation(null));
+          }}
+          stationTrains={stationTrains}
+        />
+      </ScheduleWrapper>
+
+      {station && !stationTrains && (
+        <ScheduleSpinnerWrapper>
+          <LoadingSpinner
+            color="#515773"
+            size={16}
+            height="270px"
+            width="100%"
+            delay={100}
           />
-        </ScheduleWrapper>
+        </ScheduleSpinnerWrapper>
       )}
     </Body>
   );

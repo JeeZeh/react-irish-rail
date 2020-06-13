@@ -5,7 +5,6 @@ import { Journey, Train, Movement } from "../api/IrishRailApi";
 import { JourneyStop } from "./JourneyStop";
 import { JourneyInfo } from "./JourneyInfo";
 import { LoadingSpinner } from "./LoadingSpinner";
-import { testJourney } from "../api/JourneyLoader";
 import { useWindowSize } from "../hooks/useWindowSize";
 
 const Wrapper = styled.div<{
@@ -136,8 +135,6 @@ export const JourneyMap = (props: JoruneyMapProps) => {
   );
 
   const scrollToTrainPosition = () => {
-    console.log(scroller.current);
-
     if (scroller.current) {
       const scrollDiv = scroller.current as HTMLElement;
       const trainDiv = scrollDiv.children.item(

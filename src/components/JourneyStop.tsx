@@ -5,7 +5,7 @@ import moment = require("moment");
 import { useWindowSize } from "../hooks/useWindowSize";
 
 interface JourneyStopProps {
-  station: Movement | any;
+  station: Movement;
   stopNumber: number;
   trainPosition: number;
   journeyLength: number;
@@ -51,7 +51,6 @@ export const Dot = styled.div<{ isPortable?: boolean }>`
 
 export const Name = styled.div<{ isPortable?: boolean }>`
   font-weight: 600;
-  user-select: none;
   writing-mode: inherit;
   ${(p) => (!p.isPortable ? "margin-top" : "margin-left")}: 5px;
 
@@ -94,6 +93,8 @@ export const StationDiv = styled.div<{ isPortable?: boolean }>`
   display: flex;
   flex-direction: "row";
   align-items: center;
+  user-select: none;
+
   width: ${(p) => (p.isPortable ? "100%" : null)};
   height: ${(p) => (!p.isPortable ? "100%" : null)};
   margin: ${(p) => (p.isPortable ? "2px" : "0 4px")};
@@ -147,23 +148,23 @@ export const JourneyStop = (props: JourneyStopProps) => {
   let time: string | React.ReactElement = "";
   let classes = "";
 
-  const getTime = () => {
+  const getTime = (): string => {
     if (station.Departure) {
-      return station.Departure;
+      return station.Departure.format("HH:mm");
     }
     if (station.Arrival) {
       if (station.LocationType === "D") {
-        return station.Arrival;
+        return station.Arrival.format("HH:mm");
       } else if (stopNumber === trainPosition) {
-        return station.ExpectedDeparture;
+        return station.ExpectedDeparture.format("HH:mm");
       }
     }
 
     if (station.LocationType === "O") {
-      return station.ExpectedDeparture;
+      return station.ExpectedDeparture.format("HH:mm");
     }
 
-    return station.ExpectedArrival;
+    return station.ExpectedArrival.format("HH:mm");
   };
 
   const getClasses = () => {
@@ -189,8 +190,8 @@ export const JourneyStop = (props: JourneyStopProps) => {
     if (!station.Arrival && station.LocationFullName == train.Stationfullname) {
       classNames.push("relevant");
       classNames.push("show-time");
-      const diff = moment(station.ExpectedArrival, "HH:mm:SS").diff(
-        moment(station.ScheduledArrival, "HH:mm:SS"),
+      const diff = station.ExpectedArrival.diff(
+        station.ScheduledArrival,
         "minutes"
       );
 
@@ -199,17 +200,17 @@ export const JourneyStop = (props: JourneyStopProps) => {
       // Only check the unaccounted delay if it's the next station
       if (trainPosition !== -1 && trainPosition + 1 == station.LocationOrder) {
         unaccountedDelay = moment(train.Querytime, "HH:mm:SS").diff(
-          moment(station.ExpectedArrival, "HH:mm:SS"),
+          station.ExpectedArrival,
           "minutes"
         );
       }
 
       if (diff > 2 || unaccountedDelay > 2) {
         classNames.push("delayed");
-        time = `${time} (${station.ScheduledArrival})`;
+        time = `${time} (${station.ScheduledArrival.format("HH:mm")})`;
       } else if (diff < -2) {
         classNames.push("early");
-        time = `${time} (${station.ScheduledArrival})`;
+        time = `${time} (${station.ScheduledArrival.format("HH:mm")})`;
       }
     }
 

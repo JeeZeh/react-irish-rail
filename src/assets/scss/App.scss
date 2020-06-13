@@ -4,7 +4,8 @@ body {
   scroll-behavior: smooth;
 }
 
-*:focus {
+*:focus,
+.Collapsible {
   -webkit-tap-highlight-color: transparent;
   outline: none;
   -ms-touch-action: manipulation;

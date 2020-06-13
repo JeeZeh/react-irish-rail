@@ -158,7 +158,7 @@ const renderHeader = (train: Train) => {
           {Origin}
         </StationName>
         <StationTime weight={700} color={mediumGrey}>
-          {Origintime}
+          {Origintime.format("HH:mm")}
         </StationTime>
       </Station>
       <Arrow>
@@ -169,7 +169,7 @@ const renderHeader = (train: Train) => {
           {Destination}
         </StationName>
         <StationTime weight={700} color={mediumGrey}>
-          {Destinationtime}
+          {Destinationtime.format("HH:mm")}
         </StationTime>
       </Station>
     </Header>
@@ -184,7 +184,7 @@ const renderFooter = (train: Train, onClick, open: boolean) => {
         {Exparrival ? (
           <TimeEntry>
             <StationTime weight={700} color={lightBlack}>
-              {Exparrival}
+              {Exparrival.format("HH:mm")}
             </StationTime>
             <StationName weight={400} color={black}>
               Arriving
@@ -194,7 +194,7 @@ const renderFooter = (train: Train, onClick, open: boolean) => {
         {Expdepart ? (
           <TimeEntry>
             <StationTime weight={700} color={lightBlack}>
-              {Expdepart}
+              {Expdepart.format("HH:mm")}
             </StationTime>
             <StationName weight={400} color={black}>
               Departing
@@ -226,10 +226,7 @@ export const MobileTrainCard = (props: MobileTrainCardProps) => {
 
   const handleMapButtonClick = () => {
     const top = bottomRef.current.getBoundingClientRect().top;
-    console.log(top);
     if (!open) {
-      console.log(top, top + 450, window.innerHeight);
-
       if (top + 450 > window.innerHeight) {
         window.scrollBy({
           behavior: "smooth",
