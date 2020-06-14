@@ -165,7 +165,11 @@ export const App = () => {
   const [stationList, setStationList] = useState<Station[]>(null);
   const [waiting, setWaiting] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
-  const [favourites, _] = useLocalStorage<string[]>("favourites", []);
+  const [localFavourites, setLocalFavourites] = useLocalStorage<string[]>(
+    "favourites",
+    []
+  );
+  const [favourites, setFavourites] = useState<string[]>(localFavourites);
   const [modalOpen, setModelOpen] = useState(false);
   const [scheduleFadedOut, setScheduleFadedOut] = useState(false);
 
@@ -177,9 +181,26 @@ export const App = () => {
         setError(false);
         clearTimeout(timeout);
       })
+      .then()
       .catch(setError)
       .finally(() => setWaiting(false));
   }, []);
+
+  // Favourite Handling
+  useEffect(() => {
+    setLocalFavourites(favourites);
+  }, [favourites]);
+
+  const handleToggleFavourite = (stationName: string) => {
+    const favSet = new Set(favourites);
+    if (favSet.has(stationName)) {
+      favSet.delete(stationName);
+    } else {
+      favSet.add(stationName);
+    }
+
+    setFavourites(Array.from(favSet));
+  };
 
   const errorTimeout = () => {
     setWaiting(false);
@@ -324,7 +345,8 @@ export const App = () => {
         <Schedule
           station={station}
           lookahead={lookahead}
-          onError={errorTimeout}
+          isFavourite={favourites.includes(station?.StationDesc)}
+          onToggleFavourite={handleToggleFavourite}
           handleStationClose={() => {
             asyncFadeout(true).then(() => setStation(null));
           }}

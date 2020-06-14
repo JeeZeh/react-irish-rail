@@ -1,22 +1,21 @@
 import * as React from "react";
-import { useRef, useState, useEffect, MutableRefObject } from "react";
+import { useRef } from "react";
 import { hot } from "react-hot-loader";
-import IrishRailApi, { Train, Station } from "../api/IrishRailApi";
+import { Train, Station } from "../api/IrishRailApi";
 import styled from "styled-components";
-import { X } from "react-feather";
+import { X, Heart } from "react-feather";
 import ScheduleTable from "./ScheduleTable";
-import { FavouriteHeart, Prompt } from "./FavouriteStations";
 import { smallify } from "./JourneyStop";
 import { useWindowSize } from "../hooks/useWindowSize";
-import { subtleGrey, lightGrey, mediumGrey } from "./SharedStyles";
-import { LoadingSpinner } from "./LoadingSpinner";
+import { subtleGrey } from "./SharedStyles";
 
 export interface TrainScheduleProps {
   station: Station;
   stationTrains: Train[];
   lookahead: number;
   handleStationClose: () => void;
-  onError: () => void;
+  isFavourite: boolean;
+  onToggleFavourite: (stationCode: string) => void;
 }
 
 export const Card = styled.div<{ isPortable?: boolean; fades?: boolean }>`
@@ -55,6 +54,7 @@ export const CardHeader = styled.div<{ isPortable: boolean }>`
   font-size: 1.8em;
   grid-column: 2;
   align-self: center;
+  user-select: none;
   padding-left: ${(p) => (p.isPortable ? 0 : 15)}px;
 
   @media only screen and (max-width: 1000px) {
@@ -83,6 +83,7 @@ const CardToolbarButton = styled.div<{ gridColumn: number }>`
   opacity: 0.8;
   transition: opacity 0.1s ease-out;
   box-shadow: 0 2px 0 ${subtleGrey};
+  fill: none;
 
   &:hover {
     opacity: 1;
@@ -106,13 +107,20 @@ export const CardBody = styled.div`
 `;
 
 export const Schedule = (props: TrainScheduleProps) => {
-  const { station, lookahead, stationTrains, handleStationClose } = props;
+  const {
+    station,
+    lookahead,
+    stationTrains,
+    handleStationClose,
+    isFavourite,
+    onToggleFavourite,
+  } = props;
   const isPortable = useWindowSize().width <= 1000;
   const schedule = useRef<HTMLDivElement>();
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 27) {
-      props.handleStationClose();
+      handleStationClose();
     }
   };
   if (!station || !stationTrains) return null;
@@ -127,10 +135,18 @@ export const Schedule = (props: TrainScheduleProps) => {
         fades={true}
       >
         <CardToolbar isPortable={isPortable}>
-          <FavouriteHeart
-            stationName={station.StationDesc}
+          <CardToolbarButton
             gridColumn={isPortable ? 3 : 1}
-          />
+            className={isFavourite ? "on" : null}
+            onClick={() => onToggleFavourite(station.StationDesc)}
+          >
+            <Heart
+              size={28}
+              fill={isFavourite ? "pink" : null}
+              opacity={isFavourite ? "pink" : null}
+            />
+          </CardToolbarButton>
+
           <CardHeader isPortable={isPortable}>
             {smallify(station.StationDesc, true)}
           </CardHeader>
