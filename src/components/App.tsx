@@ -165,6 +165,7 @@ export const App = () => {
   const [stationList, setStationList] = useState<Station[]>(null);
   const [waiting, setWaiting] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
+
   const [localFavourites, setLocalFavourites] = useLocalStorage<string[]>(
     "favourites",
     []
@@ -173,18 +174,33 @@ export const App = () => {
   const [modalOpen, setModelOpen] = useState(false);
   const [scheduleFadedOut, setScheduleFadedOut] = useState(false);
 
+  // Query Param and Mount data handling
   useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const qStation = queryParams.get("station");
+    const qLookahead = parseInt(queryParams.get("lookahead"));
+    if (!stationList) {
+      getStationList().then(() => {
+        setLookahead(lookaheadOptions.find((l) => l === qLookahead) ?? 60);
+      });
+    } else {
+      setStation(stationList.find((s) => s.StationDesc === qStation));
+    }
+  }, [stationList]);
+
+  const getStationList = async () => {
     const timeout = setTimeout(errorTimeout, timeoutLength);
-    IrishRailApi.getStations()
-      .then(setStationList)
-      .then(() => {
-        setError(false);
-        clearTimeout(timeout);
-      })
-      .then()
-      .catch(setError)
-      .finally(() => setWaiting(false));
-  }, []);
+    try {
+      const apiStationList = await IrishRailApi.getStations();
+      setStationList(apiStationList);
+      setError(false);
+      clearTimeout(timeout);
+    } catch (e) {
+      setError(e);
+    } finally {
+      setWaiting(false);
+    }
+  };
 
   // Favourite Handling
   useEffect(() => {
@@ -215,6 +231,18 @@ export const App = () => {
   useEffect(() => {
     changeStation(station);
   }, [lookahead]);
+
+  // Query param change handling
+  useEffect(() => {
+    if (!station || !lookahead) return;
+    const newParams = new URLSearchParams([
+      ["station", station.StationDesc],
+      ["lookahead", lookahead.toString()],
+    ]);
+    const newTitle = `${station?.StationDesc} - ${lookahead} mins`;
+
+    history.replaceState({}, newTitle, `?${newParams.toString()}`);
+  }, [station, lookahead]);
 
   const changeStation = (station: Station) => {
     if (station) {
