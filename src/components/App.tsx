@@ -87,13 +87,14 @@ const ScheduleSpinnerWrapper = styled.div`
 const KeyWrapper = styled.div`
   grid-area: key;
   justify-self: center;
+  margin-bottom: 20px;
 `;
 
 const Body = styled.div`
   display: grid;
   grid-template-areas:
     "head key"
-    "search options"
+    "search key"
     "schedule schedule";
   grid-template-columns: 7fr 2fr;
   margin: auto auto;
@@ -308,7 +309,11 @@ export const App = () => {
       <>
         <SearchWrapper className={stationList ? "visible" : null}>
           <div>
-            <H3A weight={700} margin="0 0 10px 0" justify="center">
+            <H3A
+              weight={700}
+              margin="0 0 10px 0"
+              justify={!isPortable ? "left" : "center"}
+            >
               View upcoming trains at a station
             </H3A>
             <StationSearch
@@ -362,13 +367,13 @@ export const App = () => {
       <Wrapp>
         <Body>
           {renderHeader()}
-          {isPortable ? null : (
+          {!isPortable && (
             <>
               <KeyWrapper>
                 <H3A margin={"0 0 10px 0"}>Map Key</H3A>
                 <JourneyKey />
+                <AppOptions handleThemeSwitch={handleThemeSwitch} />
               </KeyWrapper>
-              <AppOptions handleThemeSwitch={handleThemeSwitch} />
             </>
           )}
           {isPortable ? (

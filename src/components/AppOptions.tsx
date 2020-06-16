@@ -4,8 +4,8 @@ import { OpenFavouriteStationButton } from "./FavouriteStations";
 import { Moon } from "react-feather";
 
 const AppOptionsWrapper = styled.div`
-  grid-area: options;
   display: flex;
+  margin: 20px 10px;
   & svg {
     margin-left: 10px;
     transition: fill 0.2s ease-out;
