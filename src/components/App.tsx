@@ -1,8 +1,8 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
-import styled from "styled-components";
+import styled, { ThemeContext, ThemeProvider } from "styled-components";
 import { Info } from "react-feather";
 import Schedule from "./Schedule";
 import { StationSearch } from "./StationSearch";
@@ -14,9 +14,21 @@ import { useWindowSize } from "../hooks/useWindowSize";
 import { ModalMenu } from "./ModalMenu";
 import { About } from "./About";
 import { ErrorDialogue } from "./ErrorDialogue";
-import { lightGrey, H3A, H1A } from "./SharedStyles";
+import { H3A, H1A, themes, ThemeType } from "./SharedStyles";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LoadingSpinner } from "./LoadingSpinner";
+import { AppOptions } from "./AppOptions";
+
+const Wrapp = styled.div`
+  background-color: ${(p) => p.theme.bg};
+  width: 100%;
+  min-height: 101vh;
+  color: ${(p) => p.theme.primaryText};
+  * {
+    box-sizing: border-box;
+    font-family: "Nunito", sans-serif;
+  }
+`;
 
 const SearchWrapper = styled.div`
   grid-area: search;
@@ -78,11 +90,10 @@ const KeyWrapper = styled.div`
 `;
 
 const Body = styled.div`
-  background-color: #fbfbfb;
   display: grid;
   grid-template-areas:
     "head key"
-    "search key"
+    "search options"
     "schedule schedule";
   grid-template-columns: 7fr 2fr;
   margin: auto auto;
@@ -139,19 +150,19 @@ const ModalButton = styled.button`
   align-items: center;
   right: 20px;
   bottom: 20px;
-  background: #fefefe;
-  border: 1px solid #aaa;
+  background: ${(p) => p.theme.nearlyBg};
+  border: 1px solid ${(p) => p.theme.button};
   width: 56px;
   height: 56px;
   border-radius: 10px;
-  box-shadow: 0 4px 4px ${lightGrey};
+  box-shadow: 0 2px 0px ${(p) => p.theme.button};
   z-index: 9;
   &:focus {
     outline: none;
   }
 
   & svg {
-    color: #444;
+    color: ${(p) => p.theme.secondaryText};
   }
 `;
 
@@ -165,6 +176,10 @@ export const App = () => {
   const [stationList, setStationList] = useState<Station[]>(null);
   const [waiting, setWaiting] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
+  const [currentTheme, setCurrentTheme] = useState<ThemeType>("dark");
+
+  const themeContext = useContext(ThemeContext);
+  console.log("THEME", themeContext);
 
   const [localFavourites, setLocalFavourites] = useLocalStorage<string[]>(
     "favourites",
@@ -230,7 +245,7 @@ export const App = () => {
   // Station Data handling
   useEffect(() => {
     changeStation(station);
-  }, [lookahead]);
+  }, [lookahead, station]);
 
   // Query param change handling
   useEffect(() => {
@@ -244,17 +259,15 @@ export const App = () => {
     history.replaceState({}, newTitle, `?${newParams.toString()}`);
   }, [station, lookahead]);
 
-  const changeStation = (station: Station) => {
-    if (station) {
-      Promise.all([
-        asyncFadeout(true),
-        IrishRailApi.getTrainsForStation(station, lookahead),
-      ]).then(([_, trains]) => {
-        setStation(station);
-        setStationTrains(trains);
-        asyncFadeout(false, 50);
-      });
-    }
+  const changeStation = (newStation: Station) => {
+    Promise.all([
+      asyncFadeout(true),
+      IrishRailApi.getTrainsForStation(newStation, lookahead),
+    ]).then(([_, trains]) => {
+      setStation(newStation);
+      setStationTrains(trains);
+      asyncFadeout(false, 50);
+    });
   };
 
   const asyncFadeout = (
@@ -275,7 +288,7 @@ export const App = () => {
       (s) => s.StationDesc === e.target.innerHTML
     );
 
-    changeStation(station);
+    setStation(station);
   };
 
   const renderHeader = () => {
@@ -295,7 +308,7 @@ export const App = () => {
       <>
         <SearchWrapper className={stationList ? "visible" : null}>
           <div>
-            <H3A weight={700} margin="0 0 10px 0">
+            <H3A weight={700} margin="0 0 10px 0" justify="center">
               View upcoming trains at a station
             </H3A>
             <StationSearch
@@ -321,17 +334,15 @@ export const App = () => {
         </SearchWrapper>
         {!stationList && (
           <ScheduleSpinnerWrapper>
-            <LoadingSpinner
-              color="#515773"
-              size={16}
-              height="270px"
-              width="100%"
-              delay={0}
-            />
+            <LoadingSpinner size={16} height="270px" width="100%" delay={0} />
           </ScheduleSpinnerWrapper>
         )}
       </>
     );
+  };
+
+  const handleThemeSwitch = (e) => {
+    setCurrentTheme(currentTheme === "light" ? "dark" : "light");
   };
 
   if (error) {
@@ -347,53 +358,60 @@ export const App = () => {
   if (waiting) return <Body>{renderHeader()}</Body>;
 
   return (
-    <Body>
-      {renderHeader()}
-      {isPortable ? null : (
-        <KeyWrapper>
-          <H3A margin={"0 0 10px 0"}>Map Key</H3A>
-          <JourneyKey />
-        </KeyWrapper>
-      )}
-      {isPortable ? (
-        <ModalButton onClick={() => setModelOpen(true)}>
-          <Info size={28} />
-        </ModalButton>
-      ) : null}
-      {modalOpen ? (
-        <ModalMenu
-          handleCloseModal={() => setModelOpen(false)}
-          onFavouriteSelect={onFavouriteSelect}
-        />
-      ) : null}
+    <ThemeProvider theme={themes[currentTheme]}>
+      <Wrapp>
+        <Body>
+          {renderHeader()}
+          {isPortable ? null : (
+            <>
+              <KeyWrapper>
+                <H3A margin={"0 0 10px 0"}>Map Key</H3A>
+                <JourneyKey />
+              </KeyWrapper>
+              <AppOptions handleThemeSwitch={handleThemeSwitch} />
+            </>
+          )}
+          {isPortable ? (
+            <ModalButton onClick={() => setModelOpen(true)}>
+              <Info size={28} />
+            </ModalButton>
+          ) : null}
+          {modalOpen ? (
+            <ModalMenu
+              handleCloseModal={() => setModelOpen(false)}
+              onFavouriteSelect={onFavouriteSelect}
+              handleThemeSwitch={handleThemeSwitch}
+            />
+          ) : null}
 
-      {renderSearch()}
+          {renderSearch()}
 
-      <ScheduleWrapper className={!scheduleFadedOut ? "visible" : null}>
-        <Schedule
-          station={station}
-          lookahead={lookahead}
-          isFavourite={favourites.includes(station?.StationDesc)}
-          onToggleFavourite={handleToggleFavourite}
-          handleStationClose={() => {
-            asyncFadeout(true).then(() => setStation(null));
-          }}
-          stationTrains={stationTrains}
-        />
-      </ScheduleWrapper>
+          <ScheduleWrapper className={!scheduleFadedOut ? "visible" : null}>
+            <Schedule
+              station={station}
+              lookahead={lookahead}
+              isFavourite={favourites.includes(station?.StationDesc)}
+              onToggleFavourite={handleToggleFavourite}
+              handleStationClose={() => {
+                asyncFadeout(true).then(() => setStation(null));
+              }}
+              stationTrains={stationTrains}
+            />
+          </ScheduleWrapper>
 
-      {station && !stationTrains && (
-        <ScheduleSpinnerWrapper>
-          <LoadingSpinner
-            color="#515773"
-            size={16}
-            height="270px"
-            width="100%"
-            delay={100}
-          />
-        </ScheduleSpinnerWrapper>
-      )}
-    </Body>
+          {station && stationTrains === null && (
+            <ScheduleSpinnerWrapper>
+              <LoadingSpinner
+                size={16}
+                height="270px"
+                width="100%"
+                delay={100}
+              />
+            </ScheduleSpinnerWrapper>
+          )}
+        </Body>
+      </Wrapp>
+    </ThemeProvider>
   );
 };
 

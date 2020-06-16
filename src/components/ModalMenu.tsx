@@ -5,9 +5,8 @@ import { JourneyKey } from "./JourneyKey";
 import { About } from "./About";
 import { XCircle } from "react-feather";
 import { Card } from "./Schedule";
-import { Divider } from "./MobileTrainCard";
-import { FavouriteStations } from "./FavouriteStations";
 import { H1A } from "./SharedStyles";
+import { AppOptions } from "./AppOptions";
 
 const Overlay = styled.div`
   position: fixed;
@@ -18,7 +17,7 @@ const Overlay = styled.div`
   top: 0;
   left: 0;
   overflow-y: scroll;
-  background-color: #fffffffa;
+  background-color: ${(p) => `${p.theme.bg}FA`};
   z-index: 10;
 
   opacity: 0;
@@ -42,7 +41,7 @@ const Info = styled.div`
 const InfoCard = styled(Card)`
   width: 300px;
   padding: 20px;
-  background-color: #fff;
+  background-color: ${(p) => p.theme.max};
   margin: 15px 0 !important;
   display: flex;
   flex-direction: column;
@@ -80,6 +79,7 @@ const CloseText = styled(CloseItem)`
 interface ModalMenuProps {
   handleCloseModal: () => void;
   onFavouriteSelect: (e) => void;
+  handleThemeSwitch: (e) => void;
 }
 
 export const ModalMenu = (props: ModalMenuProps) => {
@@ -95,6 +95,7 @@ export const ModalMenu = (props: ModalMenuProps) => {
             <XCircle size={32} />
           </CloseItem>
         </CloseModal>
+        <AppOptions handleThemeSwitch={props.handleThemeSwitch} />
         <InfoCard>
           <H1A margin="0 0 10px 0">Map Key</H1A>
           <JourneyKey />

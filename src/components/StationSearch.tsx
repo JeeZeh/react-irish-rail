@@ -5,7 +5,6 @@ import { Station } from "../api/IrishRailApi";
 import styled from "styled-components";
 import { FuzzyOverlay } from "./FuzzyOverlay";
 import { useWindowSize } from "../hooks/useWindowSize";
-import { lightGrey, mediumGrey, subtleGrey } from "./SharedStyles";
 
 export interface StationSearchState {
   fuseMatch: Fuse.FuseResult<Station>[];
@@ -30,22 +29,23 @@ const Search = styled.div`
 `;
 
 const Input = styled.input<{ isPortable?: boolean }>`
-  background: whitesmoke;
+  background: ${(p) => p.theme.offMax};
+  color: ${(p) => p.theme.primaryText};
   font-size: 0.95em;
   width: 100%;
   height: 50px;
   display: inline-block;
   padding: 10px;
-  border: 1px solid ${lightGrey};
+  border: 1px solid ${(p) => p.theme.button};
   border-radius: 5px 5px 0 0;
   border-bottom: none;
   outline: none;
-  box-shadow: ${(p) => (!p.isPortable ? `0 4px 4px ${lightGrey}` : null)};
+  box-shadow: ${(p) => (!p.isPortable ? `0 4px 4px ${p.theme.shadow}` : null)};
   transition: all 0.1s ease-out;
 
   &:focus {
-    background-color: #fff;
-    border: 1px solid ${subtleGrey};
+    background-color: ${(p) => p.theme.offMax};
+    border: 1px solid ${(p) => p.theme.faint};
     border-bottom: none;
     transition: all 0.05s ease-out;
   }

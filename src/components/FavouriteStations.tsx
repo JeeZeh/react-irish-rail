@@ -1,12 +1,11 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { JourneyButton } from "./MobileTrainCard";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Heart, ChevronsDown } from "react-feather";
 import styled from "styled-components";
 import { smallify } from "./JourneyStop";
 import Collapsible from "react-collapsible";
-import { subtleGrey, black, lightGrey, H3A, mediumGrey } from "./SharedStyles";
+import { H3A } from "./SharedStyles";
 import { useWindowSize } from "../hooks/useWindowSize";
 
 export const Prompt = styled.p<{ isPortable?: boolean }>`
@@ -15,7 +14,7 @@ export const Prompt = styled.p<{ isPortable?: boolean }>`
   font-weight: 600;
   display: flex;
   align-items: center;
-  color: ${subtleGrey};
+  color: ${(p) => p.theme.subtle};
   margin: ${(p) => (p.isPortable ? "auto" : "0")};
 
   & svg {
@@ -29,7 +28,7 @@ const ListWrap = styled.div<{ isPortable?: boolean }>`
   padding: ${(p) => (p.isPortable ? "0 15px 15px 15px" : "5px 0")};
 `;
 
-const OpenFavouriteStationButton = styled(JourneyButton)<{
+export const OpenFavouriteStationButton = styled(JourneyButton)<{
   isPortable?: boolean;
 }>`
   grid-area: none;
@@ -38,9 +37,9 @@ const OpenFavouriteStationButton = styled(JourneyButton)<{
   box-shadow: none;
   margin: 5px;
   height: 40px;
+  background-color: ${(p) => p.theme.nearlyBg};
   transition: box-shadow 0.2s ease-out, opacity 0.2s ease-out;
-  box-shadow: ${(p) => (!p.isPortable ? `0 2px 0 ${lightGrey}` : null)};
-
+  box-shadow: ${(p) => (!p.isPortable ? `0 2px 0 ${p.theme.button};` : null)};
   opacity: 1;
 
   &:hover {
@@ -50,12 +49,12 @@ const OpenFavouriteStationButton = styled(JourneyButton)<{
 
 const CollapseWrap = styled.div<{ isPortable?: boolean }>`
   justify-self: ${(p) => (p.isPortable ? "center" : "flex-start")};
-  border: ${(p) => (p.isPortable ? `1px solid ${lightGrey}` : null)};
+  border: ${(p) => (p.isPortable ? `1px solid ${p.theme.faint}` : null)};
+  background-color: ${(p) => (p.isPortable ? p.theme.offMax : "inherit")};
   outline: none;
   border-radius: 5px;
   width: ${(p) => (p.isPortable ? "100%" : "330px")};
-
-  box-shadow: ${(p) => (p.isPortable ? `0 4px 0 ${lightGrey}` : null)};
+  box-shadow: ${(p) => (p.isPortable ? `0 2px 2px ${p.theme.shadow}` : null)};
 `;
 
 const CollapseHeader = styled.div<{ open?: boolean; isPortable?: boolean }>`
@@ -63,9 +62,8 @@ const CollapseHeader = styled.div<{ open?: boolean; isPortable?: boolean }>`
   cursor: ${(p) => (p.isPortable ? "pointer" : "default")};
   justify-content: space-between;
   padding: ${(p) => (p.isPortable ? "15px 20px" : 0)};
-
   align-items: center;
-  color: ${black};
+  color: ${(p) => p.theme.primaryText};
   height: ${(p) => (p.isPortable ? "60px" : "auto")};
   & > div {
     display: flex;

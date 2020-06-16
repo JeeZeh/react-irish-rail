@@ -1,13 +1,12 @@
 import * as React from "react";
-import { useRef } from "react";
+import { useRef, useContext } from "react";
 import { hot } from "react-hot-loader";
 import { Train, Station } from "../api/IrishRailApi";
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import { X, Heart } from "react-feather";
 import ScheduleTable from "./ScheduleTable";
 import { smallify } from "./JourneyStop";
 import { useWindowSize } from "../hooks/useWindowSize";
-import { subtleGrey } from "./SharedStyles";
 
 export interface TrainScheduleProps {
   station: Station;
@@ -19,7 +18,7 @@ export interface TrainScheduleProps {
 }
 
 export const Card = styled.div<{ isPortable?: boolean; fades?: boolean }>`
-  background-color: #fefefe;
+  background-color: ${(p) => p.theme.offMax};
   display: grid;
   grid-template-areas:
     "toolbar"
@@ -27,8 +26,8 @@ export const Card = styled.div<{ isPortable?: boolean; fades?: boolean }>`
 
   padding: ${(p) => (p.isPortable ? 0 : 15)}px;
 
-  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ddd;
+  box-shadow: 0 5px 8px ${(p) => p.theme.shadow};
+  border: 1px solid ${(p) => p.theme.faint};
   border-radius: 8px;
   position: relative;
 
@@ -69,8 +68,8 @@ const CardToolbarButton = styled.div<{ gridColumn: number }>`
   grid-column: ${(p) => p.gridColumn};
   justify-self: center;
   cursor: pointer;
-  background-color: white;
-  border: 1px solid ${subtleGrey};
+  background-color: ${(p) => p.theme.nearlyBg};
+  border: 1px solid ${(p) => p.theme.button};
   height: 50px;
   width: 50px;
   border-radius: 10px;
@@ -82,7 +81,7 @@ const CardToolbarButton = styled.div<{ gridColumn: number }>`
   grid-row: 1;
   opacity: 0.8;
   transition: opacity 0.1s ease-out;
-  box-shadow: 0 2px 0 ${subtleGrey};
+  box-shadow: 0 2px 0 ${(p) => p.theme.button};
   fill: none;
 
   &:hover {
@@ -92,13 +91,17 @@ const CardToolbarButton = styled.div<{ gridColumn: number }>`
   button:focus {
     outline: 0;
   }
+
+  & svg {
+    stroke: ${(p) => p.theme.primaryText};
+  }
 `;
 
 const Error = styled.h2`
   font-weight: 700;
   text-align: center;
   margin: 100px;
-  color: #777;
+  color: ${(p) => p.theme.lightEmphasis};
   user-select: none;
 `;
 
@@ -117,6 +120,7 @@ export const Schedule = (props: TrainScheduleProps) => {
   } = props;
   const isPortable = useWindowSize().width <= 1000;
   const schedule = useRef<HTMLDivElement>();
+  const themeContext = useContext(ThemeContext);
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 27) {
@@ -142,8 +146,8 @@ export const Schedule = (props: TrainScheduleProps) => {
           >
             <Heart
               size={28}
-              fill={isFavourite ? "pink" : null}
-              opacity={isFavourite ? "pink" : null}
+              fill={isFavourite ? themeContext.favourite : null}
+              opacity={isFavourite ? 1 : 0.8}
             />
           </CardToolbarButton>
 

@@ -20,8 +20,9 @@ const Key = styled.div<{ isPortable?: boolean }>`
   }
 
   & p {
-    margin: 10px 0;
+    margin: 10px;
     margin-top: 0;
+    color: ${(p) => p.theme.secondaryText};
   }
 
   & ${Dot} {

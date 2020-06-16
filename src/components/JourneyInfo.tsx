@@ -15,6 +15,8 @@ const Info = styled((props) => <Card {...props} />)`
   flex-direction: column;
   user-select: none;
   padding: 10px;
+  box-shadow: none !important;
+  background-color: ${(p) => p.theme.nearlyBg} !important;
 `;
 
 const Entry = styled.div`

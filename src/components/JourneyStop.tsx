@@ -17,35 +17,40 @@ export const Dot = styled.div<{ isPortable?: boolean }>`
   height: 10px;
   width: 10px;
   border-radius: 5px;
-  border: 3px solid #444;
+  border: 3px solid ${(p) => p.theme.primaryText};
+  background-color: ${(p) => p.theme.primaryText};
+
   font-size: 1em;
   font-weight: 900;
   writing-mode: inherit;
 
-  &.departed,
-  &.arrived {
-    background-color: #444;
+  &.departed {
+    background-color: ${(p) => p.theme.lightEmphasis};
+    border: 3px solid ${(p) => p.theme.lightEmphasis};
   }
 
   &.future {
     border-width: 2px;
+    background: none;
+    border: 3px solid ${(p) => p.theme.emphasis};
   }
 
   &.delayed,
   &.early {
     align-self: "center";
     border: none;
+    background: none;
     ${(p) => (!p.isPortable ? "width: auto" : null)};
     ${(p) => (p.isPortable ? "text-align: center" : null)};
     ${(p) => (p.isPortable ? "height: auto" : null)};
   }
 
   &.delayed {
-    color: darkorange;
+    color: ${(p) => p.theme.delayed};
   }
 
   &.early {
-    color: darkblue;
+    color: ${(p) => p.theme.early};
   }
 `;
 
@@ -81,11 +86,11 @@ export const Time = styled.div<{ isPortable?: boolean }>`
   }
 
   &.delayed {
-    color: darkorange;
+    color: ${(p) => p.theme.delayed};
   }
 
   &.early {
-    color: darkblue;
+    color: ${(p) => p.theme.early};
   }
 `;
 
@@ -94,20 +99,21 @@ export const StationDiv = styled.div<{ isPortable?: boolean }>`
   flex-direction: "row";
   align-items: center;
   user-select: none;
+  color: ${(p) => p.theme.primaryText};
 
   width: ${(p) => (p.isPortable ? "100%" : null)};
   height: ${(p) => (!p.isPortable ? "100%" : null)};
-  margin: ${(p) => (p.isPortable ? "2px" : "0 4px")};
+  margin: ${(p) => (p.isPortable ? "2px" : "0 8px")};
   writing-mode: ${(p) => (p.isPortable ? "horizontal-tb" : "vertical-lr")};
   transform: ${(p) =>
     !p.isPortable ? "rotate(225deg) translateY(-35px)" : null};
 
   &.departed {
-    opacity: 0.2;
+    color: ${(p) => p.theme.lightEmphasis};
   }
 
   &.future {
-    opacity: 0.8;
+    color: ${(p) => p.theme.emphasis};
   }
 
   &:hover ${Time} {

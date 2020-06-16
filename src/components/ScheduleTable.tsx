@@ -31,7 +31,7 @@ export const DesktopTrainRow = styled.div<{ header?: boolean }>`
     opacity: 0.8;
   }
 
-  color: #444;
+  color: ${(p) => p.theme.secondaryText};
   font-weight: ${(p) => (p.header ? 700 : 500)};
   user-select: none;
   cursor: pointer;

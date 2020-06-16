@@ -1,6 +1,5 @@
 import * as React from "react";
 import styled from "styled-components";
-import { lightBlack, lightGrey, mediumGrey, subtleGrey } from "./SharedStyles";
 import { useWindowSize } from "../hooks/useWindowSize";
 
 interface SearchParamerersProps {
@@ -12,10 +11,10 @@ interface SearchParamerersProps {
 const RadioSelect = styled.div<{ isPortable?: boolean }>`
   display: inline-flex;
   flex-direction: row;
-  border: 1px solid ${lightGrey};
+  border: 1px solid ${(p) => p.theme.button};
   border-radius: 0 0 5px 5px;
-  border-top-color: ${subtleGrey};
-  background-color: whitesmoke;
+  border-top-color: ${(p) => p.theme.subtle};
+  background-color: ${(p) => p.theme.veryFaint};
   grid-area: paramsbar;
   justify-content: space-evenly;
   width: 100%;
@@ -24,7 +23,7 @@ const RadioSelect = styled.div<{ isPortable?: boolean }>`
   overflow: hidden;
   user-select: none;
   z-index: 1;
-  box-shadow: ${(p) => (!p.isPortable ? `0 4px 4px ${lightGrey}` : null)};
+  box-shadow: ${(p) => (!p.isPortable ? `0 4px 4px ${p.theme.shadow}` : null)};
   ${(p) => (!p.isPortable ? "position: relative" : null)};
 `;
 
@@ -36,8 +35,8 @@ const RadioButton = styled.button<{ selected?: boolean }>`
   align-items: center;
   font-weight: bold;
   overflow: hidden;
-  color: ${(p) => (p.selected ? "rgba(0, 0, 0, 0.9)" : "rgba(0, 0, 0, 0.6)")};
-  background-color: ${(p) => (p.selected ? "#fff" : "inherit")};
+  color: ${(p) => (p.selected ? p.theme.primaryText : p.theme.subtle)};
+  background-color: ${(p) => (p.selected ? p.theme.offMax : "inherit")};
   padding: 8px;
   cursor: pointer;
   border: none;

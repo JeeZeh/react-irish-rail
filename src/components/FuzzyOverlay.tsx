@@ -5,7 +5,6 @@ import { FuseResult } from "fuse.js";
 import { Fade } from "./JourneyMap";
 import { FixedSizeList as List } from "react-window";
 import { useWindowSize } from "../hooks/useWindowSize";
-import { lightGrey, lightBlack, darkGrey, subtleGrey } from "./SharedStyles";
 
 export interface FuzzyOverlayProps {
   fuzzyList: FuseResult<Station>[];
@@ -16,16 +15,16 @@ export interface FuzzyOverlayProps {
 export const ItemList = styled.div<{ isPortable?: boolean }>`
   background: white;
   position: relative;
-  border: 1px solid ${subtleGrey};
+  border: 1px solid ${(p) => p.theme.subtle};
   overflow: hidden;
   border-radius: ${(p) => (p.isPortable ? "5px" : "0 0 5px 5px")};
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 2px ${(p) => p.theme.shadow};
 `;
 
 export const ListItem = styled.div<{ active?: boolean }>`
   padding: 10px;
   cursor: pointer;
-  ${(p) => (p.active ? "background-color: #eee;" : "")};
+  background-color: ${(p) => (p.active ? p.theme.veryFaint : "inherit")};
 
   &:hover {
     background: whitesmoke;
@@ -36,7 +35,7 @@ const FuzzyList = styled(ItemList)<{ isPortable?: boolean }>`
   position: absolute;
   ${(p) => (p.isPortable ? "bottom" : "top")}: 100%;
   ${(p) => (!p.isPortable ? "border-top: none" : "")};
-
+  background-color: ${(p) => p.theme.nearlyBg};
   z-index: 2;
   width: 100%;
 `;

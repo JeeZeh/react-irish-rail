@@ -37,8 +37,8 @@ export const Fade = styled.div<{
   overflow: hidden;
   background-image: linear-gradient(
     to ${(p) => p.side},
-    ${(p) => (p.backgroundColor ? p.backgroundColor : "#fefefe")}00,
-    ${(p) => (p.backgroundColor ? p.backgroundColor : "#fefefe")}ff
+    ${(p) => (p.backgroundColor ? p.backgroundColor : p.theme.offMax)}00,
+    ${(p) => (p.backgroundColor ? p.backgroundColor : p.theme.offMax)}ff
   );
   ${(p) => p.side}: ${(p) => (p.offset ? p.offset : "0px")};
 `;
@@ -60,18 +60,15 @@ const Map = styled.div<{
   overflow-x: ${(p) => (p.isPortable ? "hidden" : "scroll")};
   overflow-y: ${(p) => (p.isPortable ? "scroll" : "hidden")};
 
-  /* width */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
 
-  /* Track */
   ::-webkit-scrollbar-track {
     background: none;
   }
 
-  /* Handle */
   ::-webkit-scrollbar-thumb {
     border-radius: 5px;
     width: 5px;
@@ -79,12 +76,12 @@ const Map = styled.div<{
   }
 
   &:hover::-webkit-scrollbar-thumb {
-    background-color: #8886;
+    background-color: ${(p) => `${p.theme.lightEmphasis}66`};
   }
 
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: ${(p) => p.theme.emphasis};
   }
 
   opacity: 0;
@@ -201,8 +198,8 @@ export const JourneyMap = (props: JoruneyMapProps) => {
           <Fade
             side={isPortable ? "top" : "left"}
             size={`${itemSize / 3}px`}
-            backgroundColor={backgroundColor}
             offset={isPortable ? `${scrollerMargin}px` : "0px"}
+            backgroundColor={backgroundColor}
           />
           <Map
             isPortable={isPortable}
@@ -216,19 +213,13 @@ export const JourneyMap = (props: JoruneyMapProps) => {
           <Fade
             side={isPortable ? "bottom" : "right"}
             size={`${itemSize / 3}px`}
-            backgroundColor={backgroundColor}
             offset={isPortable ? `${scrollerMargin}px` : "0px"}
+            backgroundColor={backgroundColor}
           />
         </>
       ) : (
         open && (
-          <LoadingSpinner
-            color="#515773"
-            size={16}
-            height="300px"
-            width="100%"
-            delay={500}
-          />
+          <LoadingSpinner size={16} height="300px" width="100%" delay={500} />
         )
       )}
     </Wrapper>

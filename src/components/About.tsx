@@ -5,6 +5,7 @@ const AboutList = styled.ul`
   width: 100%;
   padding-left: 0;
   list-style-position: inside;
+  color: ${(p) => p.theme.secondaryText};
   opacity: 0.9;
   @media only screen and (max-width: 1205px) {
     list-style-type: none;

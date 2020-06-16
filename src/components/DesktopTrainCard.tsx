@@ -10,7 +10,7 @@ import moment = require("moment");
 const Row = styled.div`
   padding-top: 15px;
   transition: opacity 0.08s ease-out;
-  border-bottom: 2px solid #eee;
+  border-bottom: 2px solid ${(p) => p.theme.veryFaint};
   padding-bottom: 15px;
   transition: all 0.25s ease-in-out;
 `;

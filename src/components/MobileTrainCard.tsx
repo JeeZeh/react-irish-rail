@@ -1,20 +1,10 @@
 import * as React from "react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useContext } from "react";
 import { ArrowRight, Map, X, ChevronUp } from "react-feather";
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import { Journey, Train } from "../api/IrishRailApi";
 import Collapsible from "react-collapsible";
 import { JourneyMap } from "./JourneyMap";
-import { initJourneyLoader } from "../api/JourneyLoader";
-import { LoadingSpinner } from "./LoadingSpinner";
-import {
-  veryLightGrey,
-  lightGrey,
-  nearlyWhite,
-  mediumGrey,
-  black,
-  lightBlack,
-} from "./SharedStyles";
 
 const TrainCard = styled.div`
   display: flex;
@@ -22,7 +12,7 @@ const TrainCard = styled.div`
   width: 100%;
   padding: 10px 15px;
   margin-bottom: 10px;
-  background-color: ${veryLightGrey};
+  background-color: ${(p) => p.theme.nearlyBg};
   font-family: "Nunito", sans-serif;
   font-size: 18px;
 
@@ -45,7 +35,7 @@ const Header = styled.div`
 export const Divider = styled.div<{ margin?: string }>`
   grid-area: divider;
   height: 2px;
-  background-color: ${lightGrey};
+  background-color: ${(p) => p.theme.faint};
   width: 100%;
   align-self: center;
   opacity: 0;
@@ -122,13 +112,13 @@ const TimeEntry = styled.div`
 export const JourneyButton = styled.button`
   grid-area: button;
   height: 40px;
-  background-color: ${nearlyWhite};
+  background-color: ${(p) => p.theme.bg};
   outline: none;
-  border: 1px solid ${lightGrey};
+  border: 1px solid ${(p) => p.theme.button};
   border-radius: 4px;
   font-size: 18px;
   font-weight: 600;
-  color: ${black};
+  color: ${(p) => p.theme.primaryText};
   padding: 10px;
   justify-content: space-between;
   justify-self: flex-end;
@@ -136,7 +126,7 @@ export const JourneyButton = styled.button`
   align-items: center;
   align-self: center;
   cursor: pointer;
-  box-shadow: 0 2px 0 ${lightGrey};
+  box-shadow: 0 2px 0 ${(p) => p.theme.button};
 
   display: flex;
   flex-direction: row;
@@ -150,25 +140,27 @@ export const JourneyButton = styled.button`
 `;
 
 const renderHeader = (train: Train) => {
+  const themeContext = useContext(ThemeContext);
+
   const { Destination, Destinationtime, Origin, Origintime } = train;
   return (
     <Header>
       <Station area="origin">
-        <StationName weight={600} color={black}>
+        <StationName weight={600} color={themeContext.primaryText}>
           {Origin}
         </StationName>
-        <StationTime weight={700} color={mediumGrey}>
+        <StationTime weight={700} color={themeContext.lightEmphasis}>
           {Origintime.format("HH:mm")}
         </StationTime>
       </Station>
       <Arrow>
-        <ArrowRight stroke={black} size={24} />
+        <ArrowRight stroke={themeContext.primaryText} size={24} />
       </Arrow>
       <Station area="destination">
-        <StationName weight={600} color={black}>
+        <StationName weight={600} color={themeContext.primaryText}>
           {Destination}
         </StationName>
-        <StationTime weight={700} color={mediumGrey}>
+        <StationTime weight={700} color={themeContext.lightEmphasis}>
           {Destinationtime.format("HH:mm")}
         </StationTime>
       </Station>
@@ -178,25 +170,27 @@ const renderHeader = (train: Train) => {
 
 const renderFooter = (train: Train, onClick, open: boolean) => {
   const { Exparrival, Expdepart } = train;
+  const themeContext = useContext(ThemeContext);
+
   return (
     <Footer>
       <Times>
         {Exparrival ? (
           <TimeEntry>
-            <StationTime weight={700} color={lightBlack}>
+            <StationTime weight={700} color={themeContext.secondaryText}>
               {Exparrival.format("HH:mm")}
             </StationTime>
-            <StationName weight={400} color={black}>
+            <StationName weight={400} color={themeContext.primaryText}>
               Arriving
             </StationName>
           </TimeEntry>
         ) : null}
         {Expdepart ? (
           <TimeEntry>
-            <StationTime weight={700} color={lightBlack}>
+            <StationTime weight={700} color={themeContext.secondaryText}>
               {Expdepart.format("HH:mm")}
             </StationTime>
-            <StationName weight={400} color={black}>
+            <StationName weight={400} color={themeContext.primaryText}>
               Departing
             </StationName>
           </TimeEntry>
@@ -204,9 +198,9 @@ const renderFooter = (train: Train, onClick, open: boolean) => {
       </Times>
       <JourneyButton onClick={onClick}>
         {!open ? (
-          <Map stroke={lightBlack} size={24} />
+          <Map stroke={themeContext.secondaryText} size={24} />
         ) : (
-          <ChevronUp stroke={lightBlack} size={24} />
+          <ChevronUp stroke={themeContext.secondaryText} size={24} />
         )}
         <div>{!open ? "Show" : "Hide"} Journey</div>
       </JourneyButton>
@@ -223,6 +217,7 @@ export const MobileTrainCard = (props: MobileTrainCardProps) => {
   const { train, getJourney } = props;
   const [open, setOpen] = useState(false);
   const bottomRef = useRef<HTMLHRElement>();
+  const themeContext = useContext(ThemeContext);
 
   const handleMapButtonClick = () => {
     const top = bottomRef.current.getBoundingClientRect().top;
@@ -257,7 +252,7 @@ export const MobileTrainCard = (props: MobileTrainCardProps) => {
         <JourneyMap
           train={train}
           getJourney={getJourney}
-          backgroundColor={veryLightGrey}
+          backgroundColor={themeContext.veryFaint}
           open={open}
         />
       </Collapsible>
