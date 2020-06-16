@@ -10,7 +10,6 @@ const AppOptionsWrapper = styled.div`
     margin-left: 10px;
     transition: fill 0.2s ease-out;
     fill: none;
-    stroke: ${(p) => p.theme.primaryText};
   }
 `;
 

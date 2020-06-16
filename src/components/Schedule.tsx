@@ -93,7 +93,7 @@ const CardToolbarButton = styled.div<{ gridColumn: number }>`
   }
 
   & svg {
-    stroke: ${(p) => p.theme.primaryText};
+    stroke: ${(p) => p.theme.secondaryText};
   }
 `;
 

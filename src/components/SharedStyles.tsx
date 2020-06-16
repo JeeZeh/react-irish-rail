@@ -12,6 +12,8 @@ interface Theme {
   bg: string;
   offMax: string;
   max: string;
+  departed: string;
+  future: string;
   delayed: string;
   early: string;
   spinner: string;
@@ -35,6 +37,8 @@ export const themes: Record<ThemeType, Theme> = {
     bg: "#FBFBFB",
     offMax: "#FEFEFE",
     max: "#FFFFFF",
+    departed: "#CC7777AA",
+    future: "#555566EE",
     delayed: "#FF8C00",
     early: "#00008B",
     spinner: "#515773",
@@ -43,8 +47,8 @@ export const themes: Record<ThemeType, Theme> = {
     favourite: "#FFAADD",
   },
   dark: {
-    primaryText: "#DDDDDD",
-    secondaryText: "#CCCCCC",
+    primaryText: "#DADADA",
+    secondaryText: "#CACACA",
     emphasis: "#BBBBBB",
     lightEmphasis: "#999999",
     subtle: "#666666",
@@ -54,8 +58,10 @@ export const themes: Record<ThemeType, Theme> = {
     bg: "#1A1A1D",
     offMax: "#161616",
     max: "#111111",
+    departed: "#DD888866",
+    future: "#888899EE",
     delayed: "#EEAA44",
-    early: "#4444EE",
+    early: "#6666EE",
     spinner: "#515773",
     button: "#666666",
     shadow: "#161616",

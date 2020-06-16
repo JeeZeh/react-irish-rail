@@ -25,14 +25,14 @@ export const Dot = styled.div<{ isPortable?: boolean }>`
   writing-mode: inherit;
 
   &.departed {
-    background-color: ${(p) => p.theme.lightEmphasis};
-    border: 3px solid ${(p) => p.theme.lightEmphasis};
+    background-color: ${(p) => p.theme.departed};
+    border: 3px solid ${(p) => p.theme.departed};
   }
 
   &.future {
     border-width: 2px;
     background: none;
-    border: 3px solid ${(p) => p.theme.emphasis};
+    border: 3px solid ${(p) => p.theme.future};
   }
 
   &.delayed,
@@ -109,11 +109,11 @@ export const StationDiv = styled.div<{ isPortable?: boolean }>`
     !p.isPortable ? "rotate(225deg) translateY(-35px)" : null};
 
   &.departed {
-    color: ${(p) => p.theme.lightEmphasis};
+    color: ${(p) => p.theme.departed};
   }
 
   &.future {
-    color: ${(p) => p.theme.emphasis};
+    color: ${(p) => p.theme.future};
   }
 
   &:hover ${Time} {

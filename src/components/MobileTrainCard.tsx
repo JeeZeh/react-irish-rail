@@ -130,7 +130,9 @@ export const JourneyButton = styled.button`
 
   display: flex;
   flex-direction: row;
-  & :first-child {
+
+  & svg {
+    stroke: ${(p) => p.theme.secondaryText};
     margin-right: 10px;
   }
 

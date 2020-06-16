@@ -35,7 +35,7 @@ const RadioButton = styled.button<{ selected?: boolean }>`
   align-items: center;
   font-weight: bold;
   overflow: hidden;
-  color: ${(p) => (p.selected ? p.theme.primaryText : p.theme.subtle)};
+  color: ${(p) => (p.selected ? p.theme.secondaryText : p.theme.lightEmphasis)};
   background-color: ${(p) => (p.selected ? p.theme.offMax : "inherit")};
   padding: 8px;
   cursor: pointer;

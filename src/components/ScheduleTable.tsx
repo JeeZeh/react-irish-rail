@@ -63,7 +63,7 @@ interface JourneyCache {
 const ScheduleTable = (props: { stationTrains: Train[] }) => {
   const isPortable = useWindowSize().width <= 1000;
   const { stationTrains } = props;
-  const defaultSort = "Exparrive";
+  const defaultSort = "Exparrival";
   const [sort, setSort] = useState({ col: defaultSort, dir: 1 }); // 1 = Ascending, -1 Descending
   const [journeyCache, setJourneyCache] = useState(
     new Map<string, JourneyCache>()
@@ -78,11 +78,12 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
   useEffect(() => {
     const { col, dir } = sort;
     if (col && dir !== 0) {
-      setSortedTrainData(
-        [...stationTrains].sort((a, b) => {
-          return (a[col] >= b[col] ? 1 : -1) * dir;
-        })
-      );
+      const before = stationTrains;
+      const after = [...stationTrains].sort((a, b) => {
+        return (a[col].valueOf() >= b[col].valueOf() ? 1 : -1) * dir;
+      });
+      console.log(before, after);
+      setSortedTrainData(after);
     } else {
       setSortedTrainData([...stationTrains]);
     }
@@ -90,9 +91,6 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
 
   // Updates the sorting direction based on the selected heading
   const handleSort = (e) => {
-    if (isPortable) {
-      return;
-    }
     const col = e.currentTarget.getAttribute("data-col");
     if (sort.col === col) {
       if (sort.dir === -1) {

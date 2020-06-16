@@ -76,12 +76,12 @@ const Map = styled.div<{
   }
 
   &:hover::-webkit-scrollbar-thumb {
-    background-color: ${(p) => `${p.theme.lightEmphasis}66`};
+    background-color: ${(p) => `${p.theme.subtle}66`};
   }
 
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: ${(p) => p.theme.emphasis};
+    background: ${(p) => p.theme.lightEmphasis};
   }
 
   opacity: 0;
