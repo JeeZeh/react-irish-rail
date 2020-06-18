@@ -114,22 +114,21 @@ export const JourneyMap = (props: JoruneyMapProps) => {
   const [journey, setJourney] = useState<Journey>(null);
   const [fade, setFade] = useState(false);
   const scroller = useRef(null);
+  const [trainPosition, setTrainPosition] = useState<number>(-1);
 
-  const calcTrainPosition = (journey: Journey): number => {
-    if (!journey) return -1;
-    return journey.stops.findIndex((s, i) => {
-      return (
-        (i < journey.stops.length - 1 &&
-          s.Departure &&
-          !journey.stops[i + 1].Arrival) ||
-        (s.Arrival && !s.Departure)
-      );
-    });
+  const calcTrainPosition = () => {
+    if (!journey) return setTrainPosition(-1);
+    setTrainPosition(
+      journey.stops.findIndex((s, i) => {
+        return (
+          (i < journey.stops.length - 1 &&
+            s.Departure &&
+            !journey.stops[i + 1].Arrival) ||
+          (s.Arrival && !s.Departure)
+        );
+      })
+    );
   };
-
-  const [trainPosition, setTrainPosition] = useState<number>(
-    calcTrainPosition(journeyProp)
-  );
 
   const scrollToTrainPosition = () => {
     if (scroller.current) {
@@ -151,8 +150,8 @@ export const JourneyMap = (props: JoruneyMapProps) => {
 
   useEffect(() => {
     scrollToTrainPosition();
+    calcTrainPosition();
     if (journey) setFade(true);
-
     return () => setFade(false);
   }, [journey]);
 
@@ -161,7 +160,6 @@ export const JourneyMap = (props: JoruneyMapProps) => {
       setJourney(journeyProp);
       if (!journeyProp) {
         getJourney(train.Traincode).then((j) => {
-          setTrainPosition(calcTrainPosition(j));
           setJourney(j);
         });
         // .then((j) => setTimeout(() => setJourney(j), 2000));
@@ -219,7 +217,12 @@ export const JourneyMap = (props: JoruneyMapProps) => {
         </>
       ) : (
         open && (
-          <LoadingSpinner size={16} height="300px" width="100%" delay={500} />
+          <LoadingSpinner
+            size={16}
+            height={isPortable ? "270px" : "300px"}
+            width="100%"
+            delay={500}
+          />
         )
       )}
     </Wrapper>

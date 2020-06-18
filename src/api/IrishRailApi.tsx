@@ -170,7 +170,6 @@ export default class IrishRailApi {
       train.Exparrival = train.Expdepart;
     }
 
-    console.log(train);
     trainDateProps.forEach((prop) => {
       if (train.hasOwnProperty(prop)) {
         const date = moment(

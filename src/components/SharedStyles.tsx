@@ -37,7 +37,7 @@ export const themes: Record<ThemeType, Theme> = {
     bg: "#FBFBFB",
     offMax: "#FEFEFE",
     max: "#FFFFFF",
-    departed: "#CC7777AA",
+    departed: "#CC7777BB",
     future: "#555566EE",
     delayed: "#FF8C00",
     early: "#00008B",
