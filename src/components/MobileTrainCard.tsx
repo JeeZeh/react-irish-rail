@@ -179,22 +179,22 @@ const renderFooter = (train: Train, onClick, open: boolean) => {
       <Times>
         {Exparrival ? (
           <TimeEntry>
-            <StationTime weight={700} color={themeContext.secondaryText}>
-              {Exparrival.format("HH:mm")}
-            </StationTime>
-            <StationName weight={600} color={themeContext.departed}>
+            <StationName weight={600} color={themeContext.secondaryText}>
               Arriving
             </StationName>
+            <StationTime weight={700} color={themeContext.primaryText}>
+              {Exparrival.format("HH:mm")}
+            </StationTime>
           </TimeEntry>
         ) : null}
         {Expdepart ? (
           <TimeEntry>
-            <StationTime weight={700} color={themeContext.secondaryText}>
-              {Expdepart.format("HH:mm")}
-            </StationTime>
-            <StationName weight={600} color={themeContext.future}>
+            <StationName weight={600} color={themeContext.secondaryText}>
               Departing
             </StationName>
+            <StationTime weight={700} color={themeContext.primaryText}>
+              {Expdepart.format("HH:mm")}
+            </StationTime>
           </TimeEntry>
         ) : null}
       </Times>

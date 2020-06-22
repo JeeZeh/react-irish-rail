@@ -68,11 +68,7 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
   const [journeyCache, setJourneyCache] = useState(
     new Map<string, JourneyCache>()
   );
-  const [sortedTrainData, setSortedTrainData] = useState<Train[]>(null);
-
-  useEffect(() => {
-    setSortedTrainData(stationTrains);
-  }, [stationTrains]);
+  const [sortedTrainData, setSortedTrainData] = useState<Train[]>();
 
   // Re-sort the train data when the user updates the sorting params
   useEffect(() => {
@@ -80,7 +76,9 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
     if (col && dir !== 0) {
       const before = stationTrains;
       const after = [...stationTrains].sort((a, b) => {
-        return (a[col].valueOf() >= b[col].valueOf() ? 1 : -1) * dir;
+        const [t1, t2] = [a[col], b[col]];
+        const order = (t1.valueOf() >= t2.valueOf() ? 1 : -1) * dir;
+        return order;
       });
       console.log(before, after);
       setSortedTrainData(after);
