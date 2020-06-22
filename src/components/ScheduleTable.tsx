@@ -70,7 +70,7 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
   );
   const [sortedTrainData, setSortedTrainData] = useState<Train[]>();
 
-  // Re-sort the train data when the user updates the sorting params
+  // Re-sort the train data when the user updates the sorting params or trains change
   useEffect(() => {
     const { col, dir } = sort;
     if (col && dir !== 0) {
@@ -85,7 +85,7 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
     } else {
       setSortedTrainData([...stationTrains]);
     }
-  }, [sort]);
+  }, [sort, stationTrains]);
 
   // Updates the sorting direction based on the selected heading
   const handleSort = (e) => {
