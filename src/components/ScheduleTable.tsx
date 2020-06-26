@@ -156,7 +156,7 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
   return (
     <Table>
       {!isPortable ? renderHeader() : null}
-      <Body>{sortedTrainData && sortedTrainData.map(renderTrain)}</Body>
+      <Body>{sortedTrainData && sortedTrainData?.map(renderTrain)}</Body>
       {/* <Body>{[testTrain, testTrain, testTrain].map(renderTrain)}</Body> */}
     </Table>
   );

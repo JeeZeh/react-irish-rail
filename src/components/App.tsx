@@ -195,7 +195,7 @@ export const App = () => {
     const queryParams = new URLSearchParams(window.location.search);
     const qStation = queryParams.get("station");
     const qLookahead = parseInt(queryParams.get("lookahead"));
-    if (!stationList) {
+    if (!stationList || stationList.length === 0) {
       getStationList().then(() => {
         setLookahead(lookaheadOptions.find((l) => l === qLookahead) ?? 60);
       });

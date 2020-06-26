@@ -82,15 +82,15 @@ export default class IrishRailApi {
   }
 
   private static parseXmlStationData(xml: string): Train[] {
-    if (!xml) return null;
+    if (!xml) return [];
     const parsedXml = parser.parse(xml, this.XML_OPTIONS);
-    if (!parsedXml || !parsedXml.ArrayOfObjStationData) return null;
+    if (!parsedXml || !parsedXml.ArrayOfObjStationData) return [];
 
     return parsedXml.ArrayOfObjStationData[0].objStationData;
   }
 
   private static parseXmlAllStations(xml: string): Station[] {
-    if (!xml) return null;
+    if (!xml) return [];
     const parsedXml = parser.parse(xml, this.XML_OPTIONS);
     if (!parsedXml || !parsedXml.ArrayOfObjStation) return null;
 
@@ -102,6 +102,7 @@ export default class IrishRailApi {
   }
 
   private static parseXmlTrainJourney(xml: string): Journey {
+    if (!xml) return null;
     const parsedXml = parser.parse(xml, this.XML_OPTIONS);
     if (parsedXml.ArrayOfObjTrainMovements[0]) {
       let movements: Movement[] =
@@ -137,6 +138,7 @@ export default class IrishRailApi {
         const stationData = this.parseXmlStationData(await response.text()).map(
           this.cleanTrainData
         );
+
         resolve(stationData);
       } catch (error) {
         reject(error);

@@ -206,7 +206,7 @@ export const JourneyMap = (props: JoruneyMapProps) => {
             ref={scroller}
             width={!isPortable ? Math.min(800, width - 500) : null}
           >
-            {journey.stops.map(renderStop)}
+            {journey?.stops.map(renderStop)}
           </Map>
           <Fade
             side={isPortable ? "bottom" : "right"}
