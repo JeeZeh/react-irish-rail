@@ -82,23 +82,20 @@ export default class IrishRailApi {
   }
 
   private static parseXmlStationData(xml: string): Train[] {
+    if (!xml) return null;
     const parsedXml = parser.parse(xml, this.XML_OPTIONS);
-    if (!parsedXml.ArrayOfObjStationData) {
-      // let fakeData = new Array<Train>();
-      // for (let i = 0; i < 10; i++) {
-      //   fakeData.push(this.generateFakeStationData());
-      // }
-      // return fakeData;
-      return [];
-    }
+    if (!parsedXml || !parsedXml.ArrayOfObjStationData) return null;
+
     return parsedXml.ArrayOfObjStationData[0].objStationData;
   }
 
   private static parseXmlAllStations(xml: string): Station[] {
-    const parsedXml: Station[] = parser.parse(xml, this.XML_OPTIONS)
-      .ArrayOfObjStation[0].objStation;
+    if (!xml) return null;
+    const parsedXml = parser.parse(xml, this.XML_OPTIONS);
+    if (!parsedXml || !parsedXml.ArrayOfObjStation) return null;
+
     const removedDuplicates = new Map<string, Station>();
-    for (const station of parsedXml) {
+    for (const station of parsedXml.ArrayOfObjStation[0].objStation) {
       removedDuplicates.set(station.StationDesc, station);
     }
     return Array.from(removedDuplicates.values());
@@ -125,7 +122,7 @@ export default class IrishRailApi {
         });
       return { stops: movements };
     }
-    return { stops: [] };
+    return { stops: null };
   }
 
   public static async getTrainsForStation(
@@ -136,6 +133,7 @@ export default class IrishRailApi {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(endpoint);
+        if (!response.ok) reject(response);
         const stationData = this.parseXmlStationData(await response.text()).map(
           this.cleanTrainData
         );
@@ -154,6 +152,7 @@ export default class IrishRailApi {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(endpoint);
+        if (!response.ok) reject(response);
         const journeyData = this.parseXmlTrainJourney(await response.text());
         resolve(journeyData);
       } catch (error) {
@@ -190,6 +189,7 @@ export default class IrishRailApi {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(endpoint);
+        if (!response.ok) reject(response);
         const parsedXml = this.parseXmlAllStations(await response.text());
         resolve(parsedXml);
       } catch (error) {

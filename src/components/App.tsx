@@ -212,6 +212,7 @@ export const App = () => {
       setError(false);
       clearTimeout(timeout);
     } catch (e) {
+      console.error(e);
       setError(e);
     } finally {
       setWaiting(false);
@@ -261,14 +262,16 @@ export const App = () => {
   }, [station, lookahead]);
 
   const changeStation = (newStation: Station) => {
-    Promise.all([
-      asyncFadeout(true),
-      IrishRailApi.getTrainsForStation(newStation, lookahead),
-    ]).then(([_, trains]) => {
-      setStation(newStation);
-      setStationTrains(trains);
-      asyncFadeout(false, 50);
-    });
+    if (newStation) {
+      Promise.all([
+        asyncFadeout(true),
+        IrishRailApi.getTrainsForStation(newStation, lookahead),
+      ]).then(([_, trains]) => {
+        setStation(newStation);
+        setStationTrains(trains);
+        asyncFadeout(false, 50);
+      });
+    }
   };
 
   const asyncFadeout = (
@@ -350,16 +353,6 @@ export const App = () => {
     setCurrentTheme(currentTheme === "light" ? "dark" : "light");
   };
 
-  if (error) {
-    console.error(error);
-    return (
-      <Body>
-        {renderHeader()}
-        <ErrorDialogue />
-      </Body>
-    );
-  }
-
   if (waiting) return <Body>{renderHeader()}</Body>;
 
   return (
@@ -388,31 +381,36 @@ export const App = () => {
               handleThemeSwitch={handleThemeSwitch}
             />
           ) : null}
+          {error ? (
+            <ErrorDialogue />
+          ) : (
+            <>
+              {renderSearch()}
 
-          {renderSearch()}
+              <ScheduleWrapper className={!scheduleFadedOut ? "visible" : null}>
+                <Schedule
+                  station={station}
+                  lookahead={lookahead}
+                  isFavourite={favourites.includes(station?.StationDesc)}
+                  onToggleFavourite={handleToggleFavourite}
+                  handleStationClose={() => {
+                    asyncFadeout(true).then(() => setStation(null));
+                  }}
+                  stationTrains={stationTrains}
+                />
+              </ScheduleWrapper>
 
-          <ScheduleWrapper className={!scheduleFadedOut ? "visible" : null}>
-            <Schedule
-              station={station}
-              lookahead={lookahead}
-              isFavourite={favourites.includes(station?.StationDesc)}
-              onToggleFavourite={handleToggleFavourite}
-              handleStationClose={() => {
-                asyncFadeout(true).then(() => setStation(null));
-              }}
-              stationTrains={stationTrains}
-            />
-          </ScheduleWrapper>
-
-          {station && stationTrains === null && (
-            <ScheduleSpinnerWrapper>
-              <LoadingSpinner
-                size={16}
-                height="270px"
-                width="100%"
-                delay={100}
-              />
-            </ScheduleSpinnerWrapper>
+              {station && stationTrains === null && (
+                <ScheduleSpinnerWrapper>
+                  <LoadingSpinner
+                    size={16}
+                    height="270px"
+                    width="100%"
+                    delay={100}
+                  />
+                </ScheduleSpinnerWrapper>
+              )}
+            </>
           )}
         </Body>
       </Wrapp>
