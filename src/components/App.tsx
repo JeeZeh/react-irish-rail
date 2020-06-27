@@ -208,6 +208,9 @@ export const App = () => {
     const timeout = setTimeout(errorTimeout, timeoutLength);
     try {
       const apiStationList = await IrishRailApi.getStations();
+      if (!apiStationList || apiStationList.length === 0) {
+        throw new Error("API returned no stations");
+      }
       setStationList(apiStationList);
       setError(false);
       clearTimeout(timeout);
