@@ -78,6 +78,7 @@
     "fast-xml-parser": "^3.16.0",
     "fuse.js": "^5.1.0",
     "he": "^1.2.0",
+    "heroku-ssl-redirect": "0.0.4",
     "http-proxy-middleware": "^1.0.3",
     "moment": "^2.24.0",
     "react-collapsible": "^2.7.0",
