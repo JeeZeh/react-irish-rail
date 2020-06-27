@@ -1,0 +1,26 @@
+{
+  "short_name": "Irish Rail Schedule",
+  "name": "Live Irish Rail Station Schedule",
+  "description": "See the live timetable for any Irish Rail station, and the journey each train is on.",
+  "icons": [
+    {
+      "src": "./favicon.ico",
+      "type": "image/ico",
+      "sizes": "256x256"
+    },
+    {
+      "src": "./favicon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+    },
+    {
+      "src": "./apple-touch.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafafa"
+}

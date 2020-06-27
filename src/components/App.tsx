@@ -179,9 +179,6 @@ export const App = () => {
   const [error, setError] = useState<any>(null);
   const [currentTheme, setCurrentTheme] = useState<ThemeType>("dark");
 
-  const themeContext = useContext(ThemeContext);
-  console.log("THEME", themeContext);
-
   const [localFavourites, setLocalFavourites] = useLocalStorage<string[]>(
     "favourites",
     []
@@ -263,6 +260,12 @@ export const App = () => {
 
     history.replaceState({}, newTitle, `?${newParams.toString()}`);
   }, [station, lookahead]);
+
+  useEffect(() => {
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const colour = themes[currentTheme] ? themes[currentTheme].bg : "fefefe";
+    metaTheme.setAttribute("content", colour);
+  }, [currentTheme]);
 
   const changeStation = (newStation: Station) => {
     if (newStation) {

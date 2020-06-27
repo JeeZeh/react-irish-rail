@@ -2,6 +2,8 @@
 const { resolve } = require("path");
 const { CheckerPlugin } = require("awesome-typescript-loader");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const WorkboxPlugin = require("workbox-webpack-plugin");
 
 module.exports = {
   resolve: {
@@ -30,7 +32,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
+        test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$|\.json$/,
         loader: "file-loader?name=[name].[ext]", // <-- retain original file name
       },
     ],
@@ -38,6 +40,13 @@ module.exports = {
   plugins: [
     new CheckerPlugin(),
     new HtmlWebpackPlugin({ template: "index.html.ejs" }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: "manifest.json", to: "." }],
+    }),
+    new WorkboxPlugin.GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
+    }),
   ],
   externals: {
     react: "React",
