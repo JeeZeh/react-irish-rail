@@ -2,13 +2,14 @@ const express = require("express");
 const cors = require("cors");
 const compression = require("compression");
 const { createProxyMiddleware } = require("http-proxy-middleware");
-const enforceSSL = require("express-sslify");
 const app = express();
 const portNumber = 3000;
 const sourceDir = "dist";
 
 const whitelist = [
   "http://localhost:3333",
+  "https://localhost:3333",
+  "http://react-rail.herokuapp.com/",
   "https://react-rail.herokuapp.com/",
 ];
 
@@ -30,7 +31,6 @@ const proxyMiddlewareOptions = {
 
 app.use(compression());
 app.use(express.static(sourceDir));
-app.use(enforceSSL.HTTPS({ trustProtoHeader: true }));
 
 app.use("/", cors(corsOptions), createProxyMiddleware(proxyMiddlewareOptions));
 

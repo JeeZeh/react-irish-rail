@@ -5,6 +5,15 @@ import App from "./components/App";
 
 const rootEl = document.getElementById("root");
 
+const isDev =
+  location.hostname === "localhost" || location.hostname === "127.0.0.1";
+
+if (!isDev && location.protocol !== "https:") {
+  location.replace(
+    `https:${location.href.substring(location.protocol.length)}`
+  );
+}
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
