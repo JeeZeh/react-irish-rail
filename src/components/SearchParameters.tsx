@@ -41,6 +41,11 @@ const RadioButton = styled.button<{ selected?: boolean }>`
   cursor: pointer;
   border: none;
   outline: none;
+
+  @media only screen and (max-width: 400px) {
+    font-size: 0.9em;
+    padding: 5px;
+  }
 `;
 
 export const SearchParameters = (props: SearchParamerersProps) => {
