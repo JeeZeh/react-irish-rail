@@ -376,7 +376,10 @@ export const App = () => {
             </>
           )}
           {isPortable ? (
-            <ModalButton onClick={() => setModelOpen(true)}>
+            <ModalButton
+              onClick={() => setModelOpen(true)}
+              name="Open modal overlay"
+            >
               <Info size={28} />
             </ModalButton>
           ) : null}

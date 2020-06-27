@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const compression = require("compression");
-const sslRedirect = require("heroku-ssl-redirect");
 const { createProxyMiddleware } = require("http-proxy-middleware");
+const enforceSSL = require("express-sslify");
 const app = express();
 const portNumber = 3000;
 const sourceDir = "dist";
@@ -30,17 +30,9 @@ const proxyMiddlewareOptions = {
 
 app.use(compression());
 app.use(express.static(sourceDir));
-app.use(sslRedirect());
+app.use(enforceSSL.HTTPS({ trustProtoHeader: true }));
 
 app.use("/", cors(corsOptions), createProxyMiddleware(proxyMiddlewareOptions));
-
-app.get("*", (req, res, next) => {
-  if (req.headers["x-forwarded-proto"] != "https") {
-    res.redirect("https://" + req.hostname + req.url);
-  } else {
-    next();
-  }
-});
 
 app.listen(process.env.PORT ? process.env.PORT : portNumber, () => {
   console.log(`Express web server started: http://localhost:${portNumber}`);

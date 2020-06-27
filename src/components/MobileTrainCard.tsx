@@ -198,7 +198,7 @@ const renderFooter = (train: Train, onClick, open: boolean) => {
           </TimeEntry>
         ) : null}
       </Times>
-      <JourneyButton onClick={onClick}>
+      <JourneyButton onClick={onClick} name="Open train journey map">
         {!open ? (
           <Map stroke={themeContext.secondaryText} size={24} />
         ) : (

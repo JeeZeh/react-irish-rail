@@ -14,7 +14,7 @@ export const Prompt = styled.p<{ isPortable?: boolean }>`
   font-weight: 600;
   display: flex;
   align-items: center;
-  color: ${(p) => p.theme.subtle};
+  color: ${(p) => p.theme.lightEmphasis};
   margin: ${(p) => (p.isPortable ? "auto" : "0")};
 
   & svg {

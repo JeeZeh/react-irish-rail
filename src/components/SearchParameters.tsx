@@ -63,6 +63,7 @@ export const SearchParameters = (props: SearchParamerersProps) => {
             selected={props.lookahead === o}
             onClick={handleClick}
             data-value={o}
+            name={`Select ${o} minutes lookahead`}
           >
             {o} mins
           </RadioButton>

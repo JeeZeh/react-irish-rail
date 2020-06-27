@@ -41,7 +41,11 @@ module.exports = {
     new CheckerPlugin(),
     new HtmlWebpackPlugin({ template: "index.html.ejs" }),
     new CopyWebpackPlugin({
-      patterns: [{ from: "manifest.json", to: "." }],
+      patterns: [
+        { from: "manifest.json", to: "." },
+        { from: "*.png", to: "." },
+        { from: "robots.txt", to: "." },
+      ],
     }),
     new WorkboxPlugin.GenerateSW({
       clientsClaim: true,
