@@ -2,13 +2,13 @@ import * as React from "react";
 import { useContext } from "react";
 import { Station } from "../api/IrishRailApi";
 import styled, { ThemeContext } from "styled-components";
-import { FuseResult } from "fuse.js";
+import Fuse from "fuse.js";
 import { Fade } from "./JourneyMap";
 import { FixedSizeList as List } from "react-window";
 import { useWindowSize } from "../hooks/useWindowSize";
 
 export interface FuzzyOverlayProps {
-  fuzzyList: FuseResult<Station>[];
+  fuzzyList: Fuse.FuseResult<Station>[];
   cursor: number;
   onFuzzySelect: (refIndex: number) => void;
 }
@@ -52,7 +52,7 @@ export const FuzzyOverlay = (props: FuzzyOverlayProps) => {
   const { fuzzyList, cursor } = props;
 
   const Item = ({ index, style }) => {
-    const station: FuseResult<Station> = fuzzyList[index];
+    const station: Fuse.FuseResult<Station> = fuzzyList[index];
     return (
       <ListItem
         active={props.cursor === index}
