@@ -6,7 +6,7 @@
     "module": "commonjs",
     "target": "es5",
     "jsx": "react",
-    "lib": ["es5", "es6", "dom", "ES2020.promise"]
+    "lib": ["es5", "es6", "dom"]
   },
   "include": ["./src/**/*"],
   "awesomeTypescriptLoaderOptions": {
