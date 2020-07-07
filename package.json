@@ -24,7 +24,6 @@
   "scripts": {
     "build": "npm run clean-dist && webpack -p --config=configs/webpack/prod.js",
     "clean-dist": "rimraf dist/*",
-    "lint": "tslint './src/**/*.ts*' --format stylish --project . --force",
     "start": "npm run start-prod",
     "dev": "concurrently --kill-others \"webpack-dev-server --config=configs/webpack/dev.js\" \"node express.js\"",
     "start-prod": "node express.js",
@@ -46,6 +45,7 @@
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^3.0.0",
     "file-loader": "^5.1.0",
     "html-webpack-plugin": "^3.2.0",
@@ -59,7 +59,6 @@
     "rimraf": "^3.0.2",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.1.3",
-    "tslint": "^6.1.2",
     "typescript": "^3.8.3",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.42.0",

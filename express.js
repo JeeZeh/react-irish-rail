@@ -4,8 +4,6 @@ const compression = require("compression");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const request = require("request");
 const mcache = require("memory-cache");
-const { consoleTestResultHandler } = require("tslint/lib/test");
-const { TIMEOUT } = require("dns");
 const app = express();
 
 const portNumber = 3000;
