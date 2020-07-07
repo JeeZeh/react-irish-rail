@@ -1,13 +1,11 @@
 import IrishRailApi, { Journey } from "./IrishRailApi";
-import moment = require("moment");
 
 export const initJourneyLoader = (journeyCode: string): (() => Journey) => {
   let journey: Journey;
   let error;
   let status = "init";
 
-  let date = moment().locale("en-gb").format("ll");
-  const fetchingJourney = IrishRailApi.getTrainJourney(journeyCode, date)
+  const fetchingJourney = IrishRailApi.getTrainJourney(journeyCode)
     .then((j: Journey) => {
       journey = j;
       status = "done";

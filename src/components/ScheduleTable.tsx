@@ -8,6 +8,7 @@ import { ArrowDown, ArrowUp } from "react-feather";
 import { MobileTrainCard } from "./MobileTrainCard";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { DesktopTrainCard } from "./DesktopTrainCard";
+import { TrainFilter } from "./TrainFilter";
 
 const Table = styled.div`
   display: flex;
@@ -80,7 +81,6 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
         const order = (t1.valueOf() >= t2.valueOf() ? 1 : -1) * dir;
         return order;
       });
-      console.log(before, after);
       setSortedTrainData(after);
     } else {
       setSortedTrainData([...stationTrains]);
@@ -106,8 +106,7 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
     let time = Date.now();
     let cachedJourney = journeyCache.get(journeyCode) ?? null;
     if (!cachedJourney || time - cachedJourney.time > invalidateCacheAfter) {
-      const date = Moment().locale("en-gb").format("ll");
-      const journey = await IrishRailApi.getTrainJourney(journeyCode, date);
+      const journey = await IrishRailApi.getTrainJourney(journeyCode);
       setJourneyCache(
         new Map(journeyCache.set(journeyCode, { journey, time }))
       );

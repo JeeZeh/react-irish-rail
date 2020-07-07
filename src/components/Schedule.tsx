@@ -1,12 +1,13 @@
 import * as React from "react";
-import { useRef, useContext } from "react";
+import { useRef, useContext, useState, useEffect } from "react";
 import { hot } from "react-hot-loader";
-import { Train, Station } from "../api/IrishRailApi";
+import { Train, Station, Route } from "../api/IrishRailApi";
 import styled, { ThemeContext } from "styled-components";
 import { X, Heart } from "react-feather";
 import ScheduleTable from "./ScheduleTable";
 import { smallify } from "./JourneyStop";
 import { useWindowSize } from "../hooks/useWindowSize";
+import { TrainFilter } from "./TrainFilter";
 
 export interface TrainScheduleProps {
   station: Station;
@@ -15,6 +16,7 @@ export interface TrainScheduleProps {
   handleStationClose: () => void;
   isFavourite: boolean;
   onToggleFavourite: (stationCode: string) => void;
+  stationConnections: Route[];
 }
 
 export const Card = styled.div<{ isPortable?: boolean; fades?: boolean }>`
@@ -117,16 +119,47 @@ export const Schedule = (props: TrainScheduleProps) => {
     handleStationClose,
     isFavourite,
     onToggleFavourite,
+    stationConnections,
   } = props;
   const isPortable = useWindowSize().width <= 1000;
   const schedule = useRef<HTMLDivElement>();
   const themeContext = useContext(ThemeContext);
+  const [trainFilter, setTrainFilter] = useState<string[]>();
+  const [stationToTrainMap, setStationToTrainMap] = useState(
+    new Map<string, Set<string>>()
+  );
+
+  const generateStationTrainMap = (stationConnections: Route[]) => {
+    const connectionMap = new Map<string, Set<string>>();
+    const reachableStations = stationConnections?.map((r) => ({
+      code: r.trainCode,
+      stops: r.stops.slice(
+        r.stops.findIndex((s) => s === station.StationDesc) + 1
+      ),
+    }));
+    reachableStations?.forEach(({ code, stops }) => {
+      stops.forEach((s) => {
+        if (connectionMap.has(s)) {
+          connectionMap.set(s, connectionMap.get(s).add(code));
+        } else {
+          connectionMap.set(s, new Set([code]));
+        }
+      });
+    });
+    return connectionMap;
+  };
+
+  useEffect(() => {
+    const map = generateStationTrainMap(stationConnections);
+    setStationToTrainMap(map);
+  }, [stationConnections]);
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 27) {
       handleStationClose();
     }
   };
+
   if (!station || !stationTrains) return null;
 
   return (
@@ -160,19 +193,29 @@ export const Schedule = (props: TrainScheduleProps) => {
             </CardToolbarButton>
           )}
         </CardToolbar>
+        <CardBody>
+          <TrainFilter
+            stationToTrainMap={stationToTrainMap}
+            onTrainFilter={setTrainFilter}
+          />
 
-        {stationTrains.length === 0 ? (
-          <CardBody>
+          {stationTrains.length === 0 ? (
             <Error>
               No trains due at {station.StationDesc} for the next {lookahead}{" "}
               minutes
             </Error>
-          </CardBody>
-        ) : (
-          <CardBody>
-            <ScheduleTable stationTrains={stationTrains} />
-          </CardBody>
-        )}
+          ) : (
+            <ScheduleTable
+              stationTrains={
+                trainFilter?.length > 0
+                  ? stationTrains.filter((t) =>
+                      trainFilter.includes(t.Traincode)
+                    )
+                  : stationTrains
+              }
+            />
+          )}
+        </CardBody>
       </Card>
     </>
   );

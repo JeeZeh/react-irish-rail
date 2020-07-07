@@ -6,7 +6,7 @@ import styled, { ThemeContext, ThemeProvider } from "styled-components";
 import { Info } from "react-feather";
 import Schedule from "./Schedule";
 import { StationSearch } from "./StationSearch";
-import IrishRailApi, { Station, Train } from "../api/IrishRailApi";
+import IrishRailApi, { Station, Train, Route } from "../api/IrishRailApi";
 import { SearchParameters } from "./SearchParameters";
 import { JourneyKey } from "./JourneyKey";
 import { FavouriteStations } from "./FavouriteStations";
@@ -18,6 +18,9 @@ import { H3A, H1A, themes, ThemeType } from "./SharedStyles";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LoadingSpinner } from "./LoadingSpinner";
 import { AppOptions } from "./AppOptions";
+import { TrainFilter } from "./TrainFilter";
+
+// TODO: Retry loading on opening app if fails
 
 const Wrapp = styled.div`
   background-color: ${(p) => p.theme.bg};
@@ -169,15 +172,21 @@ const ModalButton = styled.button`
 
 export const App = () => {
   const timeoutLength = 5000;
+  const prefersDark =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
   const lookaheadOptions = [30, 60, 90, 120];
   const isPortable = useWindowSize().width <= 1000;
   const [lookahead, setLookahead] = useState(90);
   const [station, setStation] = useState<Station>(null);
-  const [stationTrains, setStationTrains] = useState<Train[]>(null);
-  const [stationList, setStationList] = useState<Station[]>(null);
+  const [stationTrains, setStationTrains] = useState<Train[]>([]);
+  const [stationList, setStationList] = useState<Station[]>([]);
+  const [stationConnections, setStationConnections] = useState<Route[]>([]);
   const [waiting, setWaiting] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
-  const [currentTheme, setCurrentTheme] = useState<ThemeType>("dark");
+  const [currentTheme, setCurrentTheme] = useState<ThemeType>(
+    prefersDark ? "dark" : "light"
+  );
 
   const [localFavourites, setLocalFavourites] = useLocalStorage<string[]>(
     "favourites",
@@ -189,16 +198,15 @@ export const App = () => {
 
   // Query Param and Mount data handling
   useEffect(() => {
+    if (!stationList || stationList.length === 0) {
+      getStationList();
+      return;
+    }
     const queryParams = new URLSearchParams(window.location.search);
     const qStation = queryParams.get("station");
     const qLookahead = parseInt(queryParams.get("lookahead"));
-    if (!stationList || stationList.length === 0) {
-      getStationList().then(() => {
-        setLookahead(lookaheadOptions.find((l) => l === qLookahead) ?? 60);
-      });
-    } else {
-      setStation(stationList.find((s) => s.StationDesc === qStation));
-    }
+    setStation(stationList.find((s) => s.StationDesc === qStation));
+    setLookahead(lookaheadOptions.find((l) => l === qLookahead) ?? 60);
   }, [stationList]);
 
   const getStationList = async () => {
@@ -267,16 +275,24 @@ export const App = () => {
     metaTheme.setAttribute("content", colour);
   }, [currentTheme]);
 
-  const changeStation = (newStation: Station) => {
+  const changeStation = async (newStation: Station) => {
     if (newStation) {
-      Promise.all([
+      const [_, trains] = await Promise.all([
         asyncFadeout(true),
         IrishRailApi.getTrainsForStation(newStation, lookahead),
-      ]).then(([_, trains]) => {
-        setStation(newStation);
-        setStationTrains(trains);
-        asyncFadeout(false, 50);
-      });
+      ]);
+
+      setStation(newStation);
+      setStationTrains(trains);
+      asyncFadeout(false, 50);
+
+      const connectionCodes = Array.from(
+        new Set(trains.map((t) => t.Traincode)).values()
+      ).map(IrishRailApi.getRouteInfo);
+
+      const connections = await Promise.all(connectionCodes);
+      setStationConnections(connections);
+      console.log(connections);
     }
   };
 
@@ -401,6 +417,7 @@ export const App = () => {
                   station={station}
                   lookahead={lookahead}
                   isFavourite={favourites.includes(station?.StationDesc)}
+                  stationConnections={stationConnections}
                   onToggleFavourite={handleToggleFavourite}
                   handleStationClose={() => {
                     asyncFadeout(true).then(() => setStation(null));

@@ -105,6 +105,16 @@ interface JoruneyMapProps {
   open?: boolean;
 }
 
+export const calcTrainPosition = (stops: Movement[]): number => {
+  if (!stops) return -1;
+  return stops.findIndex((s, i) => {
+    return (
+      (i < stops.length - 1 && s.Departure && !stops[i + 1].Arrival) ||
+      (s.Arrival && !s.Departure)
+    );
+  });
+};
+
 export const JourneyMap = (props: JoruneyMapProps) => {
   const { train, backgroundColor, getJourney, journeyProp, open } = props;
   const width = useWindowSize().width;
@@ -114,27 +124,12 @@ export const JourneyMap = (props: JoruneyMapProps) => {
   const [journey, setJourney] = useState<Journey>(null);
   const [fade, setFade] = useState(false);
   const scroller = useRef(null);
-  const [trainPosition, setTrainPosition] = useState<number>(-1);
-
-  const calcTrainPosition = () => {
-    if (!journey) return setTrainPosition(-1);
-    setTrainPosition(
-      journey.stops.findIndex((s, i) => {
-        return (
-          (i < journey.stops.length - 1 &&
-            s.Departure &&
-            !journey.stops[i + 1].Arrival) ||
-          (s.Arrival && !s.Departure)
-        );
-      })
-    );
-  };
 
   const scrollToTrainPosition = () => {
     if (scroller.current) {
       const scrollDiv = scroller.current as HTMLElement;
       const trainDiv = scrollDiv.children.item(
-        Math.max(trainPosition, 0)
+        Math.max(journey.trainPosition, 0)
       ) as HTMLElement;
       const scrollOffset =
         (isPortable ? trainDiv.offsetTop : trainDiv.offsetLeft) -
@@ -150,7 +145,6 @@ export const JourneyMap = (props: JoruneyMapProps) => {
 
   useEffect(() => {
     scrollToTrainPosition();
-    calcTrainPosition();
     if (journey) setFade(true);
     return () => setFade(false);
   }, [journey]);
@@ -167,17 +161,17 @@ export const JourneyMap = (props: JoruneyMapProps) => {
     }
   }, [open]);
 
-  const renderStop = (stop: Movement, index) => {
-    return (
+  const renderStops = (journey: Journey) => {
+    return journey.stops.map((stop, i) => (
       <JourneyStop
         station={stop}
-        stopNumber={index}
-        trainPosition={trainPosition}
+        stopNumber={i}
+        trainPosition={journey.trainPosition}
         journeyLength={journey.stops.length}
         train={train}
-        key={index}
+        key={i}
       />
-    );
+    ));
   };
 
   return (
@@ -206,7 +200,7 @@ export const JourneyMap = (props: JoruneyMapProps) => {
             ref={scroller}
             width={!isPortable ? Math.min(800, width - 500) : null}
           >
-            {journey?.stops.map(renderStop)}
+            {renderStops(journey)}
           </Map>
           <Fade
             side={isPortable ? "bottom" : "right"}

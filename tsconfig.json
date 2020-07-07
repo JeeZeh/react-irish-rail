@@ -1,20 +1,16 @@
 {
-    "compilerOptions": {
-        "outDir": "./dist/",
-        "sourceMap": true,
-        "noImplicitAny": false,
-        "module": "commonjs",
-        "target": "es5",
-        "jsx": "react",
-        "lib": ["es5", "es6", "dom"],
-    },
-    "include": [
-        "./src/**/*",
-    ],
-    "awesomeTypescriptLoaderOptions": {
-        "reportFiles": [
-            "./src/**/*"
-        ]
-    },
-    "files": [ "custom.d.ts" ]
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react",
+    "lib": ["es5", "es6", "dom", "ES2020.promise"]
+  },
+  "include": ["./src/**/*"],
+  "awesomeTypescriptLoaderOptions": {
+    "reportFiles": ["./src/**/*"]
+  },
+  "files": ["custom.d.ts"]
 }

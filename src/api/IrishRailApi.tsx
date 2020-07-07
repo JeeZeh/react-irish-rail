@@ -2,11 +2,12 @@ import * as parser from "fast-xml-parser";
 import * as he from "he";
 import { smallify } from "../components/JourneyStop";
 import moment = require("moment");
+import { calcTrainPosition } from "../components/JourneyMap";
 
 export default class IrishRailApi {
   private static API = window.location.host.includes("localhost")
-    ? "http://localhost:3000/"
-    : "/";
+    ? "http://localhost:3000"
+    : "";
   private static STATIONDATA =
     "getStationDataByCodeXML_WithNumMins?StationCode=";
   private static TRAINJOURNEY = "getTrainMovementsXML?TrainId=";
@@ -83,7 +84,7 @@ export default class IrishRailApi {
 
   private static parseXmlStationData(xml: string): Train[] {
     if (!xml) return [];
-    const parsedXml = parser.parse(xml, this.XML_OPTIONS);
+    const parsedXml = parser.parse(xml, IrishRailApi.XML_OPTIONS);
     if (!parsedXml || !parsedXml.ArrayOfObjStationData) return [];
 
     return parsedXml.ArrayOfObjStationData[0].objStationData;
@@ -91,7 +92,7 @@ export default class IrishRailApi {
 
   private static parseXmlAllStations(xml: string): Station[] {
     if (!xml) return [];
-    const parsedXml = parser.parse(xml, this.XML_OPTIONS);
+    const parsedXml = parser.parse(xml, IrishRailApi.XML_OPTIONS);
     if (!parsedXml || !parsedXml.ArrayOfObjStation) return null;
 
     const removedDuplicates = new Map<string, Station>();
@@ -103,7 +104,7 @@ export default class IrishRailApi {
 
   private static parseXmlTrainJourney(xml: string): Journey {
     if (!xml) return null;
-    const parsedXml = parser.parse(xml, this.XML_OPTIONS);
+    const parsedXml = parser.parse(xml, IrishRailApi.XML_OPTIONS);
     if (parsedXml.ArrayOfObjTrainMovements[0]) {
       let movements: Movement[] =
         parsedXml.ArrayOfObjTrainMovements[0].objTrainMovements;
@@ -121,23 +122,23 @@ export default class IrishRailApi {
           });
           return m;
         });
-      return { stops: movements };
+      return { stops: movements, trainPosition: calcTrainPosition(movements) };
     }
-    return { stops: null };
+    return { stops: null, trainPosition: null };
   }
 
   public static async getTrainsForStation(
     station: Station,
     lookahead: number
   ): Promise<Train[]> {
-    const endpoint = `${this.API}${this.STATIONDATA}${station.StationCode}&NumMins=${lookahead}&format=xml`;
+    const endpoint = `${IrishRailApi.API}/proxy/${IrishRailApi.STATIONDATA}${station.StationCode}&NumMins=${lookahead}&format=xml`;
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(endpoint);
         if (!response.ok) reject(response);
-        const stationData = this.parseXmlStationData(await response.text()).map(
-          this.cleanTrainData
-        );
+        const stationData = IrishRailApi.parseXmlStationData(
+          await response.text()
+        ).map(IrishRailApi.cleanTrainData);
 
         resolve(stationData);
       } catch (error) {
@@ -146,16 +147,15 @@ export default class IrishRailApi {
     });
   }
 
-  public static async getTrainJourney(
-    trainCode: string,
-    trainDate: string
-  ): Promise<Journey> {
-    const endpoint = `${this.API}${this.TRAINJOURNEY}${trainCode}&TrainDate=${trainDate}`;
+  public static async getTrainJourney(trainCode: string): Promise<Journey> {
+    const endpoint = `${IrishRailApi.API}/proxy/${IrishRailApi.TRAINJOURNEY}${trainCode}&TrainDate=0`;
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(endpoint);
         if (!response.ok) reject(response);
-        const journeyData = this.parseXmlTrainJourney(await response.text());
+        const journeyData = IrishRailApi.parseXmlTrainJourney(
+          await response.text()
+        );
         resolve(journeyData);
       } catch (error) {
         reject(error);
@@ -187,18 +187,54 @@ export default class IrishRailApi {
   }
 
   public static getStations(): Promise<Station[]> {
-    const endpoint = `${this.API}${this.ALLSTATIONS}`;
+    const endpoint = `${IrishRailApi.API}/proxy/${IrishRailApi.ALLSTATIONS}`;
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(endpoint);
         if (!response.ok) reject(response);
-        const parsedXml = this.parseXmlAllStations(await response.text());
+        const parsedXml = IrishRailApi.parseXmlAllStations(
+          await response.text()
+        );
         resolve(parsedXml);
       } catch (error) {
         reject(error);
       }
     });
   }
+
+  public static getRouteInfo(trainCode: string): Promise<Route> {
+    if (!trainCode) return null;
+    const endpoint = `${IrishRailApi.API}/route/${trainCode}`;
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(endpoint);
+        if (!response.ok) reject(response);
+        const parsedXml = IrishRailApi.parseXmlTrainJourney(
+          await response.text()
+        );
+        resolve({
+          origin: parsedXml.stops[0].TrainOrigin,
+          destination: parsedXml.stops[0].TrainDestination,
+          stops: parsedXml.stops
+            .filter((s) => s.StopType != "T")
+            .map((s) => s.LocationFullName),
+          trainCode: parsedXml.stops[0].TrainCode,
+          trainPosition: parsedXml.trainPosition,
+        });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+}
+
+export interface Route {
+  origin: string;
+  destination: string;
+  stops: Array<string>;
+  trainCode: string;
+  trainPosition: number;
 }
 
 export interface Train {
@@ -227,6 +263,7 @@ export interface Train {
 
 export interface Journey {
   stops: Movement[];
+  trainPosition: number;
 }
 
 export interface Movement {

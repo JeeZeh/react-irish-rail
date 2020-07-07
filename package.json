@@ -79,11 +79,14 @@
     "fuse.js": "^5.1.0",
     "he": "^1.2.0",
     "http-proxy-middleware": "^1.0.3",
+    "memory-cache": "^0.2.0",
     "moment": "^2.24.0",
     "react-collapsible": "^2.7.0",
     "react-feather": "^2.0.8",
+    "react-select": "^3.1.0",
     "react-spinners": "^0.8.3",
     "react-window": "^1.8.5",
+    "request": "^2.88.2",
     "styled-components": "^5.0.1"
   }
 }
