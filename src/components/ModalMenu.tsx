@@ -17,6 +17,7 @@ const Overlay = styled.div`
   top: 0;
   left: 0;
   overflow-y: scroll;
+  overscroll-behavior-y: contain;
   background-color: ${(p) => `${p.theme.bg}FA`};
   z-index: 10;
 
