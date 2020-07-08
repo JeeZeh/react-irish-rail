@@ -2,7 +2,11 @@ import * as React from "react";
 import { useState, useEffect, useContext } from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
-import styled, { ThemeContext, ThemeProvider } from "styled-components";
+import styled, {
+  ThemeContext,
+  ThemeProvider,
+  createGlobalStyle,
+} from "styled-components";
 import { Info } from "react-feather";
 import Schedule from "./Schedule";
 import { StationSearch } from "./StationSearch";
@@ -167,6 +171,12 @@ const ModalButton = styled.button`
 
   & svg {
     color: ${(p) => p.theme.secondaryText};
+  }
+`;
+
+const ModalPreventScroll = createGlobalStyle<{ modalOpen: boolean }>`
+  body {
+    overflow: ${(p) => (p.modalOpen ? "hidden" : "inherit")};
   }
 `;
 
@@ -398,6 +408,7 @@ export const App = () => {
 
   return (
     <ThemeProvider theme={themes[currentTheme]}>
+      <ModalPreventScroll modalOpen={modalOpen} />
       <Wrapp>
         <Body>
           {renderHeader()}
