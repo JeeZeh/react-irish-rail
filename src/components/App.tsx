@@ -288,7 +288,7 @@ export const App = () => {
 
       setStation(newStation);
       setStationTrains(trains);
-      await asyncFadeout(false, 50);
+      asyncFadeout(false, 50);
 
       const connectionCodes = Array.from(
         new Set(trains.map((t) => t.Traincode)).values()
@@ -318,7 +318,7 @@ export const App = () => {
       (s) => s.StationDesc === e.target.innerHTML
     );
 
-    setStation(station);
+    changeStation(station);
   };
 
   // Theming behaviours
