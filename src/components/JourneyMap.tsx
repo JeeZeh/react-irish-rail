@@ -59,6 +59,7 @@ const Map = styled.div<{
   width: ${(p) => (p.width ? p.width + "px" : p.isPortable ? "100%" : "auto")};
   overflow-x: ${(p) => (p.isPortable ? "hidden" : "scroll")};
   overflow-y: ${(p) => (p.isPortable ? "scroll" : "hidden")};
+  overscroll-behavior-y: ${(p) => (p.isPortable ? "contain" : "auto")};
 
   ::-webkit-scrollbar {
     width: 8px;
