@@ -184,14 +184,18 @@ export const App = () => {
   const [stationConnections, setStationConnections] = useState<Route[]>([]);
   const [waiting, setWaiting] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
-  const [currentTheme, setCurrentTheme] = useState<ThemeType>(
-    prefersDark ? "dark" : "light"
-  );
+  const [themePreference, setThemePreference] = useLocalStorage<
+    "dark" | "light"
+  >("theme", null);
+
+  const initialTheme = themePreference ?? (prefersDark ? "dark" : "light");
+  const [currentTheme, setCurrentTheme] = useState<ThemeType>(initialTheme);
 
   const [localFavourites, setLocalFavourites] = useLocalStorage<string[]>(
     "favourites",
     []
   );
+
   const [favourites, setFavourites] = useState<string[]>(localFavourites);
   const [modalOpen, setModelOpen] = useState(false);
   const [scheduleFadedOut, setScheduleFadedOut] = useState(false);
@@ -284,7 +288,7 @@ export const App = () => {
 
       setStation(newStation);
       setStationTrains(trains);
-      asyncFadeout(false, 50);
+      await asyncFadeout(false, 50);
 
       const connectionCodes = Array.from(
         new Set(trains.map((t) => t.Traincode)).values()
@@ -316,6 +320,25 @@ export const App = () => {
 
     setStation(station);
   };
+
+  // Theming behaviours
+
+  window.matchMedia("(prefers-color-scheme: dark)").addListener((e) => {
+    if (!themePreference) {
+      if (e.matches) setCurrentTheme("dark");
+      else setCurrentTheme("light");
+    }
+  });
+
+  const handleThemeSwitch = (e) => {
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    setCurrentTheme(newTheme);
+    setThemePreference(newTheme);
+  };
+
+  useEffect(() => {
+    console.log(themePreference);
+  }, [themePreference]);
 
   const renderHeader = () => {
     return (
@@ -369,10 +392,6 @@ export const App = () => {
         )}
       </>
     );
-  };
-
-  const handleThemeSwitch = (e) => {
-    setCurrentTheme(currentTheme === "light" ? "dark" : "light");
   };
 
   if (waiting) return <Body>{renderHeader()}</Body>;
