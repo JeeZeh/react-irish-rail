@@ -10,9 +10,6 @@ const portNumber = 3000;
 const sourceDir = "dist";
 const IRISH_RAIL_API = "http://api.irishrail.ie/realtime/realtime.asmx/";
 
-// TODO: Cache requests server side
-// TODO: Maybe keep long-term cache of trainCode->journey
-
 const whitelist = [
   "http://localhost:3333",
   "https://localhost:3333",
@@ -41,24 +38,45 @@ const proxyMiddlewareOptions = {
 
 /**
  * Cache used for requests
- * @param {number} duration milliseconds to keep cached value
- * @param {string} keyPrefix prefix to apply to the cache key
  */
-const cacheMiddleware = (duration, keyPrefix) => {
+const cacheMiddleware = () => {
   return (req, res, next) => {
-    const key = `__express__${keyPrefix}__${req.originUrl || req.url}_${
-      req.params
-    }`;
+    if (req.method !== "GET") return next();
+    const key = "__api__" + req.url;
     const cachedBody = mcache.get(key);
     if (cachedBody) {
       res.send(cachedBody);
+      console.log("Serving cached", key);
       return;
     }
 
-    res.sendResponse = res.send;
-    res.send = (body) => {
-      mcache.put(key, body, duration);
-      res.sendResponse(body);
+    // Set the duration of the cache in ms depending on the data requested
+    let cacheTime = 0;
+    if (
+      req.path === "/proxy/getTrainMovementsXML" ||
+      req.path === "/proxy/getStationDataByCodeXML_WithNumMins"
+    ) {
+      cacheTime = 15000;
+    } else if (
+      req.path === "/proxy/getAllStationsXML" ||
+      req.path === "/route"
+    ) {
+      cacheTime = msUntil(4);
+    }
+
+    const _end = res.end;
+    const _write = res.write;
+    let buffer = new Buffer.alloc(0);
+    // Rewrite response method and get the content.
+    res.write = function (data) {
+      buffer = Buffer.concat([buffer, data]);
+    };
+    res.end = function () {
+      const body = buffer.toString();
+      console.log("Caching", key, "for", cacheTime);
+      mcache.put(key, body, cacheTime);
+      _write.call(res, body);
+      _end.call(res);
     };
     next();
   };
@@ -79,24 +97,25 @@ let msUntil = (hour) => {
 app.use(compression(), cors(corsOptions));
 app.use(express.static(sourceDir));
 
-app.use("/proxy/", createProxyMiddleware(proxyMiddlewareOptions));
-
 app.get(
-  "/route/:trainCode",
-  cacheMiddleware(msUntil(4), "route"),
-  (req, res) => {
-    request.get(
-      `${IRISH_RAIL_API}getTrainMovementsXML?TrainId=${req.params.trainCode}&TrainDate=0`,
-      { json: false },
-      (error, response, body) => {
-        if (error) {
-          res.status(400).send(error);
-        }
-        res.send(body);
-      }
-    );
-  }
+  "/proxy/*",
+  cacheMiddleware(),
+  createProxyMiddleware(proxyMiddlewareOptions)
 );
+
+app.get("/route", cacheMiddleware(), (req, res) => {
+  request.get(
+    `${IRISH_RAIL_API}getTrainMovementsXML?TrainId=${req.query.trainCode}&TrainDate=0`,
+    { json: false },
+    (error, response, body) => {
+      if (error) {
+        res.status(400).send(error);
+      }
+      res.write(new Buffer(body));
+      res.end();
+    }
+  );
+});
 
 app.listen(process.env.PORT ? process.env.PORT : portNumber, () => {
   console.log(`Express web server started: http://localhost:${portNumber}`);

@@ -93,7 +93,7 @@ export default class IrishRailApi {
   private static parseXmlAllStations(xml: string): Station[] {
     if (!xml) return [];
     const parsedXml = parser.parse(xml, IrishRailApi.XML_OPTIONS);
-    if (!parsedXml || !parsedXml.ArrayOfObjStation) return null;
+    if (!parsedXml || !parsedXml.ArrayOfObjStation) return [];
 
     const removedDuplicates = new Map<string, Station>();
     for (const station of parsedXml.ArrayOfObjStation[0].objStation) {
@@ -204,7 +204,7 @@ export default class IrishRailApi {
 
   public static getRouteInfo(trainCode: string): Promise<Route> {
     if (!trainCode) return null;
-    const endpoint = `${IrishRailApi.API}/route/${trainCode}`;
+    const endpoint = `${IrishRailApi.API}/route?trainCode=${trainCode}`;
 
     return new Promise(async (resolve, reject) => {
       try {
