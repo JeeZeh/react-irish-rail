@@ -2,13 +2,11 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { hot } from "react-hot-loader";
 import IrishRailApi, { Train, Journey } from "../api/IrishRailApi";
-import * as Moment from "moment";
 import styled from "styled-components";
 import { ArrowDown, ArrowUp } from "react-feather";
 import { MobileTrainCard } from "./MobileTrainCard";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { DesktopTrainCard } from "./DesktopTrainCard";
-import { TrainFilter } from "./TrainFilter";
 
 const Table = styled.div`
   display: flex;

@@ -2,11 +2,7 @@ import * as React from "react";
 import { useState, useEffect, useContext } from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
-import styled, {
-  ThemeContext,
-  ThemeProvider,
-  createGlobalStyle,
-} from "styled-components";
+import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 import { Info } from "react-feather";
 import Schedule from "./Schedule";
 import { StationSearch } from "./StationSearch";
@@ -22,7 +18,6 @@ import { H3A, H1A, themes, ThemeType } from "./SharedStyles";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LoadingSpinner } from "./LoadingSpinner";
 import { AppOptions } from "./AppOptions";
-import { TrainFilter } from "./TrainFilter";
 
 // TODO: Retry loading on opening app if fails
 

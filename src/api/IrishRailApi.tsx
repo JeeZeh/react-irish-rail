@@ -31,56 +31,7 @@ export default class IrishRailApi {
     stopNodes: ["parse-me-as-string"],
   };
 
-  private static generateFakeStationData(): Train {
-    let d: Train = {
-      Servertime: new Date(),
-      Traincode: null,
-      Stationfullname: null,
-      Stationcode: null,
-      Querytime: null,
-      Traindate: null,
-      Origin: null,
-      Destination: null,
-      Origintime: null,
-      Destinationtime: null,
-      Status: null,
-      Lastlocation: null,
-      Duein: 0,
-      Late: 0,
-      Exparrival: null,
-      Expdepart: null,
-      Scharrival: null,
-      Schdepart: null,
-      Direction: null,
-      Traintype: null,
-      Locationtype: null,
-    };
-
-    for (const key in d) {
-      if (["Duein", "Late"].includes(key)) {
-        d[key] = 0;
-      } else if (
-        [
-          "Origintime",
-          "Destinationtime",
-          "Exparrival",
-          "Expdepart",
-          "Scharrival",
-          "Schdepart",
-        ].includes(key)
-      ) {
-        d[key] = `${(Math.random() * 24 + 100).toString().substring(1, 3)}:${(
-          Math.random() * 60 +
-          100
-        )
-          .toString()
-          .substring(1, 3)}`;
-      } else {
-        d[key] = Math.random().toString(36).slice(2);
-      }
-    }
-    return d;
-  }
+  private static localRouteCache = new Map<string, Route>();
 
   private static parseXmlStationData(xml: string): Train[] {
     if (!xml) return [];
@@ -204,16 +155,24 @@ export default class IrishRailApi {
 
   public static getRouteInfo(trainCode: string): Promise<Route> {
     if (!trainCode) return null;
-    const endpoint = `${IrishRailApi.API}/route?trainCode=${trainCode}`;
-
     return new Promise(async (resolve, reject) => {
+      const localRouteCacheEntry = IrishRailApi.localRouteCache.get(trainCode);
+
+      if (localRouteCacheEntry) {
+        console.log("Returning cached route");
+        resolve(localRouteCacheEntry);
+        return;
+      }
+
+      const endpoint = `${IrishRailApi.API}/route?trainCode=${trainCode}`;
       try {
         const response = await fetch(endpoint);
         if (!response.ok) reject(response);
         const parsedXml = IrishRailApi.parseXmlTrainJourney(
           await response.text()
         );
-        resolve({
+
+        const route = {
           origin: parsedXml.stops[0].TrainOrigin,
           destination: parsedXml.stops[0].TrainDestination,
           stops: parsedXml.stops
@@ -221,7 +180,9 @@ export default class IrishRailApi {
             .map((s) => s.LocationFullName),
           trainCode: parsedXml.stops[0].TrainCode,
           trainPosition: parsedXml.trainPosition,
-        });
+        };
+        IrishRailApi.localRouteCache.set(trainCode, route);
+        resolve(route);
       } catch (error) {
         reject(error);
       }
