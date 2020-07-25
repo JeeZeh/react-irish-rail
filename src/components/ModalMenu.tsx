@@ -79,7 +79,6 @@ const CloseText = styled(CloseItem)`
 
 interface ModalMenuProps {
   handleCloseModal: () => void;
-  onFavouriteSelect: (e) => void;
   handleThemeSwitch: (e) => void;
 }
 

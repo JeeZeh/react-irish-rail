@@ -10,13 +10,13 @@ import { useWindowSize } from "../hooks/useWindowSize";
 export interface FuzzyOverlayProps {
   fuzzyList: Fuse.FuseResult<Station>[];
   cursor: number;
-  onFuzzySelect: (refIndex: number) => void;
+  onFuzzySelect: (station: Station) => void;
 }
 
 export const ListItem = styled.div<{ active?: boolean }>`
   padding: 10px;
   cursor: pointer;
-  background-color: ${(p) => (p.active ? p.theme.veryFaint : "inherit")};
+  background-color: ${(p) => (p.active ? p.theme.faint : "inherit")};
 
   &:hover {
     background-color: ${(p) => p.theme.faint};
@@ -45,23 +45,19 @@ export const FuzzyOverlay = (props: FuzzyOverlayProps) => {
   const isPortable = useWindowSize().width <= 1000;
   const themeContext = useContext(ThemeContext);
 
-  const handleClick = (e) => {
-    props.onFuzzySelect(e.target.getAttribute("data-index"));
-  };
-
-  const { fuzzyList, cursor } = props;
+  const { fuzzyList, cursor, onFuzzySelect } = props;
 
   const Item = ({ index, style }) => {
-    const station: Fuse.FuseResult<Station> = fuzzyList[index];
+    const station: Station = fuzzyList[index].item;
     return (
       <ListItem
-        active={props.cursor === index}
-        onClick={handleClick}
+        active={cursor === index}
+        onClick={() => onFuzzySelect(station)}
         style={style}
-        key={station.refIndex}
-        data-index={station.refIndex}
+        key={index}
+        data-index={index}
       >
-        {station.item.StationDesc}
+        {station.StationDesc}
       </ListItem>
     );
   };

@@ -3,13 +3,13 @@ import { useState, useEffect, useContext } from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
-import { Info } from "react-feather";
+import { Info, Heart } from "react-feather";
 import Schedule from "./Schedule";
 import { StationSearch } from "./StationSearch";
 import IrishRailApi, { Station, Train, Route } from "../api/IrishRailApi";
 import { SearchParameters } from "./SearchParameters";
 import { JourneyKey } from "./JourneyKey";
-import { FavouriteStations } from "./FavouriteStations";
+import { CollapsibleItemList } from "./CollapsibleItemList";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { ModalMenu } from "./ModalMenu";
 import { About } from "./About";
@@ -18,6 +18,8 @@ import { H3A, H1A, themes, ThemeType } from "./SharedStyles";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LoadingSpinner } from "./LoadingSpinner";
 import { AppOptions } from "./AppOptions";
+import { NearbyStations } from "./NearbyStations";
+import { smallify } from "./JourneyStop";
 
 // TODO: Retry loading on opening app if fails
 
@@ -188,6 +190,7 @@ export const App = () => {
   const [stationList, setStationList] = useState<Station[]>([]);
   const [stationConnections, setStationConnections] = useState<Route[]>([]);
   const [waiting, setWaiting] = useState<boolean>(false);
+  const [initialised, setInitialised] = useState(false);
   const [error, setError] = useState<any>(null);
   const [themePreference, setThemePreference] = useLocalStorage<
     "dark" | "light"
@@ -205,10 +208,12 @@ export const App = () => {
   const [modalOpen, setModelOpen] = useState(false);
   const [scheduleFadedOut, setScheduleFadedOut] = useState(false);
 
+  // Initialisation
   // Query Param and Mount data handling
   useEffect(() => {
     if (!stationList || stationList.length === 0) {
       getStationList();
+      setInitialised(true);
       return;
     }
     const queryParams = new URLSearchParams(window.location.search);
@@ -216,6 +221,7 @@ export const App = () => {
     const qLookahead = parseInt(queryParams.get("lookahead"));
     setStation(stationList.find((s) => s.StationDesc === qStation));
     setLookahead(lookaheadOptions.find((l) => l === qLookahead) ?? 60);
+    setInitialised(true);
   }, [stationList]);
 
   const getStationList = async () => {
@@ -268,11 +274,15 @@ export const App = () => {
 
   // Query param change handling
   useEffect(() => {
-    if (!station || !lookahead) return;
-    const newParams = new URLSearchParams([
-      ["station", station.StationDesc],
-      ["lookahead", lookahead.toString()],
-    ]);
+    if (!initialised) return;
+    const newParams = new URLSearchParams(
+      station && lookahead
+        ? [
+            ["station", station.StationDesc],
+            ["lookahead", lookahead.toString()],
+          ]
+        : []
+    );
     const newTitle = `${station?.StationDesc} - ${lookahead} mins`;
 
     history.replaceState({}, newTitle, `?${newParams.toString()}`);
@@ -318,10 +328,8 @@ export const App = () => {
     });
   };
 
-  const onFavouriteSelect = (e) => {
-    const station = stationList.find(
-      (s) => s.StationDesc === e.target.innerHTML
-    );
+  const changeStationByName = (stationName: string) => {
+    const station = stationList.find((s) => s.StationDesc === stationName);
 
     changeStation(station);
   };
@@ -380,15 +388,32 @@ export const App = () => {
               onLookaheadChange={setLookahead}
             />
           </div>
-          <div>
-            {stationList && (
-              <FavouriteStations
-                onFavouriteSelect={onFavouriteSelect}
-                forceOpen={!station || !isPortable}
-                favourites={favourites}
+          {stationList && (
+            <div>
+              <CollapsibleItemList
+                onItemSelect={changeStationByName}
+                forceState={!station || !isPortable}
+                items={favourites.map((f) => ({ label: smallify(f), key: f }))}
+                initialOpenState={isPortable && !station}
+                headerTitle="Favourite Stations"
+                noItemsPrompt={
+                  <>
+                    Favourite <Heart size={16} /> a station to see it here
+                  </>
+                }
               />
-            )}
-          </div>
+            </div>
+          )}
+          {stationList && (
+            <div>
+              <NearbyStations
+                stationList={stationList}
+                onStationChange={changeStationByName}
+                initialOpenState={isPortable && !station}
+                station={station}
+              />
+            </div>
+          )}
         </SearchWrapper>
         {!stationList && (
           <ScheduleSpinnerWrapper>
@@ -427,7 +452,6 @@ export const App = () => {
           {modalOpen ? (
             <ModalMenu
               handleCloseModal={() => setModelOpen(false)}
-              onFavouriteSelect={onFavouriteSelect}
               handleThemeSwitch={handleThemeSwitch}
             />
           ) : null}
@@ -435,7 +459,7 @@ export const App = () => {
             <ErrorDialogue />
           ) : (
             <>
-              {renderSearch()}
+              {initialised && renderSearch()}
 
               <ScheduleWrapper className={!scheduleFadedOut ? "visible" : null}>
                 <Schedule

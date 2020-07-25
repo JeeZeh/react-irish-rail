@@ -71,37 +71,40 @@ export const StationSearch = (props: StationSearchProps) => {
     keys: ["StationDesc", "StationCode"],
   };
 
-  const [state, setState] = useState<StationSearchState>({
-    fuseMatch: null,
-    fuse: null,
-    input: "",
-    hasFocus: false,
-    cursor: -1,
-    mouseOver: false,
-  });
+  const [fuseMatch, setFuseMatch] = useState<Fuse.FuseResult<Station>[]>();
+  const [input, setInput] = useState("");
+  const [cursor, setCursor] = useState(-1);
+  const [hasFocus, setHasFocus] = useState(false);
+  const [mouseOver, setMouseOver] = useState(false);
+  const [fuse, setFuse] = useState<Fuse<Station, any>>();
 
   const isPortable = useWindowSize().width <= 1000;
 
   useEffect(() => {
     if (props.stationList) {
-      setState({ ...state, fuse: new Fuse(props.stationList, FUSE_OPTIONS) });
+      setFuse(new Fuse(props.stationList, FUSE_OPTIONS));
     }
   }, [props.stationList]);
 
+  useEffect(() => {
+    if (input) {
+      setHasFocus(true);
+    }
+  }, [input]);
+
   const handleKeyDown = (e) => {
-    const { cursor, fuseMatch } = state;
     // Up Arrow
     if (e.keyCode === 38 && cursor > 0) {
-      setState({ ...state, cursor: state.cursor - 1 });
+      setCursor(cursor - 1);
     } // Down Arrow
     else if (e.keyCode === 40 && cursor < fuseMatch.length - 1) {
-      setState({ ...state, cursor: state.cursor + 1 });
+      setCursor(cursor + 1);
     } else if (e.keyCode === 13) {
       const selection =
         fuseMatch.length === 1
-          ? fuseMatch[0].refIndex
+          ? fuseMatch[0].item
           : cursor !== -1
-          ? fuseMatch[cursor].refIndex
+          ? fuseMatch[cursor].item
           : null;
       if (selection) {
         handleFuzzySelect(selection);
@@ -111,35 +114,36 @@ export const StationSearch = (props: StationSearchProps) => {
 
   const handleChange = (e) => {
     const pattern = e.target.value;
-    setState({
-      ...state,
-      input: pattern,
-      fuseMatch: state.fuse.search(pattern).slice(0, 10),
-      cursor: -1,
-    });
+    setInput(pattern);
+    setFuseMatch(fuse.search(pattern).slice(0, 10));
+    setCursor(-1);
   };
 
-  const handleFuzzySelect = (refIndex: number) => {
-    setState({ ...state, input: "", fuseMatch: [], cursor: -1 });
-    props.onStationChange(props.stationList[refIndex]);
+  const handleFuzzySelect = (station: Station) => {
+    setInput("");
+    setFuseMatch([]);
+    setCursor(-1);
+    setHasFocus(false);
+    props.onStationChange(station);
   };
-
-  const { fuseMatch, cursor, hasFocus, mouseOver } = state;
 
   return (
     <Search
-      onFocus={() => setState({ ...state, hasFocus: true })}
+      onFocus={() => setHasFocus(true)}
       onBlur={() => {
-        if (!mouseOver) setState({ ...state, hasFocus: false, cursor: 0 });
+        if (!mouseOver) {
+          setHasFocus(false);
+          setCursor(0);
+        }
       }}
-      onMouseEnter={() => setState({ ...state, mouseOver: true })}
-      onMouseLeave={() => setState({ ...state, mouseOver: false })}
+      onMouseEnter={() => setMouseOver(true)}
+      onMouseLeave={() => setMouseOver(false)}
     >
       <SearchFlex isPortable={isPortable}>
         <Input
           onChange={handleChange}
           onKeyDown={handleKeyDown}
-          value={state.input}
+          value={input}
           isPortable={isPortable}
           placeholder="Type a station name"
           aria-label="Input box for searching a station"

@@ -111,7 +111,7 @@ app.get("/route", cacheMiddleware(), (req, res) => {
       if (error) {
         res.status(400).send(error);
       }
-      res.write(new Buffer(body));
+      res.write(Buffer.from(body));
       res.end();
     }
   );

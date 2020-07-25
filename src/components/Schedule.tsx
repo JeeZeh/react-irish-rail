@@ -46,14 +46,22 @@ export const Card = styled.div<{ isPortable?: boolean; fades?: boolean }>`
 export const CardToolbar = styled.div<{ isPortable?: boolean }>`
   grid-area: toolbar;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: ${(p) =>
+    p.isPortable ? "1fr auto auto" : "auto 1fr auto"};
   margin: ${(p) => (p.isPortable ? "15px 20px" : "5px 5px 10px 5px")};
+
+  & > div:last-child {
+    margin-left: 15px;
+  }
 `;
 
-export const CardHeader = styled.div<{ isPortable: boolean }>`
+export const CardHeader = styled.div<{
+  isPortable: boolean;
+  gridColumn?: number;
+}>`
   font-weight: 700;
   font-size: 1.8em;
-  grid-column: 2;
+  grid-column: ${(p) => p.gridColumn ?? 2};
   align-self: center;
   user-select: none;
   padding-left: ${(p) => (p.isPortable ? 0 : 15)}px;
@@ -173,7 +181,7 @@ export const Schedule = (props: TrainScheduleProps) => {
       >
         <CardToolbar isPortable={isPortable}>
           <CardToolbarButton
-            gridColumn={isPortable ? 3 : 1}
+            gridColumn={isPortable ? 2 : 1}
             className={isFavourite ? "on" : null}
             onClick={() => onToggleFavourite(station.StationDesc)}
           >
@@ -184,14 +192,12 @@ export const Schedule = (props: TrainScheduleProps) => {
             />
           </CardToolbarButton>
 
-          <CardHeader isPortable={isPortable}>
+          <CardHeader isPortable={isPortable} gridColumn={isPortable ? 1 : 2}>
             {smallify(station.StationDesc, true)}
           </CardHeader>
-          {isPortable ? null : (
-            <CardToolbarButton gridColumn={3} onClick={handleStationClose}>
-              <X size={32} />
-            </CardToolbarButton>
-          )}
+          <CardToolbarButton gridColumn={3} onClick={handleStationClose}>
+            <X size={32} />
+          </CardToolbarButton>
         </CardToolbar>
         <CardBody>
           <TrainFilter

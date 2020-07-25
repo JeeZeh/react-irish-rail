@@ -1,9 +1,8 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { JourneyButton } from "./MobileTrainCard";
-import { Heart, ChevronsDown } from "react-feather";
+import { ChevronsDown } from "react-feather";
 import styled from "styled-components";
-import { smallify } from "./JourneyStop";
 import Collapsible from "react-collapsible";
 import { H3A } from "./SharedStyles";
 import { useWindowSize } from "../hooks/useWindowSize";
@@ -22,13 +21,13 @@ export const Prompt = styled.p<{ isPortable?: boolean }>`
   }
 `;
 
-const ListWrap = styled.div<{ isPortable?: boolean }>`
+export const ListWrap = styled.div<{ isPortable?: boolean }>`
   display: flex;
   flex-wrap: wrap;
   padding: ${(p) => (p.isPortable ? "0 15px 15px 15px" : "5px 0")};
 `;
 
-export const OpenFavouriteStationButton = styled(JourneyButton)<{
+export const ItemButton = styled(JourneyButton)<{
   isPortable?: boolean;
 }>`
   grid-area: none;
@@ -37,6 +36,7 @@ export const OpenFavouriteStationButton = styled(JourneyButton)<{
   box-shadow: none;
   margin: 5px;
   height: 40px;
+  color: ${(p) => p.theme.primaryText};
   background-color: ${(p) => p.theme.nearlyBg};
   transition: box-shadow 0.2s ease-out, opacity 0.2s ease-out;
   box-shadow: ${(p) => (!p.isPortable ? `0 2px 0 ${p.theme.button};` : null)};
@@ -45,9 +45,15 @@ export const OpenFavouriteStationButton = styled(JourneyButton)<{
   &:hover {
     opacity: ${(p) => (!p.isPortable ? 0.8 : 1)};
   }
+
+  & div.sublabel {
+    color: ${(p) => p.theme.emphasis};
+    font-weight: 400;
+    margin-left: 10px;
+  }
 `;
 
-const CollapseWrap = styled.div<{ isPortable?: boolean }>`
+export const CollapseWrap = styled.div<{ isPortable?: boolean }>`
   justify-self: ${(p) => (p.isPortable ? "center" : "flex-start")};
   border: ${(p) => (p.isPortable ? `1px solid ${p.theme.faint}` : null)};
   background-color: ${(p) => (p.isPortable ? p.theme.offMax : "inherit")};
@@ -57,7 +63,10 @@ const CollapseWrap = styled.div<{ isPortable?: boolean }>`
   box-shadow: ${(p) => (p.isPortable ? `0 2px 2px ${p.theme.shadow}` : null)};
 `;
 
-const CollapseHeader = styled.div<{ open?: boolean; isPortable?: boolean }>`
+export const CollapseHeader = styled.div<{
+  open?: boolean;
+  isPortable?: boolean;
+}>`
   display: flex;
   cursor: ${(p) => (p.isPortable ? "pointer" : "default")};
   justify-content: space-between;
@@ -74,38 +83,63 @@ const CollapseHeader = styled.div<{ open?: boolean; isPortable?: boolean }>`
   }
 `;
 
-const FavouritesCollapseHeader = styled(H3A)`
+export const CollapseHeaderTitle = styled(H3A)`
   @media only screen and (max-width: 400px) {
     font-size: 1.2em;
   }
 `;
 
-export const FavouriteStations = (props: {
-  onFavouriteSelect: (e) => void;
-  forceOpen?: boolean;
-  favourites: string[];
-}) => {
-  const { onFavouriteSelect, forceOpen, favourites } = props;
+export interface CollapsibleListItem {
+  label: string;
+  sublabel?: string;
+  key: string;
+}
+
+interface CollapsibleItemListProps {
+  onItemSelect: (e) => void;
+  forceState?: boolean; // True = open
+  items: CollapsibleListItem[];
+  initialOpenState: boolean;
+  headerTitle: string;
+  noItemsPrompt: React.ReactFragment;
+  itemIcon?: any;
+}
+
+export const CollapsibleItemList = (props: CollapsibleItemListProps) => {
+  const {
+    onItemSelect,
+    forceState,
+    items,
+    initialOpenState,
+    noItemsPrompt,
+    itemIcon,
+    headerTitle,
+  } = props;
   const isPortable = useWindowSize().width <= 1000;
-  const [open, setOpen] = useState(forceOpen ?? false);
-  const handleClick = (e) => {
-    onFavouriteSelect(e);
+  const [open, setOpen] = useState(forceState ?? initialOpenState);
+  const handleClick = (e, item: CollapsibleListItem) => {
+    onItemSelect(item.key);
     setOpen(false);
   };
+  console.log(forceState);
+
+  useEffect(() => {
+    if (forceState !== undefined) setOpen(forceState);
+  }, [forceState]);
 
   return (
     <CollapseWrap isPortable={isPortable}>
       <Collapsible
         open={isPortable ? open : true}
-        triggerDisabled={forceOpen ?? false}
+        triggerDisabled={forceState !== undefined ? forceState : false}
         onOpening={() => setOpen(true)}
         onClosing={() => setOpen(false)}
         trigger={
           <CollapseHeader open={open} isPortable={isPortable}>
-            <FavouritesCollapseHeader weight={700}>
-              Favourite Stations
-            </FavouritesCollapseHeader>
-            {!forceOpen && (
+            <CollapseHeaderTitle weight={700}>
+              {headerTitle}
+            </CollapseHeaderTitle>
+            {forceState !== true && isPortable && (
               <div>
                 <ChevronsDown size={30} />
               </div>
@@ -116,17 +150,19 @@ export const FavouriteStations = (props: {
         easing={"ease-out"}
       >
         <ListWrap isPortable={isPortable}>
-          {favourites.map((f, i) => (
-            <OpenFavouriteStationButton
-              key={i}
-              onClick={handleClick}
-              children={smallify(f)}
-            />
-          ))}
-          {favourites.length === 0 && (
-            <Prompt isPortable={isPortable}>
-              Favourite <Heart size={16} /> a station to see it here
-            </Prompt>
+          {items &&
+            items.length > 0 &&
+            items.map((item, index) => (
+              <ItemButton key={index} onClick={(e) => handleClick(e, item)}>
+                {itemIcon && itemIcon}
+                <div>{item.label}</div>
+                {item.sublabel && (
+                  <div className="sublabel">{item.sublabel}</div>
+                )}
+              </ItemButton>
+            ))}
+          {items.length === 0 && (
+            <Prompt isPortable={isPortable}>{noItemsPrompt}</Prompt>
           )}
         </ListWrap>
       </Collapsible>
