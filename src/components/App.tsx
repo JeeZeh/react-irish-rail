@@ -38,23 +38,27 @@ const SearchWrapper = styled.div`
   grid-area: search;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: space-between;
   opacity: 0;
   transition: opacity 0.1s ease-out;
+  margin-top: 20px;
+  border-top: 1px solid ${(p) => p.theme.faint};
 
   &.visible {
     opacity: 1;
   }
 
   & > div {
-    width: 400px;
+    width: 350px;
+    margin: 20px 0;
   }
 
   @media only screen and (max-width: 1205px) {
+    flex-wrap: wrap;
+    justify-content: flex-start;
     & > div {
-      width: 350px;
-      margin: 20px 20px 0 0;
+      margin: 20px;
     }
   }
 
@@ -65,6 +69,7 @@ const SearchWrapper = styled.div`
       margin: 10px 0;
     }
   }
+
   @media only screen and (max-width: 400px) {
     & > div {
       width: 300px;
@@ -91,14 +96,14 @@ const ScheduleSpinnerWrapper = styled.div`
 const KeyWrapper = styled.div`
   grid-area: key;
   justify-self: center;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 `;
 
 const Body = styled.div`
   display: grid;
   grid-template-areas:
     "head key"
-    "search key"
+    "search search"
     "schedule schedule";
   grid-template-columns: 7fr 2fr;
   margin: auto auto;
@@ -109,6 +114,7 @@ const Body = styled.div`
 
   @media only screen and (max-width: 1205px) {
     grid-template-columns: 5fr 2fr;
+    max-width: 1000px;
   }
   @media only screen and (max-width: 1000px) {
     grid-template-columns: 5fr 3fr;
@@ -360,7 +366,12 @@ export const App = () => {
           <H1A>Irish Rail Schedule</H1A>
           <H3A>A modern train schedule for Irish Rail</H3A>
         </div>
-        {isPortable ? null : <About />}
+        {!isPortable && (
+          <>
+            <About />
+            <AppOptions handleThemeSwitch={handleThemeSwitch} />
+          </>
+        )}
       </Head>
     );
   };
@@ -369,7 +380,7 @@ export const App = () => {
     return (
       <>
         <SearchWrapper className={stationList ? "visible" : null}>
-          <div>
+          <div className="l">
             <H3A
               weight={700}
               margin="0 0 10px 0"
@@ -389,7 +400,7 @@ export const App = () => {
             />
           </div>
           {stationList && (
-            <div>
+            <div className="r">
               <CollapsibleItemList
                 onItemSelect={changeStationByName}
                 forceState={!station || !isPortable}
@@ -404,8 +415,8 @@ export const App = () => {
               />
             </div>
           )}
-          {stationList && (
-            <div>
+          {stationList && !(station && innerWidth < 1200) && (
+            <div className="c">
               <NearbyStations
                 stationList={stationList}
                 onStationChange={changeStationByName}
@@ -437,7 +448,6 @@ export const App = () => {
               <KeyWrapper>
                 <H3A margin={"0 0 10px 0"}>Map Key</H3A>
                 <JourneyKey />
-                <AppOptions handleThemeSwitch={handleThemeSwitch} />
               </KeyWrapper>
             </>
           )}

@@ -5,9 +5,9 @@ import { Moon } from "react-feather";
 
 const AppOptionsWrapper = styled.div`
   display: flex;
-  margin: 20px 10px;
+  flex-direction: row;
+  justify-content: space-between;
   & svg {
-    margin-left: 10px;
     transition: fill 0.2s ease-out;
     fill: none;
   }
@@ -17,8 +17,8 @@ export const AppOptions = (props: { handleThemeSwitch: (e) => void }) => {
   return (
     <AppOptionsWrapper>
       <ItemButton onClick={props.handleThemeSwitch}>
-        <div>Switch Theme</div>
         <Moon size={32} />
+        <div>Switch Theme</div>
       </ItemButton>
     </AppOptionsWrapper>
   );
