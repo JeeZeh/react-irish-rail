@@ -1,7 +1,7 @@
 {
   "name": "react-irish-rail",
-  "version": "0.8.0",
-  "description": "Starter kit for React, Webpack (with Hot Module Replacement), Typescript and Babel.",
+  "version": "0.9.0",
+  "description": "See the live timetable for any Irish Rail station, and the journey each train is on.",
   "keywords": [
     "react",
     "webpack",
@@ -11,16 +11,13 @@
     "PWA",
     "app"
   ],
-  "author": "Viktor Persson",
+  "author": "Jesse Ashmore",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vikpe/react-webpack-typescript-starter.git"
+    "url": "git+https://github.com/jeezeh/react-irish-rail.git"
   },
-  "bugs": {
-    "url": "https://github.com/vikpe/react-webpack-typescript-starter/issues"
-  },
-  "homepage": "https://github.com/vikpe/react-webpack-typescript-starter",
+  "homepage": "https://www.reactrail.live/",
   "scripts": {
     "build": "npm run clean-dist && webpack -p --config=configs/webpack/prod.js",
     "clean-dist": "rimraf dist/*",
