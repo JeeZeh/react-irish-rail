@@ -76,7 +76,9 @@ export const NearbyStations = (props: NearbyStationsProps) => {
       const stationDistances = getDistanceToStations(
         position,
         props.stationList
-      ).slice(0, 5);
+      )
+        .slice(0, 5)
+        .filter((s) => s.distance < 100000);
       setProximityStations(stationDistances);
     }
   }, [position, stationList]);
@@ -100,7 +102,7 @@ export const NearbyStations = (props: NearbyStationsProps) => {
       .sort((a, b) => a.distance - b.distance);
   };
 
-  return proximityStations ? (
+  return proximityStations && proximityStations.length !== 0 ? (
     <CollapsibleItemList
       headerTitle="Nearby Stations"
       initialOpenState={initialOpenState}
