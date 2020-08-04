@@ -93,11 +93,14 @@ export const StationSearch = (props: StationSearchProps) => {
   }, [input]);
 
   const handleKeyDown = (e) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+    }
     // Up Arrow
-    if (e.keyCode === 38 && cursor > 0) {
+    if (e.key === "ArrowUp" && cursor > 0) {
       setCursor(cursor - 1);
     } // Down Arrow
-    else if (e.keyCode === 40 && cursor < fuseMatch.length - 1) {
+    else if (e.key === "ArrowDown" && cursor < fuseMatch.length - 1) {
       setCursor(cursor + 1);
     } else if (e.keyCode === 13) {
       const selection =
