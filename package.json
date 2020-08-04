@@ -1,6 +1,6 @@
 {
-  "name": "react-irish-rail",
-  "version": "0.9.0",
+  "name": "react-rail",
+  "version": "1.0.0",
   "description": "See the live timetable for any Irish Rail station, and the journey each train is on.",
   "keywords": [
     "react",

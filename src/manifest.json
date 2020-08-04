@@ -1,6 +1,6 @@
 {
-  "short_name": "Irish Rail Schedule",
-  "name": "Live Irish Rail Station Schedule",
+  "short_name": "React Rail",
+  "name": "React Rail - An Irish Rail Timetable",
   "description": "See the live timetable for any Irish Rail station, and the journey each train is on.",
   "icons": [
     {

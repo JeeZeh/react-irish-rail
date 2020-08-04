@@ -7,8 +7,11 @@ const AboutList = styled.ul`
   list-style-position: inside;
   color: ${(p) => p.theme.secondaryText};
   opacity: 0.9;
-  @media only screen and (max-width: 1205px) {
+  @media only screen and (max-width: 1200px) {
     list-style-type: none;
+    & li {
+      margin-top: 10px;
+    }
   }
 `;
 
@@ -27,8 +30,8 @@ export const About = () => {
         Éireann.
       </li>
       <li>
-        It was created as a learning experience using React, feel free to read
-        the{" "}
+        It was originally created as a learning project for React, feel free to
+        read the{" "}
         <a href="https://github.com/JeeZeh/React-Irish-Rail">source code.</a>
       </li>
     </AboutList>
