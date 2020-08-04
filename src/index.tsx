@@ -2,6 +2,10 @@ import * as React from "react";
 import { render } from "react-dom";
 require("./favicon.ico");
 import App from "./components/App";
+import { polyfill as smoothScrollPolyfill } from "smoothscroll-polyfill";
+
+// kick off the polyfill!
+smoothScrollPolyfill();
 
 const rootEl = document.getElementById("root");
 
