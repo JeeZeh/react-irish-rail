@@ -1,6 +1,7 @@
 import * as React from "react";
 import { render } from "react-dom";
-require("./favicon.ico");
+require("./browserconfig.xml");
+require("./apple-touch-icon.png:Zone.Identifier");
 import App from "./components/App";
 // import { polyfill as smoothScrollPolyfill } from "smoothscroll-polyfill";
 
@@ -24,6 +25,7 @@ if ("serviceWorker" in navigator) {
       .register("/service-worker.js")
       .then((registration) => {
         console.log("SW registered: ", registration);
+        registration.update();
       })
       .catch((registrationError) => {
         console.log("SW registration failed: ", registrationError);
