@@ -28,7 +28,11 @@ export const ErrorDialogue = () => {
       <Error>The app is unavailable right now</Error>
       <Error>
         The Irish Rail schedule service may be offline or something didn't go as
-        planned. Try refreshing this page just in case.
+        planned, try refreshing this page just in case. If the error persists
+        for more than a couple minutes please tweet me @JeeZeh! In a rush?{" "}
+        <a href="https://www.irishrail.ie/" target="_blank">
+          Click here to go straight to the official Irish Rail website
+        </a>
       </Error>
     </Dialogue>
   );

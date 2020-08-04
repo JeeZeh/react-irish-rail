@@ -70,7 +70,7 @@ export const CardHeader = styled.div<{
     font-size: 1.6em;
   }
   @media only screen and (max-width: 400px) {
-    font-size: 1.3em;
+    font-size: 1.2em;
   }
 `;
 
@@ -203,6 +203,7 @@ export const Schedule = (props: TrainScheduleProps) => {
           <TrainFilter
             stationToTrainMap={stationToTrainMap}
             onTrainFilter={setTrainFilter}
+            currentStation={station}
           />
 
           {stationTrains.length === 0 ? (
