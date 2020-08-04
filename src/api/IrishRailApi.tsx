@@ -159,7 +159,6 @@ export default class IrishRailApi {
       const localRouteCacheEntry = IrishRailApi.localRouteCache.get(trainCode);
 
       if (localRouteCacheEntry) {
-        console.log("Returning cached route");
         resolve(localRouteCacheEntry);
         return;
       }

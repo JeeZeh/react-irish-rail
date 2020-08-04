@@ -69,7 +69,6 @@ export const TrainFilter = (props: TrainFilterProps) => {
       filters.forEach((stationSet) =>
         stationSet.value.forEach((s) => filterSet.add(s))
       );
-      console.log(filterSet);
 
       onTrainFilter(Array.from(filterSet));
     }

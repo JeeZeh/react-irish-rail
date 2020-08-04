@@ -121,7 +121,6 @@ export const CollapsibleItemList = (props: CollapsibleItemListProps) => {
     onItemSelect(item.key);
     setOpen(false);
   };
-  console.log(forceState);
 
   useEffect(() => {
     if (forceState !== undefined) setOpen(forceState);
