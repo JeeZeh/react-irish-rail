@@ -1,4 +1,4 @@
-# React-Irish-Rail
+# React Rail - A modern Irish Rail timetable
 
 Originally a personal learning project for React to load Irish Rail trains for a given station, React Rail has grown into a little more than that. See below for a summary of what it can do!
 
@@ -11,12 +11,12 @@ As a newcomer to the system it is a relatively noise-free display of train data 
 ## What does it do?
 
 1. View the upcoming trains at any Irish Rail station for the next 2 hours
-1. Explore the journey for each train approaching a station (see where it is in realtime)
+1. Explore the journey for each train approaching a station (see where it is in real time)
 1. Filter the trains by reachable destination. This lets you figure out getting from one station to another i.e. you can only filter by directly connected stations
 1. Save stations to your favourites for quick access in the future
 1. Quickly access nearby station data if you provide location access
 1. Bookmark/share your current station and lookahead time (trains in the next X mins) for future reference
-1. Install the website as an app on mobile and desktop for quick access from homescreen etc.
+1. Install the website as an app on mobile and desktop for quick access from the home screen etc.
 
 ## What does it NOT do?
 
