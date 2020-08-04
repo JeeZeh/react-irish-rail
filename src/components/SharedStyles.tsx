@@ -92,6 +92,6 @@ export const H1A = styled.h1<{ margin?: string }>`
   }
 
   @media only screen and (max-width: 400px) {
-    font-size: 1.4em;
+    font-size: 1.2em;
   }
 `;

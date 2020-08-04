@@ -137,7 +137,11 @@ export const JourneyButton = styled.button`
   }
 
   @media only screen and (max-width: 380px) {
-    font-size: 16px;
+    font-size: 1em;
+  }
+
+  @media only screen and (max-width: 320px) {
+    font-size: 0.85em;
   }
 `;
 
