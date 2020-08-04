@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useRef } from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
@@ -39,7 +39,6 @@ const SearchWrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: space-between;
   opacity: 0;
   transition: opacity 0.1s ease-out;
   margin-top: 20px;
@@ -51,10 +50,14 @@ const SearchWrapper = styled.div`
 
   & > div {
     width: 350px;
-    margin: 20px 0;
+    margin: 20px 15px;
   }
 
-  @media only screen and (max-width: 1205px) {
+  & div.last {
+    order: 3;
+  }
+
+  @media only screen and (max-width: 1200px) {
     flex-wrap: wrap;
     justify-content: flex-start;
     & > div {
@@ -112,7 +115,7 @@ const Body = styled.div`
   height: 100%;
   padding-bottom: 150px;
 
-  @media only screen and (max-width: 1205px) {
+  @media only screen and (max-width: 1200px) {
     grid-template-columns: 5fr 2fr;
     max-width: 1000px;
   }
@@ -147,7 +150,7 @@ const Head = styled.div`
     align-items: center;
   }
 
-  @media only screen and (max-width: 1205px) {
+  @media only screen and (max-width: 1200px) {
     padding-right: 5px;
   }
 `;
@@ -301,7 +304,7 @@ export const App = () => {
   }, [currentTheme]);
 
   const changeStation = async (newStation: Station) => {
-    if (newStation) {
+    if (newStation && station !== newStation) {
       const [_, trains] = await Promise.all([
         asyncFadeout(true),
         IrishRailApi.getTrainsForStation(newStation, lookahead),
@@ -340,6 +343,11 @@ export const App = () => {
     changeStation(station);
   };
 
+  const onStationClose = () => {
+    window.scrollBy({ top: -10000, behavior: "smooth" });
+    asyncFadeout(true).then(() => setStation(null));
+  };
+
   // Theming behaviours
 
   window.matchMedia("(prefers-color-scheme: dark)").addListener((e) => {
@@ -363,7 +371,7 @@ export const App = () => {
     return (
       <Head>
         <div>
-          <H1A>Irish Rail Schedule</H1A>
+          <H1A>React Rail</H1A>
           <H3A>A modern train schedule for Irish Rail</H3A>
         </div>
         {!isPortable && (
@@ -380,7 +388,7 @@ export const App = () => {
     return (
       <>
         <SearchWrapper className={stationList ? "visible" : null}>
-          <div className="l">
+          <div>
             <H3A
               weight={700}
               margin="0 0 10px 0"
@@ -399,32 +407,42 @@ export const App = () => {
               onLookaheadChange={setLookahead}
             />
           </div>
-          {stationList && (
-            <div className="r">
-              <CollapsibleItemList
-                onItemSelect={changeStationByName}
-                forceState={!station || !isPortable}
-                items={favourites.map((f) => ({ label: smallify(f), key: f }))}
-                initialOpenState={isPortable && !station}
-                headerTitle="Favourite Stations"
-                noItemsPrompt={
-                  <>
-                    Favourite <Heart size={16} /> a station to see it here
-                  </>
+          {stationList &&
+            !(station && favourites.length === 0 && innerWidth <= 1200) && (
+              <div
+                className={
+                  favourites.length === 0 && innerWidth > 1200 ? "last" : ""
                 }
-              />
-            </div>
-          )}
-          {stationList && !(station && innerWidth < 1200) && (
-            <div className="c">
-              <NearbyStations
-                stationList={stationList}
-                onStationChange={changeStationByName}
-                initialOpenState={isPortable && !station}
-                station={station}
-              />
-            </div>
-          )}
+              >
+                <CollapsibleItemList
+                  onItemSelect={changeStationByName}
+                  forceState={!station || !isPortable}
+                  items={favourites.map((f) => ({
+                    label: smallify(f),
+                    key: f,
+                  }))}
+                  initialOpenState={isPortable && !station}
+                  headerTitle="Favourite Stations"
+                  noItemsPrompt={
+                    <>
+                      Favourite <Heart size={16} /> a station to see it here
+                    </>
+                  }
+                />
+              </div>
+            )}
+          {stationList &&
+            !(station && innerWidth < 1200 && favourites.length !== 0) &&
+            !(station && innerWidth >= 1000) && (
+              <div>
+                <NearbyStations
+                  stationList={stationList}
+                  onStationChange={changeStationByName}
+                  initialOpenState={isPortable && !station}
+                  station={station}
+                />
+              </div>
+            )}
         </SearchWrapper>
         {!stationList && (
           <ScheduleSpinnerWrapper>
@@ -478,9 +496,7 @@ export const App = () => {
                   isFavourite={favourites.includes(station?.StationDesc)}
                   stationConnections={stationConnections}
                   onToggleFavourite={handleToggleFavourite}
-                  handleStationClose={() => {
-                    asyncFadeout(true).then(() => setStation(null));
-                  }}
+                  handleStationClose={onStationClose}
                   stationTrains={stationTrains}
                 />
               </ScheduleWrapper>
