@@ -3,6 +3,7 @@ import Select from "react-select";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useWindowSize } from "../hooks/useWindowSize";
+import { Station } from "../api/IrishRailApi";
 
 const FilterSelect = styled(Select)<{ isPortable: boolean }>`
   margin: 10px;
@@ -44,6 +45,7 @@ interface FilterValue {
 }
 
 interface TrainFilterProps {
+  currentStation: Station;
   stationToTrainMap: Map<string, Set<string>>;
   onTrainFilter: (trainCodes: string[]) => void;
 }
@@ -53,7 +55,7 @@ interface TrainFilterProps {
  * component to filter them and send the filters back up to the schedule
  */
 export const TrainFilter = (props: TrainFilterProps) => {
-  const { onTrainFilter, stationToTrainMap } = props;
+  const { onTrainFilter, stationToTrainMap, currentStation } = props;
   const isPortable = useWindowSize().width < 1000;
   Select;
   const [filters, setFilters] = useState<FilterValue[]>();
@@ -72,6 +74,12 @@ export const TrainFilter = (props: TrainFilterProps) => {
       onTrainFilter(Array.from(filterSet));
     }
   }, [filters]);
+
+  useEffect(() => {
+    if (currentStation) {
+      setFilters([]);
+    }
+  }, [currentStation]);
 
   return (
     <FilterSelect
