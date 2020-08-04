@@ -7,8 +7,12 @@ const AboutList = styled.ul`
   list-style-position: inside;
   color: ${(p) => p.theme.secondaryText};
   opacity: 0.9;
+
   @media only screen and (max-width: 1200px) {
     list-style-type: none;
+  }
+
+  @media only screen and (max-width: 1000px) {
     & li {
       margin-top: 10px;
     }
