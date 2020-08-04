@@ -15,6 +15,8 @@ const whitelist = [
   "https://localhost:3333",
   "http://react-rail.herokuapp.com/",
   "https://react-rail.herokuapp.com/",
+  "http://www.reactrail.live",
+  "https://www.reactrail.live",
 ];
 
 const corsOptions = {
@@ -46,7 +48,7 @@ const cacheMiddleware = () => {
     const cachedBody = mcache.get(key);
     if (cachedBody) {
       res.send(cachedBody);
-      console.log("Serving cached", key);
+      console.log("Serving cached", req.url);
       return;
     }
 
