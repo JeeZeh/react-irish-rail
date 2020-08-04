@@ -133,6 +133,7 @@ export const Schedule = (props: TrainScheduleProps) => {
   const schedule = useRef<HTMLDivElement>();
   const themeContext = useContext(ThemeContext);
   const [trainFilter, setTrainFilter] = useState<string[]>();
+  const [title, setTitle] = useState(station?.StationDesc ?? "");
   const [stationToTrainMap, setStationToTrainMap] = useState(
     new Map<string, Set<string>>()
   );
@@ -168,62 +169,67 @@ export const Schedule = (props: TrainScheduleProps) => {
     }
   };
 
-  if (!station || !stationTrains) return null;
+  useEffect(() => {
+    if (!station) return;
+    setTitle(smallify(station.StationDesc, !isPortable));
+  }, [stationTrains]);
 
   return (
     <>
-      <Card
-        onKeyDown={handleKeyDown}
-        tabIndex={-1}
-        ref={schedule}
-        isPortable={isPortable}
-        fades={true}
-      >
-        <CardToolbar isPortable={isPortable}>
-          <CardToolbarButton
-            gridColumn={isPortable ? 2 : 1}
-            className={isFavourite ? "on" : null}
-            onClick={() => onToggleFavourite(station.StationDesc)}
-          >
-            <Heart
-              size={28}
-              fill={isFavourite ? themeContext.favourite : null}
-              opacity={isFavourite ? 1 : 0.8}
-            />
-          </CardToolbarButton>
+      {station && stationTrains && title && (
+        <Card
+          onKeyDown={handleKeyDown}
+          tabIndex={-1}
+          ref={schedule}
+          isPortable={isPortable}
+          fades={true}
+        >
+          <CardToolbar isPortable={isPortable}>
+            <CardToolbarButton
+              gridColumn={isPortable ? 2 : 1}
+              className={isFavourite ? "on" : null}
+              onClick={() => onToggleFavourite(station.StationDesc)}
+            >
+              <Heart
+                size={28}
+                fill={isFavourite ? themeContext.favourite : null}
+                opacity={isFavourite ? 1 : 0.8}
+              />
+            </CardToolbarButton>
 
-          <CardHeader isPortable={isPortable} gridColumn={isPortable ? 1 : 2}>
-            {smallify(station.StationDesc, true)}
-          </CardHeader>
-          <CardToolbarButton gridColumn={3} onClick={handleStationClose}>
-            <X size={32} />
-          </CardToolbarButton>
-        </CardToolbar>
-        <CardBody>
-          <TrainFilter
-            stationToTrainMap={stationToTrainMap}
-            onTrainFilter={setTrainFilter}
-            currentStation={station}
-          />
-
-          {stationTrains.length === 0 ? (
-            <Error>
-              No trains due at {station.StationDesc} for the next {lookahead}{" "}
-              minutes
-            </Error>
-          ) : (
-            <ScheduleTable
-              stationTrains={
-                trainFilter?.length > 0
-                  ? stationTrains.filter((t) =>
-                      trainFilter.includes(t.Traincode)
-                    )
-                  : stationTrains
-              }
+            <CardHeader isPortable={isPortable} gridColumn={isPortable ? 1 : 2}>
+              {title}
+            </CardHeader>
+            <CardToolbarButton gridColumn={3} onClick={handleStationClose}>
+              <X size={32} />
+            </CardToolbarButton>
+          </CardToolbar>
+          <CardBody>
+            <TrainFilter
+              stationToTrainMap={stationToTrainMap}
+              onTrainFilter={setTrainFilter}
+              currentStation={station}
             />
-          )}
-        </CardBody>
-      </Card>
+
+            {stationTrains.length === 0 ? (
+              <Error>
+                No trains due at {station.StationDesc} for the next {lookahead}{" "}
+                minutes
+              </Error>
+            ) : (
+              <ScheduleTable
+                stationTrains={
+                  trainFilter?.length > 0
+                    ? stationTrains.filter((t) =>
+                        trainFilter.includes(t.Traincode)
+                      )
+                    : stationTrains
+                }
+              />
+            )}
+          </CardBody>
+        </Card>
+      )}
     </>
   );
 };

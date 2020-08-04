@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
@@ -340,7 +340,7 @@ export const App = () => {
   };
 
   const onStationClose = () => {
-    window.scrollBy({ top: -10000, behavior: "smooth" });
+    window.scroll({ top: 0, behavior: "smooth" });
     asyncFadeout(true).then(() => setStation(null));
   };
 
