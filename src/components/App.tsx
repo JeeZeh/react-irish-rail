@@ -20,6 +20,7 @@ import { LoadingSpinner } from "./LoadingSpinner";
 import { AppOptions } from "./AppOptions";
 import { NearbyStations } from "./NearbyStations";
 import { smallify } from "./JourneyStop";
+import { usePrevious } from "../hooks/usePrevious";
 
 // TODO: Retry loading on opening app if fails
 
@@ -195,6 +196,8 @@ export const App = () => {
   const isPortable = useWindowSize().width <= 1000;
   const [lookahead, setLookahead] = useState(90);
   const [station, setStation] = useState<Station>(null);
+  const prevStation = usePrevious(station);
+  const prevLookahead = usePrevious(lookahead);
   const [stationTrains, setStationTrains] = useState<Train[]>([]);
   const [stationList, setStationList] = useState<Station[]>([]);
   const [stationConnections, setStationConnections] = useState<Route[]>([]);
@@ -278,7 +281,22 @@ export const App = () => {
 
   // Station Data handling
   useEffect(() => {
-    changeStation(station);
+    if (!station || !lookahead) return;
+    if (prevStation !== station || prevLookahead !== lookahead) {
+      Promise.all([
+        asyncFadeout(true),
+        IrishRailApi.getTrainsForStation(station, lookahead),
+      ]).then(([_, trains]) => {
+        setStationTrains(trains);
+        asyncFadeout(false, 50);
+
+        const connectionCodes = Array.from(
+          new Set(trains.map((t) => t.Traincode)).values()
+        ).map(IrishRailApi.getRouteInfo);
+
+        Promise.all(connectionCodes).then(setStationConnections);
+      });
+    }
   }, [lookahead, station]);
 
   // Query param change handling
@@ -303,27 +321,6 @@ export const App = () => {
     metaTheme.setAttribute("content", colour);
   }, [currentTheme]);
 
-  const changeStation = async (newStation: Station) => {
-    if (newStation && station !== newStation) {
-      const [_, trains] = await Promise.all([
-        asyncFadeout(true),
-        IrishRailApi.getTrainsForStation(newStation, lookahead),
-      ]);
-
-      setStation(newStation);
-      setStationTrains(trains);
-      asyncFadeout(false, 50);
-
-      const connectionCodes = Array.from(
-        new Set(trains.map((t) => t.Traincode)).values()
-      ).map(IrishRailApi.getRouteInfo);
-
-      const connections = await Promise.all(connectionCodes);
-      setStationConnections(connections);
-      console.log(connections);
-    }
-  };
-
   const asyncFadeout = (
     fadeOut: boolean,
     timeMs: number = 200
@@ -339,8 +336,7 @@ export const App = () => {
 
   const changeStationByName = (stationName: string) => {
     const station = stationList.find((s) => s.StationDesc === stationName);
-
-    changeStation(station);
+    setStation(station);
   };
 
   const onStationClose = () => {
@@ -399,7 +395,7 @@ export const App = () => {
             <StationSearch
               stationList={stationList}
               station={station}
-              onStationChange={changeStation}
+              onStationChange={setStation}
             />
             <SearchParameters
               lookaheadOptions={lookaheadOptions}
