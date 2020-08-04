@@ -60,8 +60,10 @@ const Map = styled.div<{
   overflow-x: ${(p) => (p.isPortable ? "hidden" : "scroll")};
   overflow-y: ${(p) => (p.isPortable ? "scroll" : "hidden")};
   overscroll-behavior-y: ${(p) => (p.isPortable ? "contain" : "auto")};
+  scrollbar-color: ${(p) => `${p.theme.subtle}66`} #00000000;
+  scrollbar-width: thin;
 
-  ::-webkit-scrollbar {
+  scrollbar ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
