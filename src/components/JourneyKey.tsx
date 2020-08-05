@@ -9,7 +9,7 @@ const Key = styled.div<{ isPortable?: boolean }>`
   display: flex;
   flex-direction: column;
   cursor: default;
-  width: ${(p) => (p.isPortable ? "auto" : "300px")};
+  width: ${(p) => (p.isPortable ? "auto" : "260px")};
   user-select: none;
   transition: opacity 0.1s ease-out;
   writing-mode: horizontal-tb;

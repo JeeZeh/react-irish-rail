@@ -100,6 +100,7 @@ const ScheduleSpinnerWrapper = styled.div`
 const KeyWrapper = styled.div`
   grid-area: key;
   justify-self: center;
+  align-self: center;
   /* margin-bottom: 20px; */
 `;
 
@@ -132,6 +133,22 @@ const Body = styled.div`
       "schedule";
 
     padding: 0;
+  }
+`;
+
+const Logo = styled(H1A)`
+  filter: saturate(0.6);
+  & span:first-of-type {
+    color: ${(p) => p.theme.future.substring(0, 7)};
+  }
+  & span:last-of-type {
+    color: ${(p) => p.theme.departed.substring(0, 7)};
+  }
+  font-size: 2.6em;
+  margin-bottom: 5px;
+  @media only screen and (max-width: 400px) {
+    font-size: 2em;
+    margin-bottom: 0;
   }
 `;
 
@@ -367,7 +384,9 @@ export const App = () => {
     return (
       <Head>
         <div>
-          <H1A>React Rail</H1A>
+          <Logo>
+            <span>React</span> <span>Rail</span>
+          </Logo>
           <H3A>A modern train schedule for Irish Rail</H3A>
         </div>
         {!isPortable && (
