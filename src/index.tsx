@@ -2,6 +2,8 @@ import * as React from "react";
 import { render } from "react-dom";
 require("./browserconfig.xml");
 require("./apple-touch-icon.png:Zone.Identifier");
+require("./safari-pinned-tab.svg");
+require("./favicon.ico");
 import App from "./components/App";
 // import { polyfill as smoothScrollPolyfill } from "smoothscroll-polyfill";
 
