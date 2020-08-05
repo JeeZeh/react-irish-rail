@@ -7,6 +7,8 @@ import Collapsible from "react-collapsible";
 import { JourneyMap } from "./JourneyMap";
 import moment = require("moment");
 
+moment.locale("en-ie");
+
 const Row = styled.div`
   padding-top: 15px;
   transition: opacity 0.08s ease-out;

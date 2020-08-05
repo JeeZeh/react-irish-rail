@@ -3,6 +3,7 @@ import * as he from "he";
 import { smallify } from "../components/JourneyStop";
 import moment = require("moment");
 import { calcTrainPosition } from "../components/JourneyMap";
+moment.locale("en-ie");
 
 export default class IrishRailApi {
   private static API = window.location.host.includes("localhost")

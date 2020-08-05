@@ -63,7 +63,7 @@ const Map = styled.div<{
   scrollbar-color: ${(p) => `${p.theme.subtle}66`} #00000000;
   scrollbar-width: thin;
 
-  scrollbar ::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
