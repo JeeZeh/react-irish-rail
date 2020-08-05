@@ -227,19 +227,21 @@ export const MobileTrainCard = (props: MobileTrainCardProps) => {
 
   const handleMapButtonClick = () => {
     const top = bottomRef.current.getBoundingClientRect().top;
-    if (!open) {
-      if (top + 450 > window.innerHeight) {
-        window.scrollBy({
-          behavior: "smooth",
-          top: top + 450 - window.innerHeight,
-        });
-      } else if (top < 80) {
-        window.scrollBy({
-          behavior: "smooth",
-          top: -(80 - top),
-        });
+    setTimeout(() => {
+      if (!open) {
+        // if (top + 450 > window.innerHeight) {
+        //   window.scrollBy({
+        //     behavior: "smooth",
+        //     top: top + 450 - window.innerHeight,
+        //   });
+        if (top < 350) {
+          window.scrollBy({
+            behavior: "smooth",
+            top: -(350 - top),
+          });
+        }
       }
-    }
+    }, 220);
 
     setOpen(!open);
   };
@@ -253,7 +255,6 @@ export const MobileTrainCard = (props: MobileTrainCardProps) => {
         open={open}
         transitionTime={220}
         easing={"ease-in-out"}
-        lazyRender={true}
       >
         <JourneyMap
           train={train}
