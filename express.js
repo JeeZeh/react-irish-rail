@@ -5,7 +5,7 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 const request = require("request");
 const mcache = require("memory-cache");
 const app = express();
-
+require("newrelic");
 const portNumber = 3000;
 const sourceDir = "dist";
 const IRISH_RAIL_API = "http://api.irishrail.ie/realtime/realtime.asmx/";
