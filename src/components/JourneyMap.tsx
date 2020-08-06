@@ -204,7 +204,7 @@ export const JourneyMap = (props: JoruneyMapProps) => {
           />
           <Map
             isPortable={isPortable}
-            center={journey.stops.length < 9 && isPortable}
+            center={journey.stops.length < 10 && isPortable}
             className={fade ? "visible" : null}
             ref={scroller}
             width={!isPortable ? Math.min(800, width - 500) : null}
