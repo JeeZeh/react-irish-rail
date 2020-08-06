@@ -70,10 +70,10 @@ export const JourneyKey = () => {
         <Name className="arrived">Arrived</Name>
         <Time className="arrived show-time">Departing Time</Time>
       </StationDiv>
-      <StationDiv className="">
-        <Dot className="" />
-        <Name className="">Approaching</Name>
-        <Time className="show-time">Arriving Time</Time>
+      <StationDiv className="approaching">
+        <Dot className="approaching" />
+        <Name className="approaching">Approaching</Name>
+        <Time className="approaching show-time">Arriving Time</Time>
       </StationDiv>
       <StationDiv className="future">
         <Dot className="future" />

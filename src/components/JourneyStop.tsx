@@ -26,6 +26,10 @@ export const Dot = styled.div<{ isPortable?: boolean }>`
   font-weight: 900;
   writing-mode: inherit;
 
+  &.approaching {
+    background: none;
+  }
+
   &.departed {
     background-color: ${(p) => p.theme.departed};
     border: 3px solid ${(p) => p.theme.departed};
@@ -190,12 +194,17 @@ export const JourneyStop = (props: JourneyStopProps) => {
     if (stopNumber < trainPosition) {
       classNames.push("departed");
     } else if (stopNumber == trainPosition) {
-      classNames.push(station.Arrival ? "arrived" : null);
+      classNames.push(station.Arrival ? "arrived" : "approaching");
     } else {
       classNames.push("future");
     }
 
-    if (!station.Arrival && station.LocationFullName == train.Stationfullname) {
+    if (
+      !station.Arrival &&
+      station.LocationFullName == train.Stationfullname &&
+      station.ScheduledArrival &&
+      station.ExpectedArrival
+    ) {
       classNames.push("relevant");
       classNames.push("show-time");
       const diff = station.ExpectedArrival.diff(
@@ -213,7 +222,9 @@ export const JourneyStop = (props: JourneyStopProps) => {
         );
       }
 
-      if (diff > 2 || unaccountedDelay > 2) {
+      console.log(station.ScheduledArrival);
+
+      if (station.ScheduledArrival && (diff > 2 || unaccountedDelay > 2)) {
         classNames.push("delayed");
         time = `${time} (${station.ScheduledArrival.format("HH:mm")})`;
       } else if (diff < -2) {

@@ -33,7 +33,7 @@ const FuzzyList = styled.div<{ isPortable?: boolean }>`
   ${(p) => (p.isPortable ? "bottom" : "top")}: 100%;
   ${(p) => (!p.isPortable ? "border-top: none" : "")};
   background-color: ${(p) => p.theme.nearlyBg};
-  z-index: 2;
+  z-index: 10;
   width: 100%;
 
   .scroller {

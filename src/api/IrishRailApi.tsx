@@ -65,11 +65,21 @@ export default class IrishRailApi {
         .filter((loc) => loc.LocationType !== "T")
         .map((m) => {
           stopDateProps.forEach((prop) => {
+            const currentHour = moment(moment.now()).hour();
+
             if (m[prop]) {
-              m[prop] = moment(
-                `${m.TrainDate} ${m[prop]}`,
-                "DD MMM YYYY HH:mm:SS"
-              );
+              if (
+                m[prop] === "00:00:00" &&
+                currentHour >= 2 &&
+                currentHour <= 22
+              ) {
+                m[prop] = null;
+              } else {
+                m[prop] = moment(
+                  `${m.TrainDate} ${m[prop]}`,
+                  "DD MMM YYYY HH:mm:SS"
+                );
+              }
             }
           });
           return m;

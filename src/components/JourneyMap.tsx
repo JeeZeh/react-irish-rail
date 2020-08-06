@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
+import * as moment from "moment";
 import { Journey, Train, Movement } from "../api/IrishRailApi";
 import { JourneyStop } from "./JourneyStop";
 import { JourneyInfo } from "./JourneyInfo";
@@ -110,10 +111,15 @@ interface JoruneyMapProps {
 
 export const calcTrainPosition = (stops: Movement[]): number => {
   if (!stops) return -1;
+  const now = moment.now();
   return stops.findIndex((s, i) => {
     return (
-      (i < stops.length - 1 && s.Departure && !stops[i + 1].Arrival) ||
-      (s.Arrival && !s.Departure)
+      (!s.Departure &&
+        (stops[i + 1] ? !stops[i + 1].Arrival : true) &&
+        (s.Arrival ? s.Arrival.diff(now, "minutes") < 10 : true)) ||
+      (s.Departure && s.Departure.diff(now, "minutes") > 2) ||
+      (s.ExpectedDeparture && s.ExpectedDeparture.diff(now, "minutes") > 10) ||
+      (s.ScheduledDeparture && s.ScheduledDeparture.diff(now, "minutes") > 10)
     );
   });
 };
