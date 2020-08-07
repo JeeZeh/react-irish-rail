@@ -209,9 +209,9 @@ export const App = () => {
   const prefersDark =
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const lookaheadOptions = [30, 60, 90, 120];
+  const lookaheadOptions = [15, 30, 60, 90];
   const isPortable = useWindowSize().width <= 1000;
-  const [lookahead, setLookahead] = useState(90);
+  const [lookahead, setLookahead] = useState(30);
   const [station, setStation] = useState<Station>(null);
   const prevStation = usePrevious(station);
   const prevLookahead = usePrevious(lookahead);
