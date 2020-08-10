@@ -222,8 +222,6 @@ export const JourneyStop = (props: JourneyStopProps) => {
         );
       }
 
-      console.log(station.ScheduledArrival);
-
       if (station.ScheduledArrival && (diff > 2 || unaccountedDelay > 2)) {
         classNames.push("delayed");
         time = `${time} (${station.ScheduledArrival.format("HH:mm")})`;

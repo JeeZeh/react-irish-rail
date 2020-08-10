@@ -376,10 +376,6 @@ export const App = () => {
     setThemePreference(newTheme);
   };
 
-  useEffect(() => {
-    console.log(themePreference);
-  }, [themePreference]);
-
   const renderHeader = () => {
     return (
       <Head>
