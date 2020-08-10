@@ -35,7 +35,6 @@ export const ItemButton = styled(JourneyButton)<{
   width: auto;
   box-shadow: none;
   margin: 5px;
-  height: 40px;
   color: ${(p) => p.theme.primaryText};
   background-color: ${(p) => p.theme.nearlyBg};
   transition: box-shadow 0.2s ease-out, opacity 0.2s ease-out;

@@ -111,7 +111,6 @@ const TimeEntry = styled.div`
 
 export const JourneyButton = styled.button`
   grid-area: button;
-  height: 40px;
   background-color: ${(p) => p.theme.bg};
   outline: none;
   border: 1px solid ${(p) => p.theme.button};
@@ -119,7 +118,7 @@ export const JourneyButton = styled.button`
   font-size: 18px;
   font-weight: 600;
   color: ${(p) => p.theme.primaryText};
-  padding: 10px;
+  padding: 6px 10px;
   justify-content: space-between;
   justify-self: flex-end;
   margin-right: 5px;
