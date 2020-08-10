@@ -1,11 +1,12 @@
 import * as React from "react";
 import styled, { ThemeContext } from "styled-components";
 import { ItemButton } from "./CollapsibleItemList";
-import { Moon } from "react-feather";
+import { Moon, Coffee } from "react-feather";
+import { useWindowSize } from "../hooks/useWindowSize";
 
-const AppOptionsWrapper = styled.div`
+const AppOptionsWrapper = styled.div<{ vertical?: boolean }>`
   display: flex;
-  flex-direction: row;
+  flex-direction: ${(p) => (p.vertical ? "column" : "row")};
   justify-content: space-between;
   & svg {
     transition: fill 0.2s ease-out;
@@ -14,11 +15,19 @@ const AppOptionsWrapper = styled.div`
 `;
 
 export const AppOptions = (props: { handleThemeSwitch: (e) => void }) => {
+  const isPortable = useWindowSize().width <= 1000;
+
   return (
-    <AppOptionsWrapper>
+    <AppOptionsWrapper vertical={isPortable}>
       <ItemButton onClick={props.handleThemeSwitch}>
-        <Moon size={32} />
+        <Moon size={28} />
         <div>Switch Theme</div>
+      </ItemButton>
+      <ItemButton
+        onClick={() => window.open("https://ko-fi.com/jesseash", "_blank")}
+      >
+        <Coffee size={28} />
+        <div>Buy me a Ko-Fi</div>
       </ItemButton>
     </AppOptionsWrapper>
   );
