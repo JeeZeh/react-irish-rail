@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DesktopTrainRow, scheduleColumns } from "./ScheduleTable";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Journey, Train } from "../api/IrishRailApi";
 import Collapsible from "react-collapsible";

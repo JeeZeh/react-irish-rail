@@ -27,7 +27,7 @@ const Spinner = styled.div<{ props: LoadingSpinnerProps }>`
   }
 `;
 export const LoadingSpinner = (props: LoadingSpinnerProps) => {
-  const { size, color, loading, delay } = props;
+  const { size, color, delay } = props;
   const [fade, setFade] = useState(false);
   const themeContext = useContext(ThemeContext);
   const [ready, setReady] = useState(false);

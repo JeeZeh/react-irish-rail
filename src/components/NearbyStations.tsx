@@ -1,21 +1,12 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Globe, ChevronsDown } from "react-feather";
+import { Globe } from "react-feather";
 import { Station } from "../api/IrishRailApi";
 import { useWindowSize } from "../hooks/useWindowSize";
-import { LoadingSpinner } from "./LoadingSpinner";
 import { JourneyButton } from "./MobileTrainCard";
 import { smallify } from "./JourneyStop";
-import Collapsible from "react-collapsible";
-import {
-  CollapseWrap,
-  CollapseHeader,
-  CollapseHeaderTitle,
-  ListWrap,
-  CollapsibleItemList,
-} from "./CollapsibleItemList";
-import { stat } from "fs";
+import { CollapsibleItemList } from "./CollapsibleItemList";
 
 interface NearbyStationsProps {
   stationList: Station[];

@@ -1,5 +1,5 @@
 import * as React from "react";
-import styled, { ThemeContext } from "styled-components";
+import styled from "styled-components";
 import { ItemButton } from "./CollapsibleItemList";
 import { Moon, Coffee } from "react-feather";
 import { useWindowSize } from "../hooks/useWindowSize";
