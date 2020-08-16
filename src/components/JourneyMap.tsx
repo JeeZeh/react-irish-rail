@@ -124,6 +124,13 @@ export const calcTrainPosition = (stops: Movement[]): number => {
   });
 };
 
+export const calcTrainPositionV2 = (stops: Movement[]): number => {
+  if (!stops) return -1;
+  return stops.findIndex(
+    (s, i) => (s.StopType === "C" && !s.Departure) || s.StopType === "N"
+  );
+};
+
 export const JourneyMap = (props: JoruneyMapProps) => {
   const { train, backgroundColor, getJourney, journeyProp, open } = props;
   const width = useWindowSize().width;

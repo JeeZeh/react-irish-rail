@@ -2,7 +2,7 @@ import * as parser from "fast-xml-parser";
 import * as he from "he";
 import { smallify } from "../components/JourneyStop";
 import moment = require("moment");
-import { calcTrainPosition } from "../components/JourneyMap";
+import { calcTrainPositionV2 } from "../components/JourneyMap";
 moment.locale("en-ie");
 
 export default class IrishRailApi {
@@ -84,7 +84,10 @@ export default class IrishRailApi {
           });
           return m;
         });
-      return { stops: movements, trainPosition: calcTrainPosition(movements) };
+      return {
+        stops: movements,
+        trainPosition: calcTrainPositionV2(movements),
+      };
     }
     return { stops: null, trainPosition: null };
   }
