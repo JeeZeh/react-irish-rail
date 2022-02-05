@@ -1,3 +1,5 @@
+![](https://github.com/JeeZeh/react-irish-rail/blob/master/src/android-chrome-512x512.png)
+
 # React Rail - A modern Irish Rail timetable
 
 Originally a personal learning project for React to load Irish Rail trains for a given station, React Rail has grown into a little more than that. See below for a summary of what it can do!
