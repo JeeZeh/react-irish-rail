@@ -76,7 +76,7 @@
     "he": "^1.2.0",
     "http-proxy-middleware": "^1.0.3",
     "memory-cache": "^0.2.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-locales-webpack-plugin": "^1.2.0",
     "newrelic": "^6.11.0",
     "react-collapsible": "^2.7.0",
