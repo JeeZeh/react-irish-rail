@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { hot } from "react-hot-loader";
 import "./../assets/scss/App.scss";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 import { Info, Heart } from "react-feather";
@@ -257,6 +256,7 @@ export const App = () => {
     const timeout = setTimeout(errorTimeout, timeoutLength);
     try {
       const apiStationList = await IrishRailApi.getStations();
+      console.log(apiStationList);
       if (!apiStationList || apiStationList.length === 0) {
         throw new Error("API returned no stations");
       }
@@ -434,11 +434,11 @@ export const App = () => {
                   }))}
                   initialOpenState={isPortable && !station}
                   headerTitle="Favourite Stations"
-                  noItemsPrompt={
+                  noItemsPrompt={[
                     <>
                       Favourite <Heart size={16} /> a station to see it here
-                    </>
-                  }
+                    </>,
+                  ]}
                 />
               </div>
             )}
@@ -532,4 +532,4 @@ export const App = () => {
 
 declare let module: object;
 
-export default hot(module)(App);
+export default App;

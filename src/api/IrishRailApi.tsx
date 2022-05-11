@@ -1,9 +1,11 @@
-import * as parser from "fast-xml-parser";
+import { XMLParser } from "fast-xml-parser";
 import * as he from "he";
 import { smallify } from "../components/JourneyStop";
 import moment = require("moment");
 import { calcTrainPositionV2 } from "../components/JourneyMap";
 moment.locale("en-ie");
+
+const parser = new XMLParser();
 
 export default class IrishRailApi {
   private static API = window.location.host.includes("localhost")
@@ -37,18 +39,18 @@ export default class IrishRailApi {
   private static parseXmlStationData(xml: string): Train[] {
     if (!xml) return [];
     const parsedXml = parser.parse(xml, IrishRailApi.XML_OPTIONS);
-    if (!parsedXml || !parsedXml.ArrayOfObjStationData) return [];
+    if (!parsedXml || !parsedXml.objStationData) return [];
 
-    return parsedXml.ArrayOfObjStationData[0].objStationData;
+    return parsedXml.objStationData[0].objStationData;
   }
 
   private static parseXmlAllStations(xml: string): Station[] {
     if (!xml) return [];
-    const parsedXml = parser.parse(xml, IrishRailApi.XML_OPTIONS);
+    const parsedXml = parser.parse(xml, IrishRailApi.XML_OPTIONS);    
     if (!parsedXml || !parsedXml.ArrayOfObjStation) return [];
 
     const removedDuplicates = new Map<string, Station>();
-    for (const station of parsedXml.ArrayOfObjStation[0].objStation) {
+    for (const station of parsedXml.ArrayOfObjStation.objStation) {
       removedDuplicates.set(station.StationDesc, station);
     }
     return Array.from(removedDuplicates.values());
@@ -57,9 +59,9 @@ export default class IrishRailApi {
   private static parseXmlTrainJourney(xml: string): Journey {
     if (!xml) return null;
     const parsedXml = parser.parse(xml, IrishRailApi.XML_OPTIONS);
-    if (parsedXml.ArrayOfObjTrainMovements[0]) {
+    if (parsedXml.objTrainMovements[0]) {
       let movements: Movement[] =
-        parsedXml.ArrayOfObjTrainMovements[0].objTrainMovements;
+        parsedXml.objTrainMovements[0].objTrainMovements;
 
       movements = movements
         .filter((loc) => loc.LocationType !== "T")

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useRef, useContext, useState, useEffect } from "react";
-import { hot } from "react-hot-loader";
 import { Train, Station, Route } from "../api/IrishRailApi";
 import styled, { ThemeContext } from "styled-components";
 import { X, Heart } from "react-feather";
@@ -234,4 +233,4 @@ export const Schedule = (props: TrainScheduleProps) => {
   );
 };
 
-export default hot(module)(Schedule);
+export default Schedule;

@@ -12,7 +12,7 @@ export interface StationSearchState {
   cursor: number;
   hasFocus: boolean;
   mouseOver: boolean;
-  fuse: Fuse<Station, any>;
+  fuse: Fuse<Station>;
 }
 
 export interface StationSearchProps {
@@ -76,7 +76,7 @@ export const StationSearch = (props: StationSearchProps) => {
   const [cursor, setCursor] = useState(-1);
   const [hasFocus, setHasFocus] = useState(false);
   const [mouseOver, setMouseOver] = useState(false);
-  const [fuse, setFuse] = useState<Fuse<Station, any>>();
+  const [fuse, setFuse] = useState<Fuse<Station>>();
 
   const isPortable = useWindowSize().width <= 1000;
 

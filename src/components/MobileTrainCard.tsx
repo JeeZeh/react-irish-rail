@@ -228,11 +228,6 @@ export const MobileTrainCard = (props: MobileTrainCardProps) => {
     const top = bottomRef.current.getBoundingClientRect().top;
     setTimeout(() => {
       if (!open) {
-        // if (top + 450 > window.innerHeight) {
-        //   window.scrollBy({
-        //     behavior: "smooth",
-        //     top: top + 450 - window.innerHeight,
-        //   });
         if (top < 350) {
           window.scrollBy({
             behavior: "smooth",

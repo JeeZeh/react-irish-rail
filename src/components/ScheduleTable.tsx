@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { hot } from "react-hot-loader";
 import IrishRailApi, { Train, Journey } from "../api/IrishRailApi";
 import styled from "styled-components";
 import { ArrowDown, ArrowUp } from "react-feather";
@@ -159,7 +158,7 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
   );
 };
 
-export default hot(module)(ScheduleTable);
+export default ScheduleTable;
 
 // const testTrain: Train = {
 //   Servertime: null,

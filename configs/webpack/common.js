@@ -1,9 +1,7 @@
 // shared config (dev and prod)
 const { resolve } = require("path");
-const { CheckerPlugin } = require("awesome-typescript-loader");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const WorkboxPlugin = require("workbox-webpack-plugin");
 const MomentLocalesPlugin = require("moment-locales-webpack-plugin");
 
 module.exports = {
@@ -14,10 +12,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: ["awesome-typescript-loader"],
-      },
-      {
         test: /\.css$/,
         use: [
           "style-loader",
@@ -26,7 +20,7 @@ module.exports = {
       },
       {
         test: /\.(scss|sass)$/,
-        loaders: [
+        use: [
           "style-loader",
           { loader: "css-loader", options: { importLoaders: 1 } },
           "sass-loader",
@@ -34,12 +28,17 @@ module.exports = {
       },
       {
         test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$|\.json$|\.xml$/,
-        loader: "file-loader?name=[name].[ext]", // <-- retain original file name
+        loader: "file-loader",
+        options:  "name=[name].[ext]" // <-- retain original file name
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       },
     ],
   },
   plugins: [
-    new CheckerPlugin(),
     new HtmlWebpackPlugin({ template: "index.html.ejs" }),
     new CopyWebpackPlugin({
       patterns: [
@@ -47,10 +46,6 @@ module.exports = {
         { from: "*.png", to: "." },
         { from: "robots.txt", to: "." },
       ],
-    }),
-    new WorkboxPlugin.GenerateSW({
-      clientsClaim: true,
-      skipWaiting: true,
     }),
 
     // Or: To strip all locales except “en”, “es-us” and “ru”
