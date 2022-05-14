@@ -20,7 +20,7 @@ if (!isDev && location.protocol !== "https:") {
   );
 }
 
-if ("serviceWorker" in navigator) {
+if ("serviceWorker" in navigator && !isDev) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register("/service-worker.js")

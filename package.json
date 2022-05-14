@@ -17,12 +17,12 @@
     "type": "git",
     "url": "git+https://github.com/jeezeh/react-irish-rail.git"
   },
-  "homepage": "https://irish-react-rail.github.com/",
+  "homepage": "https://www.reactrail.com/",
   "scripts": {
     "build": "npm run clean-dist && webpack --mode production --config=configs/webpack/prod.js",
     "clean-dist": "rimraf dist/*",
-    "start": "npm run start-prod",
-    "dev": "concurrently --kill-others \"webpack-dev-server --config=configs/webpack/dev.js\" \"node express.js\"",
+    "start": "npm run build && npm run start-prod",
+    "dev": "concurrently --kill-others \"webpack-dev-server --mode development --config=configs/webpack/dev.js\" \"node express.js\"",
     "start-prod": "node express.js",
     "test": "jest --coverage --watchAll --config=configs/jest.json"
   },
@@ -61,7 +61,8 @@
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0",
-    "webpack-merge": "^5.8.0"
+    "webpack-merge": "^5.8.0",
+    "workbox-webpack-plugin": "^6.5.3"
   },
   "dependencies": {
     "compression": "^1.7.4",

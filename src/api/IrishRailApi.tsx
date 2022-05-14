@@ -39,14 +39,13 @@ export default class IrishRailApi {
   private static parseXmlStationData(xml: string): Train[] {
     if (!xml) return [];
     const parsedXml = parser.parse(xml, IrishRailApi.XML_OPTIONS);
-    if (!parsedXml || !parsedXml.objStationData) return [];
-
-    return parsedXml.objStationData[0].objStationData;
+    if (!parsedXml || !parsedXml.ArrayOfObjStationData) return [];
+    return parsedXml.ArrayOfObjStationData[0].objStationData;
   }
 
   private static parseXmlAllStations(xml: string): Station[] {
     if (!xml) return [];
-    const parsedXml = parser.parse(xml, IrishRailApi.XML_OPTIONS);    
+    const parsedXml = parser.parse(xml, IrishRailApi.XML_OPTIONS);
     if (!parsedXml || !parsedXml.ArrayOfObjStation) return [];
 
     const removedDuplicates = new Map<string, Station>();
