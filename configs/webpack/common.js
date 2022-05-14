@@ -29,11 +29,11 @@ module.exports = {
       {
         test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$|\.json$|\.xml$/,
         loader: "file-loader",
-        options:  "name=[name].[ext]" // <-- retain original file name
+        options: "name=[name].[ext]", // <-- retain original file name
       },
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: "ts-loader",
         exclude: /node_modules/,
       },
     ],

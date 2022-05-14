@@ -1,6 +1,6 @@
 {
   "name": "react-rail",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "See the live timetable for any Irish Rail station, and the journey each train is on.",
   "keywords": [
     "react",
@@ -17,9 +17,9 @@
     "type": "git",
     "url": "git+https://github.com/jeezeh/react-irish-rail.git"
   },
-  "homepage": "https://www.reactrail.live/",
+  "homepage": "https://irish-react-rail.github.com/",
   "scripts": {
-    "build": "npm run clean-dist && webpack -p --config=configs/webpack/prod.js",
+    "build": "npm run clean-dist && webpack --mode production --config=configs/webpack/prod.js",
     "clean-dist": "rimraf dist/*",
     "start": "npm run start-prod",
     "dev": "concurrently --kill-others \"webpack-dev-server --config=configs/webpack/dev.js\" \"node express.js\"",
