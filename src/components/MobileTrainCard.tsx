@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState, useRef, useContext } from "react";
 import { ArrowRight, Map, X, ChevronUp } from "react-feather";
 import styled, { ThemeContext } from "styled-components";
-import { Journey, Train } from "../api/IrishRailApi";
+import { IJourney, ITrain } from "../api/IrishRailApi";
 import Collapsible from "react-collapsible";
 import { JourneyMap } from "./JourneyMap";
 
@@ -144,7 +144,7 @@ export const JourneyButton = styled.button`
   }
 `;
 
-const renderHeader = (train: Train) => {
+const renderHeader = (train: ITrain) => {
   const themeContext = useContext(ThemeContext);
 
   const { Destination, Destinationtime, Origin, Origintime } = train;
@@ -173,7 +173,7 @@ const renderHeader = (train: Train) => {
   );
 };
 
-const renderFooter = (train: Train, onClick, open: boolean) => {
+const renderFooter = (train: ITrain, onClick, open: boolean) => {
   const { Exparrival, Expdepart } = train;
   const themeContext = useContext(ThemeContext);
 
@@ -214,8 +214,8 @@ const renderFooter = (train: Train, onClick, open: boolean) => {
 };
 
 interface MobileTrainCardProps {
-  train: Train;
-  getJourney: (journeyCode: string) => Promise<Journey>;
+  train: ITrain;
+  getJourney: (journeyCode: string) => Promise<IJourney>;
 }
 
 export const MobileTrainCard = (props: MobileTrainCardProps) => {

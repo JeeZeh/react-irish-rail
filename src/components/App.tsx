@@ -5,7 +5,7 @@ import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 import { Info, Heart } from "react-feather";
 import Schedule from "./Schedule";
 import { StationSearch } from "./StationSearch";
-import IrishRailApi, { Station, Train, Route } from "../api/IrishRailApi";
+import IrishRailApi, { IStation, ITrain, IRoute } from "../api/IrishRailApi";
 import { SearchParameters } from "./SearchParameters";
 import { JourneyKey } from "./JourneyKey";
 import { CollapsibleItemList } from "./CollapsibleItemList";
@@ -211,12 +211,12 @@ export const App = () => {
   const lookaheadOptions = [15, 30, 60, 90];
   const isPortable = useWindowSize().width <= 1000;
   const [lookahead, setLookahead] = useState(30);
-  const [station, setStation] = useState<Station>(null);
+  const [station, setStation] = useState<IStation>(null);
   const prevStation = usePrevious(station);
   const prevLookahead = usePrevious(lookahead);
-  const [stationTrains, setStationTrains] = useState<Train[]>([]);
-  const [stationList, setStationList] = useState<Station[]>([]);
-  const [stationConnections, setStationConnections] = useState<Route[]>([]);
+  const [stationTrains, setStationTrains] = useState<ITrain[]>([]);
+  const [stationList, setStationList] = useState<IStation[]>([]);
+  const [stationConnections, setStationConnections] = useState<IRoute[]>([]);
   const [waiting, setWaiting] = useState<boolean>(false);
   const [initialised, setInitialised] = useState(false);
   const [error, setError] = useState<any>(null);
@@ -307,9 +307,9 @@ export const App = () => {
         setStationTrains(trains);
         asyncFadeout(false, 50);
 
-        const connectionCodes = Array.from(
-          new Set(trains.map((t) => t.Traincode)).values()
-        ).map(IrishRailApi.getRouteInfo);
+        const connectionCodes = Array.from(new Set(trains).values()).map(
+          IrishRailApi.getRouteInfo
+        );
 
         Promise.all(connectionCodes).then(setStationConnections);
       });

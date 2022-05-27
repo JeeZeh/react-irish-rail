@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useRef, useContext, useState, useEffect } from "react";
-import { Train, Station, Route } from "../api/IrishRailApi";
+import { ITrain, IStation, IRoute } from "../api/IrishRailApi";
 import styled, { ThemeContext } from "styled-components";
 import { X, Heart } from "react-feather";
 import ScheduleTable from "./ScheduleTable";
@@ -9,13 +9,13 @@ import { useWindowSize } from "../hooks/useWindowSize";
 import { TrainFilter } from "./TrainFilter";
 
 export interface TrainScheduleProps {
-  station: Station;
-  stationTrains: Train[];
+  station: IStation;
+  stationTrains: ITrain[];
   lookahead: number;
   handleStationClose: () => void;
   isFavourite: boolean;
   onToggleFavourite: (stationCode: string) => void;
-  stationConnections: Route[];
+  stationConnections: IRoute[];
 }
 
 export const Card = styled.div<{ isPortable?: boolean; fades?: boolean }>`
@@ -137,7 +137,7 @@ export const Schedule = (props: TrainScheduleProps) => {
     new Map<string, Set<string>>()
   );
 
-  const generateStationTrainMap = (stationConnections: Route[]) => {
+  const generateStationTrainMap = (stationConnections: IRoute[]) => {
     const connectionMap = new Map<string, Set<string>>();
     const reachableStations = stationConnections?.map((r) => ({
       code: r.trainCode,

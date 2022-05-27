@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Journey, Train } from "../api/IrishRailApi";
+import { IJourney, ITrain } from "../api/IrishRailApi";
 import { Card } from "./Schedule";
 
 const Header = styled.h5`
@@ -35,7 +35,7 @@ const Value = styled.div`
   font-weight: 400;
 `;
 
-export const JourneyInfo = (props: { journey: Journey; train: Train }) => {
+export const JourneyInfo = (props: { journey: IJourney; train: ITrain }) => {
   const { journey, train } = props;
 
   if (!journey) return null;

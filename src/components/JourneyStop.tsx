@@ -1,17 +1,17 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Movement, Train } from "../api/IrishRailApi";
+import { IMovement, ITrain } from "../api/IrishRailApi";
 import moment = require("moment");
 import "moment/locale/en-ie";
 import { useWindowSize } from "../hooks/useWindowSize";
 moment.locale("en-ie");
 
 interface JourneyStopProps {
-  station: Movement;
+  station: IMovement;
   stopNumber: number;
   trainPosition: number;
   journeyLength: number;
-  train: Train;
+  train: ITrain;
   forceShowTime?: boolean;
 }
 

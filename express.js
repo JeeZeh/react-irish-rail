@@ -107,7 +107,7 @@ app.get(
 
 app.get("/route", cacheMiddleware(), (req, res) => {
   request.get(
-    `${IRISH_RAIL_API}getTrainMovementsXML?TrainId=${req.query.trainCode}&TrainDate=0`,
+    `${IRISH_RAIL_API}getTrainMovementsXML?TrainId=${req.query.trainCode}&TrainDate=${req.query.trainDate}`,
     { json: false },
     (error, response, body) => {
       if (error) {

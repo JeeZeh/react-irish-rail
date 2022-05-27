@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import IrishRailApi, { Train, Journey } from "../api/IrishRailApi";
+import IrishRailApi, { ITrain, IJourney } from "../api/IrishRailApi";
 import styled from "styled-components";
 import { ArrowDown, ArrowUp } from "react-feather";
 import { MobileTrainCard } from "./MobileTrainCard";
@@ -54,11 +54,11 @@ const ColumnHeader = styled.div`
 `;
 
 interface JourneyCache {
-  journey: Journey;
+  journey: IJourney;
   time: number;
 }
 
-const ScheduleTable = (props: { stationTrains: Train[] }) => {
+const ScheduleTable = (props: { stationTrains: ITrain[] }) => {
   const isPortable = useWindowSize().width <= 1000;
   const { stationTrains } = props;
   const defaultSort = "Exparrival";
@@ -66,7 +66,7 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
   const [journeyCache, setJourneyCache] = useState(
     new Map<string, JourneyCache>()
   );
-  const [sortedTrainData, setSortedTrainData] = useState<Train[]>();
+  const [sortedTrainData, setSortedTrainData] = useState<ITrain[]>();
 
   // Re-sort the train data when the user updates the sorting params or trains change
   useEffect(() => {
@@ -98,7 +98,7 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
     }
   };
 
-  const getJourney = async (journeyCode: string): Promise<Journey> => {
+  const getJourney = async (journeyCode: string): Promise<IJourney> => {
     const invalidateCacheAfter = 30000; // Invalidate after 30s
     let time = Date.now();
     let cachedJourney = journeyCache.get(journeyCode) ?? null;
@@ -113,7 +113,7 @@ const ScheduleTable = (props: { stationTrains: Train[] }) => {
     return cachedJourney.journey;
   };
 
-  const renderTrain = (train: Train) => {
+  const renderTrain = (train: ITrain) => {
     const code = train.Traincode;
 
     if (isPortable)

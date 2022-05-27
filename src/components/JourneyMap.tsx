@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import * as moment from "moment";
-import { Journey, Train, Movement } from "../api/IrishRailApi";
+import { IJourney, ITrain, IMovement } from "../api/IrishRailApi";
 import { JourneyStop } from "./JourneyStop";
 import { JourneyInfo } from "./JourneyInfo";
 import { LoadingSpinner } from "./LoadingSpinner";
@@ -102,14 +102,14 @@ const InfoWrapper = styled.div`
 `;
 
 interface JoruneyMapProps {
-  train: Train;
+  train: ITrain;
   backgroundColor?: string;
-  getJourney?: (journeyCode: string) => Promise<Journey>;
-  journeyProp?: Journey;
+  getJourney?: (journeyCode: string) => Promise<IJourney>;
+  journeyProp?: IJourney;
   open?: boolean;
 }
 
-export const calcTrainPosition = (stops: Movement[]): number => {
+export const calcTrainPosition = (stops: IMovement[]): number => {
   if (!stops) return -1;
   const now = moment.now();
   return stops.findIndex((s, i) => {
@@ -124,7 +124,7 @@ export const calcTrainPosition = (stops: Movement[]): number => {
   });
 };
 
-export const calcTrainPositionV2 = (stops: Movement[]): number => {
+export const calcTrainPositionV2 = (stops: IMovement[]): number => {
   if (!stops) return -1;
   return stops.findIndex(
     (s, i) => (s.StopType === "C" && !s.Departure) || s.StopType === "N"
@@ -137,7 +137,7 @@ export const JourneyMap = (props: JoruneyMapProps) => {
   const isPortable = width <= 1000;
   const scrollerMargin = isPortable ? 0 : 30;
   const itemSize = 30;
-  const [journey, setJourney] = useState<Journey>(null);
+  const [journey, setJourney] = useState<IJourney>(null);
   const [fade, setFade] = useState(false);
   const scroller = useRef(null);
 
@@ -177,7 +177,7 @@ export const JourneyMap = (props: JoruneyMapProps) => {
     }
   }, [open]);
 
-  const renderStops = (journey: Journey) => {
+  const renderStops = (journey: IJourney) => {
     return journey.stops.map((stop, i) => (
       <JourneyStop
         station={stop}

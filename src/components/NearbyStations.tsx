@@ -2,17 +2,17 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Globe } from "react-feather";
-import { Station } from "../api/IrishRailApi";
+import { IStation } from "../api/IrishRailApi";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { JourneyButton } from "./MobileTrainCard";
 import { smallify } from "./JourneyStop";
 import { CollapsibleItemList } from "./CollapsibleItemList";
 
 interface NearbyStationsProps {
-  stationList: Station[];
+  stationList: IStation[];
   initialOpenState: boolean;
   onStationChange: (stationName: string) => void;
-  station: Station;
+  station: IStation;
 }
 
 interface Position {
@@ -32,7 +32,7 @@ const GeoStation = styled(JourneyButton)`
 
 export const NearbyStations = (props: NearbyStationsProps) => {
   const [proximityStations, setProximityStations] = useState<
-    { station: Station; distance: number }[]
+    { station: IStation; distance: number }[]
   >();
   const [position, setPosition] = useState<Position>();
   const [error, setError] = useState(null);
@@ -74,7 +74,7 @@ export const NearbyStations = (props: NearbyStationsProps) => {
     }
   }, [position, stationList]);
 
-  const getDistanceToStations = (position: Position, stations: Station[]) => {
+  const getDistanceToStations = (position: Position, stations: IStation[]) => {
     const R = 6371e3; // metres
     return stations
       .map((s) => {

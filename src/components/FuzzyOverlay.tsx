@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useContext } from "react";
-import { Station } from "../api/IrishRailApi";
+import { IStation } from "../api/IrishRailApi";
 import styled, { ThemeContext } from "styled-components";
 import Fuse from "fuse.js";
 import { Fade } from "./JourneyMap";
@@ -8,9 +8,9 @@ import { FixedSizeList as List } from "react-window";
 import { useWindowSize } from "../hooks/useWindowSize";
 
 export interface FuzzyOverlayProps {
-  fuzzyList: Fuse.FuseResult<Station>[];
+  fuzzyList: Fuse.FuseResult<IStation>[];
   cursor: number;
-  onFuzzySelect: (station: Station) => void;
+  onFuzzySelect: (station: IStation) => void;
 }
 
 export const ListItem = styled.div<{ active?: boolean }>`
@@ -48,7 +48,7 @@ export const FuzzyOverlay = (props: FuzzyOverlayProps) => {
   const { fuzzyList, cursor, onFuzzySelect } = props;
 
   const Item = ({ index, style }) => {
-    const station: Station = fuzzyList[index].item;
+    const station: IStation = fuzzyList[index].item;
     return (
       <ListItem
         active={cursor === index}

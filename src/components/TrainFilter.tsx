@@ -3,7 +3,7 @@ import Select from "react-select";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useWindowSize } from "../hooks/useWindowSize";
-import { Station } from "../api/IrishRailApi";
+import { IStation } from "../api/IrishRailApi";
 
 const FilterSelect = styled(Select)<{ isPortable: boolean }>`
   margin: 10px;
@@ -45,7 +45,7 @@ interface FilterValue {
 }
 
 interface TrainFilterProps {
-  currentStation: Station;
+  currentStation: IStation;
   stationToTrainMap: Map<string, Set<string>>;
   onTrainFilter: (trainCodes: string[]) => void;
 }

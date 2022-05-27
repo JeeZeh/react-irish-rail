@@ -1,24 +1,24 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import Fuse from "fuse.js";
-import { Station } from "../api/IrishRailApi";
+import { IStation } from "../api/IrishRailApi";
 import styled from "styled-components";
 import { FuzzyOverlay } from "./FuzzyOverlay";
 import { useWindowSize } from "../hooks/useWindowSize";
 
 export interface StationSearchState {
-  fuseMatch: Fuse.FuseResult<Station>[];
+  fuseMatch: Fuse.FuseResult<IStation>[];
   input: string;
   cursor: number;
   hasFocus: boolean;
   mouseOver: boolean;
-  fuse: Fuse<Station>;
+  fuse: Fuse<IStation>;
 }
 
 export interface StationSearchProps {
-  stationList: Station[];
-  station: Station;
-  onStationChange: (station: Station) => void;
+  stationList: IStation[];
+  station: IStation;
+  onStationChange: (station: IStation) => void;
 }
 
 const Search = styled.div`
@@ -71,12 +71,12 @@ export const StationSearch = (props: StationSearchProps) => {
     keys: ["StationDesc", "StationCode"],
   };
 
-  const [fuseMatch, setFuseMatch] = useState<Fuse.FuseResult<Station>[]>();
+  const [fuseMatch, setFuseMatch] = useState<Fuse.FuseResult<IStation>[]>();
   const [input, setInput] = useState("");
   const [cursor, setCursor] = useState(-1);
   const [hasFocus, setHasFocus] = useState(false);
   const [mouseOver, setMouseOver] = useState(false);
-  const [fuse, setFuse] = useState<Fuse<Station>>();
+  const [fuse, setFuse] = useState<Fuse<IStation>>();
 
   const isPortable = useWindowSize().width <= 1000;
 
@@ -122,7 +122,7 @@ export const StationSearch = (props: StationSearchProps) => {
     setCursor(-1);
   };
 
-  const handleFuzzySelect = (station: Station) => {
+  const handleFuzzySelect = (station: IStation) => {
     setInput("");
     setFuseMatch([]);
     setCursor(-1);

@@ -2,7 +2,7 @@ import * as React from "react";
 import { DesktopTrainRow, scheduleColumns } from "./ScheduleTable";
 import { useState } from "react";
 import styled from "styled-components";
-import { Journey, Train } from "../api/IrishRailApi";
+import { IJourney, ITrain } from "../api/IrishRailApi";
 import Collapsible from "react-collapsible";
 import { JourneyMap } from "./JourneyMap";
 import moment = require("moment");
@@ -27,8 +27,8 @@ const Info = styled.div`
 `;
 
 export const DesktopTrainCard = (props: {
-  train: Train;
-  getJourney: (journeyCode: string) => Promise<Journey>;
+  train: ITrain;
+  getJourney: (journeyCode: string) => Promise<IJourney>;
 }) => {
   const { train, getJourney } = props;
   const [open, setOpen] = useState(false);
