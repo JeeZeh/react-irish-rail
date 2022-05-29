@@ -44,7 +44,7 @@ export default class IrishRailApi {
     if (Array.isArray(parsedXml.ArrayOfObjStationData)) {
       return parsedXml.ArrayOfObjStationData[0].objStationData;
     }
-    return [parsedXml.ArrayOfObjStationData.objStationData];
+    return parsedXml.ArrayOfObjStationData.objStationData;
   }
 
   private static parseXmlAllStations(xml: string): IStation[] {

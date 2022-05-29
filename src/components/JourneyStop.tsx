@@ -237,6 +237,8 @@ export const JourneyStop = (props: JourneyStopProps) => {
   time = getTime();
   classes = getClasses();
 
+  console.log(station);
+
   return (
     <StationDiv className={classes} isPortable={isPortable}>
       <Dot className={classes} isPortable={isPortable}>
