@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react"
 import { useState, useEffect } from "react";
 import "./../assets/scss/App.scss";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";

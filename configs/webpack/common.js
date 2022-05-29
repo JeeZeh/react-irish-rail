@@ -5,10 +5,11 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MomentLocalesPlugin = require("moment-locales-webpack-plugin");
 
 module.exports = {
-  resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
-  },
   context: resolve(__dirname, "../../src"),
+  resolve: {
+    extensions: [".js", ".jsx", ".tsx", ".ts", ".html", ".scss"],
+    modules: ["src", "node_modules"],
+  },
   module: {
     rules: [
       {
@@ -29,11 +30,11 @@ module.exports = {
       {
         test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$|\.json$|\.xml$/,
         loader: "file-loader",
-        options: "name=[name].[ext]", // <-- retain original file name
+        options: { name: "name=[name].[ext]" }, // <-- retain original file name
       },
       {
-        test: /\.tsx?$/,
-        use: "ts-loader",
+        test: /\.[jt]sx?$/,
+        use: "babel-loader",
         exclude: /node_modules/,
       },
     ],

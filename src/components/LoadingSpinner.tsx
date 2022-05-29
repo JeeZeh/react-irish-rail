@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react"
 import { useEffect, useState, useContext } from "react";
 import styled, { ThemeContext } from "styled-components";
 import BeatLoader from "react-spinners/BeatLoader";

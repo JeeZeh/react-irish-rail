@@ -6,11 +6,8 @@
     "module": "commonjs",
     "target": "es5",
     "jsx": "react",
-    "lib": ["es5", "es6", "dom"]
-  },
-  "include": ["./src/**/*"],
-  "awesomeTypescriptLoaderOptions": {
-    "reportFiles": ["./src/**/*"]
+    "lib": ["es5", "es6", "dom"],
+    "esModuleInterop": true
   },
   "files": ["custom.d.ts"]
 }

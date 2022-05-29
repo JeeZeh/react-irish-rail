@@ -1,11 +1,11 @@
-import * as React from "react";
+import React from "react";
 import { DesktopTrainRow, scheduleColumns } from "./ScheduleTable";
 import { useState } from "react";
 import styled from "styled-components";
 import { IJourney, ITrain } from "../api/IrishRailApi";
 import Collapsible from "react-collapsible";
 import { JourneyMap } from "./JourneyMap";
-import moment = require("moment");
+import moment from "moment";
 
 moment.locale("en-ie");
 

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react"
 import { useState, useRef, useContext } from "react";
 import { ArrowRight, Map, X, ChevronUp } from "react-feather";
 import styled, { ThemeContext } from "styled-components";

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react"
 import { useRef, useContext, useState, useEffect } from "react";
 import { ITrain, IStation, IRoute } from "../api/IrishRailApi";
 import styled, { ThemeContext } from "styled-components";

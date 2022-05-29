@@ -1,7 +1,7 @@
-import * as React from "react";
+import React from "react"
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import * as moment from "moment";
+import moment from "moment";
 import { IJourney, ITrain, IMovement } from "../api/IrishRailApi";
 import { JourneyStop } from "./JourneyStop";
 import { JourneyInfo } from "./JourneyInfo";

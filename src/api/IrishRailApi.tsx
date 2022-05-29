@@ -1,8 +1,8 @@
 import { XMLParser } from "fast-xml-parser";
-import * as he from "he";
+import he from "he";
 import { smallify } from "../components/JourneyStop";
-import moment = require("moment");
 import { calcTrainPositionV2 } from "../components/JourneyMap";
+const moment = require("moment");
 moment.locale("en-ie");
 
 const parser = new XMLParser();

@@ -7,7 +7,7 @@ const WorkboxPlugin = require("workbox-webpack-plugin");
 
 module.exports = merge(commonConfig, {
   mode: "production",
-  entry: "./index.tsx",
+  entry: ".",
   output: {
     filename: "js/bundle.[hash].min.js",
     path: resolve(__dirname, "../../dist"),

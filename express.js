@@ -11,8 +11,8 @@ const sourceDir = "dist";
 const IRISH_RAIL_API = "http://api.irishrail.ie/realtime/realtime.asmx/";
 
 const whitelist = [
-  "http://localhost:3333",
-  "https://localhost:3333",
+  "http://localhost:8080",
+  "https://localhost:8080",
   "http://react-rail.herokuapp.com/",
   "https://react-rail.herokuapp.com/",
   "http://www.reactrail.live",

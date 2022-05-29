@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react"
 import { useState, useEffect } from "react";
 import { JourneyButton } from "./MobileTrainCard";
 import { ChevronsDown } from "react-feather";

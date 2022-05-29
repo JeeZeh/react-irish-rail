@@ -1,9 +1,9 @@
-import * as React from "react";
+import React from "react"
 import styled from "styled-components";
 import { IMovement, ITrain } from "../api/IrishRailApi";
-import moment = require("moment");
 import "moment/locale/en-ie";
 import { useWindowSize } from "../hooks/useWindowSize";
+import moment from "moment";
 moment.locale("en-ie");
 
 interface JourneyStopProps {

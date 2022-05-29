@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react"
 import { useState, useEffect } from "react";
 import IrishRailApi, { ITrain, IJourney } from "../api/IrishRailApi";
 import styled from "styled-components";
