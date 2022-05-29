@@ -7,3 +7,4 @@ tests/**/*.jsx
 .vs
 .VSCodeCounter
 *.log
+data
