@@ -5,10 +5,15 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 const request = require("request");
 const mcache = require("memory-cache");
 const app = express();
+const sanitize = require("sanitize-filename");
+const fs = require("fs");
 
 const portNumber = 3000;
 const sourceDir = "dist";
 const IRISH_RAIL_API = "http://api.irishrail.ie/realtime/realtime.asmx/";
+
+const debugDir = "./debug";
+const isDev = process.env.NODE_ENV === "dev";
 
 const whitelist = [
   "http://localhost:8080",
@@ -36,6 +41,32 @@ const proxyMiddlewareOptions = {
   pathRewrite: {
     "^/proxy": "",
   },
+};
+
+/**
+ * Provider function that returns a cache middleware for Express. If in dev environment,
+ * the debug cache middleware will be used, otherwise the real cache middleware will be used.
+ *
+ * @returns either debug cache or real cache middleware depending on environment
+ */
+const dynamicCacheMiddleware = () => {
+  if (isDev) {
+    console.log("[Dynamic Cache Middleware] Using DEBUG cache");
+    return debugCacheMiddleware();
+  }
+
+  console.log("[Dynamic Cache Middleware] Using REAL cache");
+  return cacheMiddleware();
+};
+
+/**
+ * Helper method for writing debug files out of the cache middleware.
+ * @param {string} url
+ * @param {string} data
+ */
+const writeDebug = (url, data) => {
+  const fp = `${debugDir}/${sanitize(url)}.xml`;
+  fs.writeFile(fp, data, (err) => console.warn(err));
 };
 
 /**
@@ -85,6 +116,45 @@ const cacheMiddleware = () => {
 };
 
 /**
+ * Middleware that only provides debug data from local filesystems and blocks all other requests.
+ *
+ * When used, overrides some parameters of the request to match debug request:
+ *  - sets [t|T]rainDate=0
+ *  - adds debug=1
+ *  - removes "/proxy" prefix if present
+ *
+ * Debug files should include all stations, with the train data for Connolly and Maynooth.
+ * All other endpoints will return nothing.
+ */
+const debugCacheMiddleware = () => {
+  return (req, res, next) => {
+    // Clean up request to match cached key
+    const url = new URL("https://example.com" + req.url.replace("/proxy", ""));
+    if (url.searchParams.has("TrainDate")) {
+      url.searchParams.set("TrainDate", "0");
+    }
+    if (url.searchParams.has("trainDate")) {
+      url.searchParams.set("trainDate", "0");
+    }
+    url.searchParams.set("debug", "1");
+
+    const key = `__api__${sanitize(
+      url.href.replace("https://example.com", "")
+    )}.xml`;
+
+    // Try get and return cached body
+    const filepath = `${debugDir}/${key}`;
+    if (fs.existsSync(filepath)) {
+      console.log(`DEBUG CACHE: ${key}`);
+      fs.readFile(filepath, (err, data) => res.send(data));
+      return;
+    }
+    console.log(`NO CACHE FOR: ${req.url}`);
+    res.send();
+  };
+};
+
+/**
  * Returns the number of milliseconds until the provided hour (on the dot)
  * @param {number} hour
  */
@@ -101,22 +171,19 @@ app.use(express.static(sourceDir));
 
 app.get(
   "/proxy/*",
-  cacheMiddleware(),
+  dynamicCacheMiddleware(),
   createProxyMiddleware(proxyMiddlewareOptions)
 );
 
-app.get("/route", cacheMiddleware(), (req, res) => {
-  request.get(
-    `${IRISH_RAIL_API}getTrainMovementsXML?TrainId=${req.query.trainCode}&TrainDate=${req.query.trainDate}`,
-    { json: false },
-    (error, response, body) => {
-      if (error) {
-        res.status(400).send(error);
-      }
-      res.write(Buffer.from(body));
-      res.end();
+app.get("/route", dynamicCacheMiddleware(), (req, res) => {
+  const url = `${IRISH_RAIL_API}getTrainMovementsXML?TrainId=${req.query.trainCode}&TrainDate=${req.query.trainDate}`;
+  request.get(url, { json: false }, (error, response, body) => {
+    if (error) {
+      res.status(400).send(error);
     }
-  );
+    res.write(Buffer.from(body));
+    res.end();
+  });
 });
 
 app.listen(process.env.PORT ? process.env.PORT : portNumber, () => {

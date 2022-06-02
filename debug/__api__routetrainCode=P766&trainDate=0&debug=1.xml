@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfObjTrainMovements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.irishrail.ie/realtime/">
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>MYNTH</LocationCode>
+    <LocationFullName>Maynooth</LocationFullName>
+    <LocationOrder>1</LocationOrder>
+    <LocationType>O</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>00:00:00</ScheduledArrival>
+    <ScheduledDeparture>23:10:00</ScheduledDeparture>
+    <ExpectedArrival>00:00:00</ExpectedArrival>
+    <ExpectedDeparture>23:10:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>C</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>LXLSA</LocationCode>
+    <LocationFullName>Leixlip (Louisa Bridge)</LocationFullName>
+    <LocationOrder>2</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:16:30</ScheduledArrival>
+    <ScheduledDeparture>23:17:00</ScheduledDeparture>
+    <ExpectedArrival>23:16:30</ExpectedArrival>
+    <ExpectedDeparture>23:17:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>N</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>LXCON</LocationCode>
+    <LocationFullName>Leixlip (Confey)</LocationFullName>
+    <LocationOrder>3</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:19:30</ScheduledArrival>
+    <ScheduledDeparture>23:20:00</ScheduledDeparture>
+    <ExpectedArrival>23:19:30</ExpectedArrival>
+    <ExpectedDeparture>23:20:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CLSLJ</LocationCode>
+    <LocationFullName>Clonsilla Junction</LocationFullName>
+    <LocationOrder>4</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:24:30</ScheduledArrival>
+    <ScheduledDeparture>23:24:30</ScheduledDeparture>
+    <ExpectedArrival>23:24:30</ExpectedArrival>
+    <ExpectedDeparture>23:24:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CLSLA</LocationCode>
+    <LocationFullName>Clonsilla</LocationFullName>
+    <LocationOrder>5</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:25:30</ScheduledArrival>
+    <ScheduledDeparture>23:26:00</ScheduledDeparture>
+    <ExpectedArrival>23:25:30</ExpectedArrival>
+    <ExpectedDeparture>23:26:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CMINE</LocationCode>
+    <LocationFullName>Coolmine</LocationFullName>
+    <LocationOrder>6</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:29:00</ScheduledArrival>
+    <ScheduledDeparture>23:29:30</ScheduledDeparture>
+    <ExpectedArrival>23:29:00</ExpectedArrival>
+    <ExpectedDeparture>23:29:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CNOCK</LocationCode>
+    <LocationFullName>Castleknock</LocationFullName>
+    <LocationOrder>7</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:31:30</ScheduledArrival>
+    <ScheduledDeparture>23:32:00</ScheduledDeparture>
+    <ExpectedArrival>23:31:30</ExpectedArrival>
+    <ExpectedDeparture>23:32:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>PHNPK</LocationCode>
+    <LocationFullName>Navan Road Parkway</LocationFullName>
+    <LocationOrder>8</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:34:30</ScheduledArrival>
+    <ScheduledDeparture>23:35:00</ScheduledDeparture>
+    <ExpectedArrival>23:34:30</ExpectedArrival>
+    <ExpectedDeparture>23:35:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>ASHTN</LocationCode>
+    <LocationFullName>Ashtown</LocationFullName>
+    <LocationOrder>9</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:37:00</ScheduledArrival>
+    <ScheduledDeparture>23:37:30</ScheduledDeparture>
+    <ExpectedArrival>23:37:00</ExpectedArrival>
+    <ExpectedDeparture>23:37:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>PELTN</LocationCode>
+    <LocationFullName>Pelletstown</LocationFullName>
+    <LocationOrder>10</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:39:30</ScheduledArrival>
+    <ScheduledDeparture>23:40:00</ScheduledDeparture>
+    <ExpectedArrival>23:39:30</ExpectedArrival>
+    <ExpectedDeparture>23:40:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>BBRDG</LocationCode>
+    <LocationFullName>Broombridge</LocationFullName>
+    <LocationOrder>11</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:42:00</ScheduledArrival>
+    <ScheduledDeparture>23:42:30</ScheduledDeparture>
+    <ExpectedArrival>23:42:00</ExpectedArrival>
+    <ExpectedDeparture>23:42:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>GLASJ</LocationCode>
+    <LocationFullName>Glasnevin Junction</LocationFullName>
+    <LocationOrder>12</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:46:00</ScheduledArrival>
+    <ScheduledDeparture>23:46:00</ScheduledDeparture>
+    <ExpectedArrival>23:46:00</ExpectedArrival>
+    <ExpectedDeparture>23:46:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>DCDRA</LocationCode>
+    <LocationFullName>Drumcondra</LocationFullName>
+    <LocationOrder>13</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:48:00</ScheduledArrival>
+    <ScheduledDeparture>23:48:30</ScheduledDeparture>
+    <ExpectedArrival>23:48:00</ExpectedArrival>
+    <ExpectedDeparture>23:48:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>NSJCT</LocationCode>
+    <LocationFullName>North Strand Junction</LocationFullName>
+    <LocationOrder>14</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:55:00</ScheduledArrival>
+    <ScheduledDeparture>23:55:00</ScheduledDeparture>
+    <ExpectedArrival>23:55:00</ExpectedArrival>
+    <ExpectedDeparture>23:55:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>OSSRY</LocationCode>
+    <LocationFullName />
+    <LocationOrder>15</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:56:30</ScheduledArrival>
+    <ScheduledDeparture>23:56:30</ScheduledDeparture>
+    <ExpectedArrival>23:56:30</ExpectedArrival>
+    <ExpectedDeparture>23:56:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P766 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CNLLY</LocationCode>
+    <LocationFullName>Dublin Connolly</LocationFullName>
+    <LocationOrder>16</LocationOrder>
+    <LocationType>D</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:59:00</ScheduledArrival>
+    <ScheduledDeparture>00:00:00</ScheduledDeparture>
+    <ExpectedArrival>23:59:00</ExpectedArrival>
+    <ExpectedDeparture>00:00:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+</ArrayOfObjTrainMovements>

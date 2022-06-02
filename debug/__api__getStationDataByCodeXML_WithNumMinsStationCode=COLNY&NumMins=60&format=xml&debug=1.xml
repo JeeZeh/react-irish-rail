@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfObjStationData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.irishrail.ie/realtime/">
+  <objStationData>
+    <Servertime>2022-06-02T22:26:28.387</Servertime>
+    <Traincode>A914 </Traincode>
+    <Stationfullname>Collooney</Stationfullname>
+    <Stationcode>COLNY</Stationcode>
+    <Querytime>22:26:28</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Dublin Connolly</Origin>
+    <Destination>Sligo</Destination>
+    <Origintime>19:17</Origintime>
+    <Destinationtime>22:33</Destinationtime>
+    <Status>En Route</Status>
+    <Lastlocation>Departed Boyle</Lastlocation>
+    <Duein>11</Duein>
+    <Late>17</Late>
+    <Exparrival>22:36</Exparrival>
+    <Expdepart>22:37</Expdepart>
+    <Scharrival>22:19</Scharrival>
+    <Schdepart>22:20</Schdepart>
+    <Direction>Northbound</Direction>
+    <Traintype>Train</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+</ArrayOfObjStationData>

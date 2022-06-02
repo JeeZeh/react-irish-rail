@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfObjTrainMovements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.irishrail.ie/realtime/">
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>MHIDE</LocationCode>
+    <LocationFullName>Malahide</LocationFullName>
+    <LocationOrder>1</LocationOrder>
+    <LocationType>O</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>00:00:00</ScheduledArrival>
+    <ScheduledDeparture>22:48:00</ScheduledDeparture>
+    <ExpectedArrival>00:00:00</ExpectedArrival>
+    <ExpectedDeparture>22:48:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>C</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>PMNCK</LocationCode>
+    <LocationFullName>Portmarnock</LocationFullName>
+    <LocationOrder>2</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>22:51:30</ScheduledArrival>
+    <ScheduledDeparture>22:52:00</ScheduledDeparture>
+    <ExpectedArrival>22:51:30</ExpectedArrival>
+    <ExpectedDeparture>22:52:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>N</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>GRGRD</LocationCode>
+    <LocationFullName>Clongriffin</LocationFullName>
+    <LocationOrder>3</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>22:54:00</ScheduledArrival>
+    <ScheduledDeparture>22:54:30</ScheduledDeparture>
+    <ExpectedArrival>22:54:00</ExpectedArrival>
+    <ExpectedDeparture>22:54:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>HWTHJ</LocationCode>
+    <LocationFullName>Howth Junction</LocationFullName>
+    <LocationOrder>4</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>22:57:00</ScheduledArrival>
+    <ScheduledDeparture>22:57:30</ScheduledDeparture>
+    <ExpectedArrival>22:57:00</ExpectedArrival>
+    <ExpectedDeparture>22:57:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>KBRCK</LocationCode>
+    <LocationFullName>Kilbarrack</LocationFullName>
+    <LocationOrder>5</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>22:59:00</ScheduledArrival>
+    <ScheduledDeparture>22:59:30</ScheduledDeparture>
+    <ExpectedArrival>22:59:00</ExpectedArrival>
+    <ExpectedDeparture>22:59:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>RAHNY</LocationCode>
+    <LocationFullName>Raheny</LocationFullName>
+    <LocationOrder>6</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:01:00</ScheduledArrival>
+    <ScheduledDeparture>23:01:30</ScheduledDeparture>
+    <ExpectedArrival>23:01:00</ExpectedArrival>
+    <ExpectedDeparture>23:01:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>HTOWN</LocationCode>
+    <LocationFullName>Harmonstown</LocationFullName>
+    <LocationOrder>7</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:03:00</ScheduledArrival>
+    <ScheduledDeparture>23:03:30</ScheduledDeparture>
+    <ExpectedArrival>23:03:00</ExpectedArrival>
+    <ExpectedDeparture>23:03:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>KLSTR</LocationCode>
+    <LocationFullName>Killester</LocationFullName>
+    <LocationOrder>8</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:05:00</ScheduledArrival>
+    <ScheduledDeparture>23:05:30</ScheduledDeparture>
+    <ExpectedArrival>23:05:00</ExpectedArrival>
+    <ExpectedDeparture>23:05:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CTARF</LocationCode>
+    <LocationFullName>Clontarf Road</LocationFullName>
+    <LocationOrder>9</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:08:00</ScheduledArrival>
+    <ScheduledDeparture>23:08:30</ScheduledDeparture>
+    <ExpectedArrival>23:08:00</ExpectedArrival>
+    <ExpectedDeparture>23:08:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>EWALL</LocationCode>
+    <LocationFullName />
+    <LocationOrder>10</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:09:30</ScheduledArrival>
+    <ScheduledDeparture>23:09:30</ScheduledDeparture>
+    <ExpectedArrival>23:09:30</ExpectedArrival>
+    <ExpectedDeparture>23:09:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>SUBJN</LocationCode>
+    <LocationFullName />
+    <LocationOrder>11</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:10:00</ScheduledArrival>
+    <ScheduledDeparture>23:10:00</ScheduledDeparture>
+    <ExpectedArrival>23:10:00</ExpectedArrival>
+    <ExpectedDeparture>23:10:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>DC336</LocationCode>
+    <LocationFullName />
+    <LocationOrder>12</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:10:30</ScheduledArrival>
+    <ScheduledDeparture>23:10:30</ScheduledDeparture>
+    <ExpectedArrival>23:10:30</ExpectedArrival>
+    <ExpectedDeparture>23:10:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CNLLY</LocationCode>
+    <LocationFullName>Dublin Connolly</LocationFullName>
+    <LocationOrder>13</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:13:00</ScheduledArrival>
+    <ScheduledDeparture>23:14:00</ScheduledDeparture>
+    <ExpectedArrival>23:13:00</ExpectedArrival>
+    <ExpectedDeparture>23:14:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>TARA</LocationCode>
+    <LocationFullName>Tara Street</LocationFullName>
+    <LocationOrder>14</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:16:30</ScheduledArrival>
+    <ScheduledDeparture>23:17:30</ScheduledDeparture>
+    <ExpectedArrival>23:16:30</ExpectedArrival>
+    <ExpectedDeparture>23:17:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>PERSE</LocationCode>
+    <LocationFullName>Dublin Pearse</LocationFullName>
+    <LocationOrder>15</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:18:30</ScheduledArrival>
+    <ScheduledDeparture>23:19:30</ScheduledDeparture>
+    <ExpectedArrival>23:18:30</ExpectedArrival>
+    <ExpectedDeparture>23:19:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>GCDK</LocationCode>
+    <LocationFullName>Grand Canal Dock</LocationFullName>
+    <LocationOrder>16</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:21:00</ScheduledArrival>
+    <ScheduledDeparture>23:22:00</ScheduledDeparture>
+    <ExpectedArrival>23:21:00</ExpectedArrival>
+    <ExpectedDeparture>23:22:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>LDWNE</LocationCode>
+    <LocationFullName>Lansdowne Road</LocationFullName>
+    <LocationOrder>17</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:23:30</ScheduledArrival>
+    <ScheduledDeparture>23:24:00</ScheduledDeparture>
+    <ExpectedArrival>23:23:30</ExpectedArrival>
+    <ExpectedDeparture>23:24:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>SMONT</LocationCode>
+    <LocationFullName>Sandymount</LocationFullName>
+    <LocationOrder>18</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:25:30</ScheduledArrival>
+    <ScheduledDeparture>23:26:00</ScheduledDeparture>
+    <ExpectedArrival>23:25:30</ExpectedArrival>
+    <ExpectedDeparture>23:26:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>SIDNY</LocationCode>
+    <LocationFullName>Sydney Parade</LocationFullName>
+    <LocationOrder>19</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:27:30</ScheduledArrival>
+    <ScheduledDeparture>23:28:00</ScheduledDeparture>
+    <ExpectedArrival>23:27:30</ExpectedArrival>
+    <ExpectedDeparture>23:28:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>BTSTN</LocationCode>
+    <LocationFullName>Booterstown</LocationFullName>
+    <LocationOrder>20</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:29:30</ScheduledArrival>
+    <ScheduledDeparture>23:30:00</ScheduledDeparture>
+    <ExpectedArrival>23:29:30</ExpectedArrival>
+    <ExpectedDeparture>23:30:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>BROCK</LocationCode>
+    <LocationFullName>Blackrock</LocationFullName>
+    <LocationOrder>21</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:31:30</ScheduledArrival>
+    <ScheduledDeparture>23:32:00</ScheduledDeparture>
+    <ExpectedArrival>23:31:30</ExpectedArrival>
+    <ExpectedDeparture>23:32:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>SEAPT</LocationCode>
+    <LocationFullName>Seapoint</LocationFullName>
+    <LocationOrder>22</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:33:30</ScheduledArrival>
+    <ScheduledDeparture>23:34:00</ScheduledDeparture>
+    <ExpectedArrival>23:33:30</ExpectedArrival>
+    <ExpectedDeparture>23:34:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>SHILL</LocationCode>
+    <LocationFullName>Salthill and Monkstown</LocationFullName>
+    <LocationOrder>23</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:35:30</ScheduledArrival>
+    <ScheduledDeparture>23:36:00</ScheduledDeparture>
+    <ExpectedArrival>23:35:30</ExpectedArrival>
+    <ExpectedDeparture>23:36:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>DLERY</LocationCode>
+    <LocationFullName>Dun Laoghaire</LocationFullName>
+    <LocationOrder>24</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:38:00</ScheduledArrival>
+    <ScheduledDeparture>23:38:30</ScheduledDeparture>
+    <ExpectedArrival>23:38:00</ExpectedArrival>
+    <ExpectedDeparture>23:38:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>SCOVE</LocationCode>
+    <LocationFullName>Sandycove</LocationFullName>
+    <LocationOrder>25</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:41:30</ScheduledArrival>
+    <ScheduledDeparture>23:42:00</ScheduledDeparture>
+    <ExpectedArrival>23:41:30</ExpectedArrival>
+    <ExpectedDeparture>23:42:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>GLGRY</LocationCode>
+    <LocationFullName>Glenageary</LocationFullName>
+    <LocationOrder>26</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:44:00</ScheduledArrival>
+    <ScheduledDeparture>23:44:30</ScheduledDeparture>
+    <ExpectedArrival>23:44:00</ExpectedArrival>
+    <ExpectedDeparture>23:44:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>DLKEY</LocationCode>
+    <LocationFullName>Dalkey</LocationFullName>
+    <LocationOrder>27</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:47:00</ScheduledArrival>
+    <ScheduledDeparture>23:47:30</ScheduledDeparture>
+    <ExpectedArrival>23:47:00</ExpectedArrival>
+    <ExpectedDeparture>23:47:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>KILNY</LocationCode>
+    <LocationFullName>Killiney</LocationFullName>
+    <LocationOrder>28</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:51:30</ScheduledArrival>
+    <ScheduledDeparture>23:52:00</ScheduledDeparture>
+    <ExpectedArrival>23:51:30</ExpectedArrival>
+    <ExpectedDeparture>23:52:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>SKILL</LocationCode>
+    <LocationFullName>Shankill</LocationFullName>
+    <LocationOrder>29</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>23:54:00</ScheduledArrival>
+    <ScheduledDeparture>23:54:30</ScheduledDeparture>
+    <ExpectedArrival>23:54:00</ExpectedArrival>
+    <ExpectedDeparture>23:54:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>E263 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>BRAY</LocationCode>
+    <LocationFullName>Bray</LocationFullName>
+    <LocationOrder>30</LocationOrder>
+    <LocationType>D</LocationType>
+    <TrainOrigin>Malahide</TrainOrigin>
+    <TrainDestination>Bray</TrainDestination>
+    <ScheduledArrival>00:00:00</ScheduledArrival>
+    <ScheduledDeparture>00:00:00</ScheduledDeparture>
+    <ExpectedArrival>00:00:00</ExpectedArrival>
+    <ExpectedDeparture>00:00:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+</ArrayOfObjTrainMovements>

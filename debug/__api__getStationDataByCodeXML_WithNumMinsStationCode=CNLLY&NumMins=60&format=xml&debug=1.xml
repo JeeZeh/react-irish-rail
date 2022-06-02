@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfObjStationData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.irishrail.ie/realtime/">
+  <objStationData>
+    <Servertime>2022-06-02T22:26:02</Servertime>
+    <Traincode>E846 </Traincode>
+    <Stationfullname>Dublin Connolly</Stationfullname>
+    <Stationcode>CNLLY</Stationcode>
+    <Querytime>22:26:02</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Greystones</Origin>
+    <Destination>Malahide</Destination>
+    <Origintime>21:34</Origintime>
+    <Destinationtime>23:00</Destinationtime>
+    <Status>En Route</Status>
+    <Lastlocation>Arrived Grand Canal Dock</Lastlocation>
+    <Duein>8</Duein>
+    <Late>1</Late>
+    <Exparrival>22:32</Exparrival>
+    <Expdepart>22:34</Expdepart>
+    <Scharrival>22:31</Scharrival>
+    <Schdepart>22:33</Schdepart>
+    <Direction>Northbound</Direction>
+    <Traintype>DART</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+  <objStationData>
+    <Servertime>2022-06-02T22:26:02</Servertime>
+    <Traincode>D828 </Traincode>
+    <Stationfullname>Dublin Connolly</Stationfullname>
+    <Stationcode>CNLLY</Stationcode>
+    <Querytime>22:26:02</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Dublin Pearse</Origin>
+    <Destination>Dundalk</Destination>
+    <Origintime>22:40</Origintime>
+    <Destinationtime>00:07</Destinationtime>
+    <Status>No Information</Status>
+    <Lastlocation />
+    <Duein>20</Duein>
+    <Late>0</Late>
+    <Exparrival>22:45</Exparrival>
+    <Expdepart>22:46</Expdepart>
+    <Scharrival>22:45</Scharrival>
+    <Schdepart>22:46</Schdepart>
+    <Direction>Northbound</Direction>
+    <Traintype>Train</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+  <objStationData>
+    <Servertime>2022-06-02T22:26:02</Servertime>
+    <Traincode>E947 </Traincode>
+    <Stationfullname>Dublin Connolly</Stationfullname>
+    <Stationcode>CNLLY</Stationcode>
+    <Querytime>22:26:02</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Bray</Origin>
+    <Destination>Howth</Destination>
+    <Origintime>22:00</Origintime>
+    <Destinationtime>23:15</Destinationtime>
+    <Status>En Route</Status>
+    <Lastlocation>Arrived Seapoint</Lastlocation>
+    <Duein>24</Duein>
+    <Late>1</Late>
+    <Exparrival>22:49</Exparrival>
+    <Expdepart>22:50</Expdepart>
+    <Scharrival>22:48</Scharrival>
+    <Schdepart>22:49</Schdepart>
+    <Direction>Northbound</Direction>
+    <Traintype>DART</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+  <objStationData>
+    <Servertime>2022-06-02T22:26:02</Servertime>
+    <Traincode>E847 </Traincode>
+    <Stationfullname>Dublin Connolly</Stationfullname>
+    <Stationcode>CNLLY</Stationcode>
+    <Querytime>22:26:02</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Greystones</Origin>
+    <Destination>Malahide</Destination>
+    <Origintime>22:04</Origintime>
+    <Destinationtime>23:30</Destinationtime>
+    <Status>En Route</Status>
+    <Lastlocation>Departed Killiney</Lastlocation>
+    <Duein>38</Duein>
+    <Late>1</Late>
+    <Exparrival>23:02</Exparrival>
+    <Expdepart>23:04</Expdepart>
+    <Scharrival>23:01</Scharrival>
+    <Schdepart>23:03</Schdepart>
+    <Direction>Northbound</Direction>
+    <Traintype>DART</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+  <objStationData>
+    <Servertime>2022-06-02T22:26:02</Servertime>
+    <Traincode>P422 </Traincode>
+    <Stationfullname>Dublin Connolly</Stationfullname>
+    <Stationcode>CNLLY</Stationcode>
+    <Querytime>22:26:02</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Hazelhatch</Origin>
+    <Destination>Grand Canal Dock</Destination>
+    <Origintime>22:35</Origintime>
+    <Destinationtime>23:18</Destinationtime>
+    <Status>No Information</Status>
+    <Lastlocation />
+    <Duein>43</Duein>
+    <Late>0</Late>
+    <Exparrival>23:08</Exparrival>
+    <Expdepart>23:09</Expdepart>
+    <Scharrival>23:08</Scharrival>
+    <Schdepart>23:09</Schdepart>
+    <Direction>Northbound</Direction>
+    <Traintype>Train</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+  <objStationData>
+    <Servertime>2022-06-02T22:26:02</Servertime>
+    <Traincode>E948 </Traincode>
+    <Stationfullname>Dublin Connolly</Stationfullname>
+    <Stationcode>CNLLY</Stationcode>
+    <Querytime>22:26:02</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Bray</Origin>
+    <Destination>Howth</Destination>
+    <Origintime>22:30</Origintime>
+    <Destinationtime>23:45</Destinationtime>
+    <Status>No Information</Status>
+    <Lastlocation />
+    <Duein>54</Duein>
+    <Late>0</Late>
+    <Exparrival>23:19</Exparrival>
+    <Expdepart>23:20</Expdepart>
+    <Scharrival>23:19</Scharrival>
+    <Schdepart>23:20</Schdepart>
+    <Direction>Northbound</Direction>
+    <Traintype>DART</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+  <objStationData>
+    <Servertime>2022-06-02T22:26:02</Servertime>
+    <Traincode>E133 </Traincode>
+    <Stationfullname>Dublin Connolly</Stationfullname>
+    <Stationcode>CNLLY</Stationcode>
+    <Querytime>22:26:02</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Howth</Origin>
+    <Destination>Greystones</Destination>
+    <Origintime>22:00</Origintime>
+    <Destinationtime>23:25</Destinationtime>
+    <Status>En Route</Status>
+    <Lastlocation>Departed Clontarf Road</Lastlocation>
+    <Duein>3</Duein>
+    <Late>3</Late>
+    <Exparrival>22:28</Exparrival>
+    <Expdepart>22:29</Expdepart>
+    <Scharrival>22:25</Scharrival>
+    <Schdepart>22:26</Schdepart>
+    <Direction>Southbound</Direction>
+    <Traintype>DART</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+  <objStationData>
+    <Servertime>2022-06-02T22:26:02</Servertime>
+    <Traincode>D423 </Traincode>
+    <Stationfullname>Dublin Connolly</Stationfullname>
+    <Stationcode>CNLLY</Stationcode>
+    <Querytime>22:26:02</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Grand Canal Dock</Origin>
+    <Destination>Hazelhatch</Destination>
+    <Origintime>22:30</Origintime>
+    <Destinationtime>23:16</Destinationtime>
+    <Status>No Information</Status>
+    <Lastlocation />
+    <Duein>13</Duein>
+    <Late>0</Late>
+    <Exparrival>22:38</Exparrival>
+    <Expdepart>22:39</Expdepart>
+    <Scharrival>22:38</Scharrival>
+    <Schdepart>22:39</Schdepart>
+    <Direction>Southbound</Direction>
+    <Traintype>Train</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+  <objStationData>
+    <Servertime>2022-06-02T22:26:02</Servertime>
+    <Traincode>E262 </Traincode>
+    <Stationfullname>Dublin Connolly</Stationfullname>
+    <Stationcode>CNLLY</Stationcode>
+    <Querytime>22:26:02</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Malahide</Origin>
+    <Destination>Bray</Destination>
+    <Origintime>22:15</Origintime>
+    <Destinationtime>23:30</Destinationtime>
+    <Status>En Route</Status>
+    <Lastlocation>Arrived Kilbarrack</Lastlocation>
+    <Duein>14</Duein>
+    <Late>-1</Late>
+    <Exparrival>22:39</Exparrival>
+    <Expdepart>22:40</Expdepart>
+    <Scharrival>22:40</Scharrival>
+    <Schdepart>22:41</Schdepart>
+    <Direction>Southbound</Direction>
+    <Traintype>DART</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+  <objStationData>
+    <Servertime>2022-06-02T22:26:02</Servertime>
+    <Traincode>P682 </Traincode>
+    <Stationfullname>Dublin Connolly</Stationfullname>
+    <Stationcode>CNLLY</Stationcode>
+    <Querytime>22:26:02</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Maynooth</Origin>
+    <Destination>Dublin Pearse</Destination>
+    <Origintime>22:08</Origintime>
+    <Destinationtime>22:58</Destinationtime>
+    <Status>En Route</Status>
+    <Lastlocation>Arrived Clonsilla</Lastlocation>
+    <Duein>27</Duein>
+    <Late>1</Late>
+    <Exparrival>22:52</Exparrival>
+    <Expdepart>22:53</Expdepart>
+    <Scharrival>22:51</Scharrival>
+    <Schdepart>22:52</Schdepart>
+    <Direction>Southbound</Direction>
+    <Traintype>Train</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+  <objStationData>
+    <Servertime>2022-06-02T22:26:02</Servertime>
+    <Traincode>E134 </Traincode>
+    <Stationfullname>Dublin Connolly</Stationfullname>
+    <Stationcode>CNLLY</Stationcode>
+    <Querytime>22:26:02</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Howth</Origin>
+    <Destination>Greystones</Destination>
+    <Origintime>22:30</Origintime>
+    <Destinationtime>23:55</Destinationtime>
+    <Status>No Information</Status>
+    <Lastlocation />
+    <Duein>30</Duein>
+    <Late>0</Late>
+    <Exparrival>22:55</Exparrival>
+    <Expdepart>22:56</Expdepart>
+    <Scharrival>22:55</Scharrival>
+    <Schdepart>22:56</Schdepart>
+    <Direction>Southbound</Direction>
+    <Traintype>DART</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+  <objStationData>
+    <Servertime>2022-06-02T22:26:02</Servertime>
+    <Traincode>P714 </Traincode>
+    <Stationfullname>Dublin Connolly</Stationfullname>
+    <Stationcode>CNLLY</Stationcode>
+    <Querytime>22:26:02</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Drogheda</Origin>
+    <Destination>Dublin Connolly</Destination>
+    <Origintime>22:05</Origintime>
+    <Destinationtime>23:01</Destinationtime>
+    <Status>En Route</Status>
+    <Lastlocation>Departed Balbriggan</Lastlocation>
+    <Duein>35</Duein>
+    <Late>0</Late>
+    <Exparrival>23:01</Exparrival>
+    <Expdepart>00:00</Expdepart>
+    <Scharrival>23:01</Scharrival>
+    <Schdepart>00:00</Schdepart>
+    <Direction>Southbound</Direction>
+    <Traintype>Train</Traintype>
+    <Locationtype>D</Locationtype>
+  </objStationData>
+  <objStationData>
+    <Servertime>2022-06-02T22:26:02</Servertime>
+    <Traincode>E263 </Traincode>
+    <Stationfullname>Dublin Connolly</Stationfullname>
+    <Stationcode>CNLLY</Stationcode>
+    <Querytime>22:26:02</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Malahide</Origin>
+    <Destination>Bray</Destination>
+    <Origintime>22:48</Origintime>
+    <Destinationtime>00:00</Destinationtime>
+    <Status>No Information</Status>
+    <Lastlocation />
+    <Duein>48</Duein>
+    <Late>0</Late>
+    <Exparrival>23:13</Exparrival>
+    <Expdepart>23:14</Expdepart>
+    <Scharrival>23:13</Scharrival>
+    <Schdepart>23:14</Schdepart>
+    <Direction>Southbound</Direction>
+    <Traintype>DART</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+</ArrayOfObjStationData>

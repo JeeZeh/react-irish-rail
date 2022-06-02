@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfObjTrainMovements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.irishrail.ie/realtime/">
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>MYNTH</LocationCode>
+    <LocationFullName>Maynooth</LocationFullName>
+    <LocationOrder>1</LocationOrder>
+    <LocationType>O</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>00:00:00</ScheduledArrival>
+    <ScheduledDeparture>22:08:00</ScheduledDeparture>
+    <ExpectedArrival>00:00:00</ExpectedArrival>
+    <ExpectedDeparture>22:08:00</ExpectedDeparture>
+    <Arrival>22:02:24</Arrival>
+    <Departure>22:09:18</Departure>
+    <AutoArrival>1</AutoArrival>
+    <AutoDepart>1</AutoDepart>
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>LXLSA</LocationCode>
+    <LocationFullName>Leixlip (Louisa Bridge)</LocationFullName>
+    <LocationOrder>2</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:14:30</ScheduledArrival>
+    <ScheduledDeparture>22:15:00</ScheduledDeparture>
+    <ExpectedArrival>22:15:48</ExpectedArrival>
+    <ExpectedDeparture>22:13:36</ExpectedDeparture>
+    <Arrival>22:13:06</Arrival>
+    <Departure>22:16:24</Departure>
+    <AutoArrival>1</AutoArrival>
+    <AutoDepart>1</AutoDepart>
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>LXCON</LocationCode>
+    <LocationFullName>Leixlip (Confey)</LocationFullName>
+    <LocationOrder>3</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:17:30</ScheduledArrival>
+    <ScheduledDeparture>22:18:00</ScheduledDeparture>
+    <ExpectedArrival>22:18:54</ExpectedArrival>
+    <ExpectedDeparture>22:17:42</ExpectedDeparture>
+    <Arrival>22:17:12</Arrival>
+    <Departure>22:20:54</Departure>
+    <AutoArrival>1</AutoArrival>
+    <AutoDepart>1</AutoDepart>
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CLSLJ</LocationCode>
+    <LocationFullName>Clonsilla Junction</LocationFullName>
+    <LocationOrder>4</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:21:30</ScheduledArrival>
+    <ScheduledDeparture>22:21:30</ScheduledDeparture>
+    <ExpectedArrival>22:24:24</ExpectedArrival>
+    <ExpectedDeparture>22:24:24</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CLSLA</LocationCode>
+    <LocationFullName>Clonsilla</LocationFullName>
+    <LocationOrder>5</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:22:30</ScheduledArrival>
+    <ScheduledDeparture>22:23:00</ScheduledDeparture>
+    <ExpectedArrival>22:25:24</ExpectedArrival>
+    <ExpectedDeparture>22:24:30</ExpectedDeparture>
+    <Arrival>22:24:00</Arrival>
+    <Departure />
+    <AutoArrival>1</AutoArrival>
+    <AutoDepart />
+    <StopType>C</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CMINE</LocationCode>
+    <LocationFullName>Coolmine</LocationFullName>
+    <LocationOrder>6</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:26:00</ScheduledArrival>
+    <ScheduledDeparture>22:26:30</ScheduledDeparture>
+    <ExpectedArrival>22:27:30</ExpectedArrival>
+    <ExpectedDeparture>22:28:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>N</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CNOCK</LocationCode>
+    <LocationFullName>Castleknock</LocationFullName>
+    <LocationOrder>7</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:28:30</ScheduledArrival>
+    <ScheduledDeparture>22:29:00</ScheduledDeparture>
+    <ExpectedArrival>22:30:00</ExpectedArrival>
+    <ExpectedDeparture>22:30:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>PHNPK</LocationCode>
+    <LocationFullName>Navan Road Parkway</LocationFullName>
+    <LocationOrder>8</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:31:30</ScheduledArrival>
+    <ScheduledDeparture>22:32:00</ScheduledDeparture>
+    <ExpectedArrival>22:33:00</ExpectedArrival>
+    <ExpectedDeparture>22:33:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>ASHTN</LocationCode>
+    <LocationFullName>Ashtown</LocationFullName>
+    <LocationOrder>9</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:34:00</ScheduledArrival>
+    <ScheduledDeparture>22:34:30</ScheduledDeparture>
+    <ExpectedArrival>22:35:30</ExpectedArrival>
+    <ExpectedDeparture>22:36:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>PELTN</LocationCode>
+    <LocationFullName>Pelletstown</LocationFullName>
+    <LocationOrder>10</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:36:30</ScheduledArrival>
+    <ScheduledDeparture>22:37:00</ScheduledDeparture>
+    <ExpectedArrival>22:38:00</ExpectedArrival>
+    <ExpectedDeparture>22:38:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>BBRDG</LocationCode>
+    <LocationFullName>Broombridge</LocationFullName>
+    <LocationOrder>11</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:39:00</ScheduledArrival>
+    <ScheduledDeparture>22:39:30</ScheduledDeparture>
+    <ExpectedArrival>22:40:30</ExpectedArrival>
+    <ExpectedDeparture>22:41:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>GLASJ</LocationCode>
+    <LocationFullName>Glasnevin Junction</LocationFullName>
+    <LocationOrder>12</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:43:00</ScheduledArrival>
+    <ScheduledDeparture>22:43:00</ScheduledDeparture>
+    <ExpectedArrival>22:44:30</ExpectedArrival>
+    <ExpectedDeparture>22:44:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>DCDRA</LocationCode>
+    <LocationFullName>Drumcondra</LocationFullName>
+    <LocationOrder>13</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:45:00</ScheduledArrival>
+    <ScheduledDeparture>22:45:30</ScheduledDeparture>
+    <ExpectedArrival>22:46:30</ExpectedArrival>
+    <ExpectedDeparture>22:47:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>NSJCT</LocationCode>
+    <LocationFullName>North Strand Junction</LocationFullName>
+    <LocationOrder>14</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:49:00</ScheduledArrival>
+    <ScheduledDeparture>22:49:00</ScheduledDeparture>
+    <ExpectedArrival>22:50:30</ExpectedArrival>
+    <ExpectedDeparture>22:50:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>OSSRY</LocationCode>
+    <LocationFullName />
+    <LocationOrder>15</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:49:30</ScheduledArrival>
+    <ScheduledDeparture>22:49:30</ScheduledDeparture>
+    <ExpectedArrival>22:51:00</ExpectedArrival>
+    <ExpectedDeparture>22:51:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CNLLY</LocationCode>
+    <LocationFullName>Dublin Connolly</LocationFullName>
+    <LocationOrder>16</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:51:00</ScheduledArrival>
+    <ScheduledDeparture>22:52:00</ScheduledDeparture>
+    <ExpectedArrival>22:52:30</ExpectedArrival>
+    <ExpectedDeparture>22:53:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>TARA</LocationCode>
+    <LocationFullName>Tara Street</LocationFullName>
+    <LocationOrder>17</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:55:00</ScheduledArrival>
+    <ScheduledDeparture>22:56:00</ScheduledDeparture>
+    <ExpectedArrival>22:56:30</ExpectedArrival>
+    <ExpectedDeparture>22:57:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P682 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>PERSE</LocationCode>
+    <LocationFullName>Dublin Pearse</LocationFullName>
+    <LocationOrder>18</LocationOrder>
+    <LocationType>D</LocationType>
+    <TrainOrigin>Maynooth</TrainOrigin>
+    <TrainDestination>Dublin Pearse</TrainDestination>
+    <ScheduledArrival>22:58:00</ScheduledArrival>
+    <ScheduledDeparture>00:00:00</ScheduledDeparture>
+    <ExpectedArrival>23:00:54</ExpectedArrival>
+    <ExpectedDeparture>00:00:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+</ArrayOfObjTrainMovements>

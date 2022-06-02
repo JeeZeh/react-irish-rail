@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfObjStationData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.irishrail.ie/realtime/">
+  <objStationData>
+    <Servertime>2022-06-02T22:26:21.387</Servertime>
+    <Traincode>D937 </Traincode>
+    <Stationfullname>Ashtown</Stationfullname>
+    <Stationcode>ASHTN</Stationcode>
+    <Querytime>22:26:21</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Dublin Pearse</Origin>
+    <Destination>Maynooth</Destination>
+    <Origintime>22:08</Origintime>
+    <Destinationtime>22:59</Destinationtime>
+    <Status>En Route</Status>
+    <Lastlocation>Arrived Pelletstown</Lastlocation>
+    <Duein>2</Duein>
+    <Late>-1</Late>
+    <Exparrival>22:28</Exparrival>
+    <Expdepart>22:28</Expdepart>
+    <Scharrival>22:29</Scharrival>
+    <Schdepart>22:29</Schdepart>
+    <Direction>Northbound</Direction>
+    <Traintype>Train</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+  <objStationData>
+    <Servertime>2022-06-02T22:26:21.387</Servertime>
+    <Traincode>P682 </Traincode>
+    <Stationfullname>Ashtown</Stationfullname>
+    <Stationcode>ASHTN</Stationcode>
+    <Querytime>22:26:21</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Maynooth</Origin>
+    <Destination>Dublin Pearse</Destination>
+    <Origintime>22:08</Origintime>
+    <Destinationtime>22:58</Destinationtime>
+    <Status>En Route</Status>
+    <Lastlocation>Departed Clonsilla</Lastlocation>
+    <Duein>11</Duein>
+    <Late>3</Late>
+    <Exparrival>22:36</Exparrival>
+    <Expdepart>22:37</Expdepart>
+    <Scharrival>22:34</Scharrival>
+    <Schdepart>22:34</Schdepart>
+    <Direction>Southbound</Direction>
+    <Traintype>Train</Traintype>
+    <Locationtype>S</Locationtype>
+  </objStationData>
+</ArrayOfObjStationData>

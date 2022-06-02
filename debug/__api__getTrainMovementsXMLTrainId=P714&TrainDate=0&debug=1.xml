@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfObjTrainMovements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.irishrail.ie/realtime/">
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>DGHDA</LocationCode>
+    <LocationFullName>Drogheda</LocationFullName>
+    <LocationOrder>1</LocationOrder>
+    <LocationType>O</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>00:00:00</ScheduledArrival>
+    <ScheduledDeparture>22:05:00</ScheduledDeparture>
+    <ExpectedArrival>00:00:00</ExpectedArrival>
+    <ExpectedDeparture>22:05:00</ExpectedDeparture>
+    <Arrival>00:00:00</Arrival>
+    <Departure>22:05:48</Departure>
+    <AutoArrival>1</AutoArrival>
+    <AutoDepart>1</AutoDepart>
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>LTOWN</LocationCode>
+    <LocationFullName>Laytown</LocationFullName>
+    <LocationOrder>2</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:11:00</ScheduledArrival>
+    <ScheduledDeparture>22:11:30</ScheduledDeparture>
+    <ExpectedArrival>22:11:48</ExpectedArrival>
+    <ExpectedDeparture>22:11:12</ExpectedDeparture>
+    <Arrival>22:10:42</Arrival>
+    <Departure>22:13:30</Departure>
+    <AutoArrival>1</AutoArrival>
+    <AutoDepart>1</AutoDepart>
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>MSNEY</LocationCode>
+    <LocationFullName>Mosney</LocationFullName>
+    <LocationOrder>3</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:14:00</ScheduledArrival>
+    <ScheduledDeparture>22:14:00</ScheduledDeparture>
+    <ExpectedArrival>22:16:00</ExpectedArrival>
+    <ExpectedDeparture>22:14:00</ExpectedDeparture>
+    <Arrival>22:14:00</Arrival>
+    <Departure>22:14:12</Departure>
+    <AutoArrival>1</AutoArrival>
+    <AutoDepart>1</AutoDepart>
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>GSTON</LocationCode>
+    <LocationFullName>Gormanston</LocationFullName>
+    <LocationOrder>4</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:16:30</ScheduledArrival>
+    <ScheduledDeparture>22:17:00</ScheduledDeparture>
+    <ExpectedArrival>22:16:42</ExpectedArrival>
+    <ExpectedDeparture>22:16:18</ExpectedDeparture>
+    <Arrival>22:15:48</Arrival>
+    <Departure>22:18:48</Departure>
+    <AutoArrival>1</AutoArrival>
+    <AutoDepart>1</AutoDepart>
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>BBRGN</LocationCode>
+    <LocationFullName>Balbriggan</LocationFullName>
+    <LocationOrder>5</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:20:30</ScheduledArrival>
+    <ScheduledDeparture>22:21:00</ScheduledDeparture>
+    <ExpectedArrival>22:22:18</ExpectedArrival>
+    <ExpectedDeparture>22:20:54</ExpectedDeparture>
+    <Arrival>22:20:24</Arrival>
+    <Departure>22:21:54</Departure>
+    <AutoArrival>1</AutoArrival>
+    <AutoDepart>1</AutoDepart>
+    <StopType>C</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>SKRES</LocationCode>
+    <LocationFullName>Skerries</LocationFullName>
+    <LocationOrder>6</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:26:30</ScheduledArrival>
+    <ScheduledDeparture>22:27:00</ScheduledDeparture>
+    <ExpectedArrival>22:27:24</ExpectedArrival>
+    <ExpectedDeparture>22:27:54</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>N</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>RLUSK</LocationCode>
+    <LocationFullName>Rush and Lusk</LocationFullName>
+    <LocationOrder>7</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:33:00</ScheduledArrival>
+    <ScheduledDeparture>22:33:30</ScheduledDeparture>
+    <ExpectedArrival>22:33:54</ExpectedArrival>
+    <ExpectedDeparture>22:34:24</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>DBATE</LocationCode>
+    <LocationFullName>Donabate</LocationFullName>
+    <LocationOrder>8</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:37:00</ScheduledArrival>
+    <ScheduledDeparture>22:37:30</ScheduledDeparture>
+    <ExpectedArrival>22:37:54</ExpectedArrival>
+    <ExpectedDeparture>22:38:24</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>MHIDE</LocationCode>
+    <LocationFullName>Malahide</LocationFullName>
+    <LocationOrder>9</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:41:30</ScheduledArrival>
+    <ScheduledDeparture>22:42:00</ScheduledDeparture>
+    <ExpectedArrival>22:42:24</ExpectedArrival>
+    <ExpectedDeparture>22:42:54</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>PMNCK</LocationCode>
+    <LocationFullName>Portmarnock</LocationFullName>
+    <LocationOrder>10</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:45:30</ScheduledArrival>
+    <ScheduledDeparture>22:45:30</ScheduledDeparture>
+    <ExpectedArrival>22:46:24</ExpectedArrival>
+    <ExpectedDeparture>22:46:24</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>GRGRD</LocationCode>
+    <LocationFullName>Clongriffin</LocationFullName>
+    <LocationOrder>11</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:47:00</ScheduledArrival>
+    <ScheduledDeparture>22:47:00</ScheduledDeparture>
+    <ExpectedArrival>22:47:54</ExpectedArrival>
+    <ExpectedDeparture>22:47:54</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>HWTHJ</LocationCode>
+    <LocationFullName>Howth Junction</LocationFullName>
+    <LocationOrder>12</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:48:00</ScheduledArrival>
+    <ScheduledDeparture>22:48:00</ScheduledDeparture>
+    <ExpectedArrival>22:48:54</ExpectedArrival>
+    <ExpectedDeparture>22:48:54</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>KBRCK</LocationCode>
+    <LocationFullName>Kilbarrack</LocationFullName>
+    <LocationOrder>13</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:48:30</ScheduledArrival>
+    <ScheduledDeparture>22:48:30</ScheduledDeparture>
+    <ExpectedArrival>22:49:24</ExpectedArrival>
+    <ExpectedDeparture>22:49:24</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>RAHNY</LocationCode>
+    <LocationFullName>Raheny</LocationFullName>
+    <LocationOrder>14</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:49:30</ScheduledArrival>
+    <ScheduledDeparture>22:49:30</ScheduledDeparture>
+    <ExpectedArrival>22:50:24</ExpectedArrival>
+    <ExpectedDeparture>22:50:24</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>HTOWN</LocationCode>
+    <LocationFullName>Harmonstown</LocationFullName>
+    <LocationOrder>15</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:51:30</ScheduledArrival>
+    <ScheduledDeparture>22:51:30</ScheduledDeparture>
+    <ExpectedArrival>22:52:24</ExpectedArrival>
+    <ExpectedDeparture>22:52:24</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>KLSTR</LocationCode>
+    <LocationFullName>Killester</LocationFullName>
+    <LocationOrder>16</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:53:30</ScheduledArrival>
+    <ScheduledDeparture>22:53:30</ScheduledDeparture>
+    <ExpectedArrival>22:54:24</ExpectedArrival>
+    <ExpectedDeparture>22:54:24</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CTARF</LocationCode>
+    <LocationFullName>Clontarf Road</LocationFullName>
+    <LocationOrder>17</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:56:00</ScheduledArrival>
+    <ScheduledDeparture>22:56:00</ScheduledDeparture>
+    <ExpectedArrival>22:56:54</ExpectedArrival>
+    <ExpectedDeparture>22:56:54</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>EWALL</LocationCode>
+    <LocationFullName />
+    <LocationOrder>18</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:57:30</ScheduledArrival>
+    <ScheduledDeparture>22:57:30</ScheduledDeparture>
+    <ExpectedArrival>22:58:24</ExpectedArrival>
+    <ExpectedDeparture>22:58:24</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>SUBJN</LocationCode>
+    <LocationFullName />
+    <LocationOrder>19</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>22:58:30</ScheduledArrival>
+    <ScheduledDeparture>22:58:30</ScheduledDeparture>
+    <ExpectedArrival>22:59:24</ExpectedArrival>
+    <ExpectedDeparture>22:59:24</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P714 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CNLLY</LocationCode>
+    <LocationFullName>Dublin Connolly</LocationFullName>
+    <LocationOrder>20</LocationOrder>
+    <LocationType>D</LocationType>
+    <TrainOrigin>Drogheda</TrainOrigin>
+    <TrainDestination>Dublin Connolly</TrainDestination>
+    <ScheduledArrival>23:01:00</ScheduledArrival>
+    <ScheduledDeparture>00:00:00</ScheduledDeparture>
+    <ExpectedArrival>23:01:54</ExpectedArrival>
+    <ExpectedDeparture>00:00:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+</ArrayOfObjTrainMovements>

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfObjTrainMovements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.irishrail.ie/realtime/">
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>HZLCH</LocationCode>
+    <LocationFullName>Hazelhatch</LocationFullName>
+    <LocationOrder>1</LocationOrder>
+    <LocationType>O</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>00:00:00</ScheduledArrival>
+    <ScheduledDeparture>22:35:00</ScheduledDeparture>
+    <ExpectedArrival>00:00:00</ExpectedArrival>
+    <ExpectedDeparture>22:35:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>C</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>ADMTN</LocationCode>
+    <LocationFullName>Adamstown</LocationFullName>
+    <LocationOrder>2</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>22:39:00</ScheduledArrival>
+    <ScheduledDeparture>22:40:00</ScheduledDeparture>
+    <ExpectedArrival>22:39:00</ExpectedArrival>
+    <ExpectedDeparture>22:40:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>N</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>KISHO</LocationCode>
+    <LocationFullName>Kishogue</LocationFullName>
+    <LocationOrder>3</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>22:42:00</ScheduledArrival>
+    <ScheduledDeparture>22:42:00</ScheduledDeparture>
+    <ExpectedArrival>22:42:00</ExpectedArrival>
+    <ExpectedDeparture>22:42:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CLDKN</LocationCode>
+    <LocationFullName>Clondalkin</LocationFullName>
+    <LocationOrder>4</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>22:43:30</ScheduledArrival>
+    <ScheduledDeparture>22:44:30</ScheduledDeparture>
+    <ExpectedArrival>22:43:30</ExpectedArrival>
+    <ExpectedDeparture>22:44:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CHORC</LocationCode>
+    <LocationFullName>Park West and Cherry Orchard</LocationFullName>
+    <LocationOrder>5</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>22:46:30</ScheduledArrival>
+    <ScheduledDeparture>22:47:30</ScheduledDeparture>
+    <ExpectedArrival>22:46:30</ExpectedArrival>
+    <ExpectedDeparture>22:47:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>HK106</LocationCode>
+    <LocationFullName>HK106</LocationFullName>
+    <LocationOrder>6</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>22:48:00</ScheduledArrival>
+    <ScheduledDeparture>22:48:00</ScheduledDeparture>
+    <ExpectedArrival>22:48:00</ExpectedArrival>
+    <ExpectedDeparture>22:48:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>ICORE</LocationCode>
+    <LocationFullName>Inchicore</LocationFullName>
+    <LocationOrder>7</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>22:50:30</ScheduledArrival>
+    <ScheduledDeparture>22:50:30</ScheduledDeparture>
+    <ExpectedArrival>22:50:30</ExpectedArrival>
+    <ExpectedDeparture>22:50:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>IBJCT</LocationCode>
+    <LocationFullName>Islandbridge Junction</LocationFullName>
+    <LocationOrder>8</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>22:53:00</ScheduledArrival>
+    <ScheduledDeparture>22:53:00</ScheduledDeparture>
+    <ExpectedArrival>22:53:00</ExpectedArrival>
+    <ExpectedDeparture>22:53:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>HSTNW</LocationCode>
+    <LocationFullName />
+    <LocationOrder>9</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>22:54:30</ScheduledArrival>
+    <ScheduledDeparture>22:54:30</ScheduledDeparture>
+    <ExpectedArrival>22:54:30</ExpectedArrival>
+    <ExpectedDeparture>22:54:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CW22</LocationCode>
+    <LocationFullName />
+    <LocationOrder>10</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>22:57:30</ScheduledArrival>
+    <ScheduledDeparture>22:57:30</ScheduledDeparture>
+    <ExpectedArrival>22:57:30</ExpectedArrival>
+    <ExpectedDeparture>22:57:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>GLASJ</LocationCode>
+    <LocationFullName>Glasnevin Junction</LocationFullName>
+    <LocationOrder>11</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>23:01:00</ScheduledArrival>
+    <ScheduledDeparture>23:01:00</ScheduledDeparture>
+    <ExpectedArrival>23:01:00</ExpectedArrival>
+    <ExpectedDeparture>23:01:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>DCDRA</LocationCode>
+    <LocationFullName>Drumcondra</LocationFullName>
+    <LocationOrder>12</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>23:03:00</ScheduledArrival>
+    <ScheduledDeparture>23:04:00</ScheduledDeparture>
+    <ExpectedArrival>23:03:00</ExpectedArrival>
+    <ExpectedDeparture>23:04:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>NSJCT</LocationCode>
+    <LocationFullName>North Strand Junction</LocationFullName>
+    <LocationOrder>13</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>23:06:30</ScheduledArrival>
+    <ScheduledDeparture>23:06:30</ScheduledDeparture>
+    <ExpectedArrival>23:06:30</ExpectedArrival>
+    <ExpectedDeparture>23:06:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>OSSRY</LocationCode>
+    <LocationFullName />
+    <LocationOrder>14</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>23:07:30</ScheduledArrival>
+    <ScheduledDeparture>23:07:30</ScheduledDeparture>
+    <ExpectedArrival>23:07:30</ExpectedArrival>
+    <ExpectedDeparture>23:07:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CNLLY</LocationCode>
+    <LocationFullName>Dublin Connolly</LocationFullName>
+    <LocationOrder>15</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>23:08:30</ScheduledArrival>
+    <ScheduledDeparture>23:09:30</ScheduledDeparture>
+    <ExpectedArrival>23:08:30</ExpectedArrival>
+    <ExpectedDeparture>23:09:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>TARA</LocationCode>
+    <LocationFullName>Tara Street</LocationFullName>
+    <LocationOrder>16</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>23:12:00</ScheduledArrival>
+    <ScheduledDeparture>23:13:00</ScheduledDeparture>
+    <ExpectedArrival>23:12:00</ExpectedArrival>
+    <ExpectedDeparture>23:13:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>PERSE</LocationCode>
+    <LocationFullName>Dublin Pearse</LocationFullName>
+    <LocationOrder>17</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>23:14:30</ScheduledArrival>
+    <ScheduledDeparture>23:15:30</ScheduledDeparture>
+    <ExpectedArrival>23:14:30</ExpectedArrival>
+    <ExpectedDeparture>23:15:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>P422 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>GCDK</LocationCode>
+    <LocationFullName>Grand Canal Dock</LocationFullName>
+    <LocationOrder>18</LocationOrder>
+    <LocationType>D</LocationType>
+    <TrainOrigin>Hazelhatch</TrainOrigin>
+    <TrainDestination>Grand Canal Dock</TrainDestination>
+    <ScheduledArrival>23:18:00</ScheduledArrival>
+    <ScheduledDeparture>00:00:00</ScheduledDeparture>
+    <ExpectedArrival>23:18:00</ExpectedArrival>
+    <ExpectedDeparture>00:00:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+</ArrayOfObjTrainMovements>

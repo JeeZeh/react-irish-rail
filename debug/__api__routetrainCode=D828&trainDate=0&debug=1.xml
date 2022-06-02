@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfObjTrainMovements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.irishrail.ie/realtime/">
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>PERSE</LocationCode>
+    <LocationFullName>Dublin Pearse</LocationFullName>
+    <LocationOrder>1</LocationOrder>
+    <LocationType>O</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>00:00:00</ScheduledArrival>
+    <ScheduledDeparture>22:40:00</ScheduledDeparture>
+    <ExpectedArrival>00:00:00</ExpectedArrival>
+    <ExpectedDeparture>22:40:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>C</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>TARA</LocationCode>
+    <LocationFullName>Tara Street</LocationFullName>
+    <LocationOrder>2</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>22:41:30</ScheduledArrival>
+    <ScheduledDeparture>22:42:30</ScheduledDeparture>
+    <ExpectedArrival>22:41:30</ExpectedArrival>
+    <ExpectedDeparture>22:42:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>N</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CNLLY</LocationCode>
+    <LocationFullName>Dublin Connolly</LocationFullName>
+    <LocationOrder>3</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>22:45:30</ScheduledArrival>
+    <ScheduledDeparture>22:46:30</ScheduledDeparture>
+    <ExpectedArrival>22:45:30</ExpectedArrival>
+    <ExpectedDeparture>22:46:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>OSSRY</LocationCode>
+    <LocationFullName />
+    <LocationOrder>4</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>22:47:00</ScheduledArrival>
+    <ScheduledDeparture>22:47:00</ScheduledDeparture>
+    <ExpectedArrival>22:47:00</ExpectedArrival>
+    <ExpectedDeparture>22:47:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>SUBJN</LocationCode>
+    <LocationFullName />
+    <LocationOrder>5</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>22:47:30</ScheduledArrival>
+    <ScheduledDeparture>22:47:30</ScheduledDeparture>
+    <ExpectedArrival>22:47:30</ExpectedArrival>
+    <ExpectedDeparture>22:47:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>EWALL</LocationCode>
+    <LocationFullName />
+    <LocationOrder>6</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>22:48:30</ScheduledArrival>
+    <ScheduledDeparture>22:48:30</ScheduledDeparture>
+    <ExpectedArrival>22:48:30</ExpectedArrival>
+    <ExpectedDeparture>22:48:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>CTARF</LocationCode>
+    <LocationFullName>Clontarf Road</LocationFullName>
+    <LocationOrder>7</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>22:51:00</ScheduledArrival>
+    <ScheduledDeparture>22:51:00</ScheduledDeparture>
+    <ExpectedArrival>22:51:00</ExpectedArrival>
+    <ExpectedDeparture>22:51:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>KLSTR</LocationCode>
+    <LocationFullName>Killester</LocationFullName>
+    <LocationOrder>8</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>22:53:00</ScheduledArrival>
+    <ScheduledDeparture>22:53:00</ScheduledDeparture>
+    <ExpectedArrival>22:53:00</ExpectedArrival>
+    <ExpectedDeparture>22:53:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>HTOWN</LocationCode>
+    <LocationFullName>Harmonstown</LocationFullName>
+    <LocationOrder>9</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>22:54:00</ScheduledArrival>
+    <ScheduledDeparture>22:54:00</ScheduledDeparture>
+    <ExpectedArrival>22:54:00</ExpectedArrival>
+    <ExpectedDeparture>22:54:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>RAHNY</LocationCode>
+    <LocationFullName>Raheny</LocationFullName>
+    <LocationOrder>10</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>22:55:00</ScheduledArrival>
+    <ScheduledDeparture>22:55:00</ScheduledDeparture>
+    <ExpectedArrival>22:55:00</ExpectedArrival>
+    <ExpectedDeparture>22:55:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>KBRCK</LocationCode>
+    <LocationFullName>Kilbarrack</LocationFullName>
+    <LocationOrder>11</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>22:56:00</ScheduledArrival>
+    <ScheduledDeparture>22:56:00</ScheduledDeparture>
+    <ExpectedArrival>22:56:00</ExpectedArrival>
+    <ExpectedDeparture>22:56:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>HWTHJ</LocationCode>
+    <LocationFullName>Howth Junction</LocationFullName>
+    <LocationOrder>12</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>22:57:30</ScheduledArrival>
+    <ScheduledDeparture>22:57:30</ScheduledDeparture>
+    <ExpectedArrival>22:57:30</ExpectedArrival>
+    <ExpectedDeparture>22:57:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>GRGRD</LocationCode>
+    <LocationFullName>Clongriffin</LocationFullName>
+    <LocationOrder>13</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>22:59:00</ScheduledArrival>
+    <ScheduledDeparture>22:59:00</ScheduledDeparture>
+    <ExpectedArrival>22:59:00</ExpectedArrival>
+    <ExpectedDeparture>22:59:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>PMNCK</LocationCode>
+    <LocationFullName>Portmarnock</LocationFullName>
+    <LocationOrder>14</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>23:00:00</ScheduledArrival>
+    <ScheduledDeparture>23:00:00</ScheduledDeparture>
+    <ExpectedArrival>23:00:00</ExpectedArrival>
+    <ExpectedDeparture>23:00:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>MHIDE</LocationCode>
+    <LocationFullName>Malahide</LocationFullName>
+    <LocationOrder>15</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>23:04:00</ScheduledArrival>
+    <ScheduledDeparture>23:04:30</ScheduledDeparture>
+    <ExpectedArrival>23:04:00</ExpectedArrival>
+    <ExpectedDeparture>23:04:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>DBATE</LocationCode>
+    <LocationFullName>Donabate</LocationFullName>
+    <LocationOrder>16</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>23:08:30</ScheduledArrival>
+    <ScheduledDeparture>23:09:00</ScheduledDeparture>
+    <ExpectedArrival>23:08:30</ExpectedArrival>
+    <ExpectedDeparture>23:09:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>RLUSK</LocationCode>
+    <LocationFullName>Rush and Lusk</LocationFullName>
+    <LocationOrder>17</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>23:13:00</ScheduledArrival>
+    <ScheduledDeparture>23:13:30</ScheduledDeparture>
+    <ExpectedArrival>23:13:00</ExpectedArrival>
+    <ExpectedDeparture>23:13:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>SKRES</LocationCode>
+    <LocationFullName>Skerries</LocationFullName>
+    <LocationOrder>18</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>23:18:30</ScheduledArrival>
+    <ScheduledDeparture>23:19:00</ScheduledDeparture>
+    <ExpectedArrival>23:18:30</ExpectedArrival>
+    <ExpectedDeparture>23:19:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>BBRGN</LocationCode>
+    <LocationFullName>Balbriggan</LocationFullName>
+    <LocationOrder>19</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>23:24:00</ScheduledArrival>
+    <ScheduledDeparture>23:24:30</ScheduledDeparture>
+    <ExpectedArrival>23:24:00</ExpectedArrival>
+    <ExpectedDeparture>23:24:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>GSTON</LocationCode>
+    <LocationFullName>Gormanston</LocationFullName>
+    <LocationOrder>20</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>23:28:30</ScheduledArrival>
+    <ScheduledDeparture>23:29:00</ScheduledDeparture>
+    <ExpectedArrival>23:28:30</ExpectedArrival>
+    <ExpectedDeparture>23:29:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>MSNEY</LocationCode>
+    <LocationFullName>Mosney</LocationFullName>
+    <LocationOrder>21</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>23:31:30</ScheduledArrival>
+    <ScheduledDeparture>23:31:30</ScheduledDeparture>
+    <ExpectedArrival>23:31:30</ExpectedArrival>
+    <ExpectedDeparture>23:31:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>LTOWN</LocationCode>
+    <LocationFullName>Laytown</LocationFullName>
+    <LocationOrder>22</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>23:33:30</ScheduledArrival>
+    <ScheduledDeparture>23:34:00</ScheduledDeparture>
+    <ExpectedArrival>23:33:30</ExpectedArrival>
+    <ExpectedDeparture>23:34:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>DGHDA</LocationCode>
+    <LocationFullName>Drogheda</LocationFullName>
+    <LocationOrder>23</LocationOrder>
+    <LocationType>S</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>23:42:00</ScheduledArrival>
+    <ScheduledDeparture>23:43:00</ScheduledDeparture>
+    <ExpectedArrival>23:42:00</ExpectedArrival>
+    <ExpectedDeparture>23:43:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>DA287</LocationCode>
+    <LocationFullName />
+    <LocationOrder>24</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>23:45:00</ScheduledArrival>
+    <ScheduledDeparture>23:45:00</ScheduledDeparture>
+    <ExpectedArrival>23:45:00</ExpectedArrival>
+    <ExpectedDeparture>23:45:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>DA284</LocationCode>
+    <LocationFullName />
+    <LocationOrder>25</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>23:51:30</ScheduledArrival>
+    <ScheduledDeparture>23:51:30</ScheduledDeparture>
+    <ExpectedArrival>23:51:30</ExpectedArrival>
+    <ExpectedDeparture>23:51:30</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>DD282</LocationCode>
+    <LocationFullName />
+    <LocationOrder>26</LocationOrder>
+    <LocationType>T</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>23:57:00</ScheduledArrival>
+    <ScheduledDeparture>23:57:00</ScheduledDeparture>
+    <ExpectedArrival>23:57:00</ExpectedArrival>
+    <ExpectedDeparture>23:57:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+  <objTrainMovements>
+    <TrainCode>D828 </TrainCode>
+    <TrainDate>02 Jun 2022</TrainDate>
+    <LocationCode>DDALK</LocationCode>
+    <LocationFullName>Dundalk</LocationFullName>
+    <LocationOrder>27</LocationOrder>
+    <LocationType>D</LocationType>
+    <TrainOrigin>Dublin Pearse</TrainOrigin>
+    <TrainDestination>Dundalk</TrainDestination>
+    <ScheduledArrival>00:07:00</ScheduledArrival>
+    <ScheduledDeparture>00:00:00</ScheduledDeparture>
+    <ExpectedArrival>00:07:00</ExpectedArrival>
+    <ExpectedDeparture>00:00:00</ExpectedDeparture>
+    <Arrival />
+    <Departure />
+    <AutoArrival />
+    <AutoDepart />
+    <StopType>-</StopType>
+  </objTrainMovements>
+</ArrayOfObjTrainMovements>

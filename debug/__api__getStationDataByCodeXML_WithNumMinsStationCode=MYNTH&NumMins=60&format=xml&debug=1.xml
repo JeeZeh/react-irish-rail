@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfObjStationData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.irishrail.ie/realtime/">
+  <objStationData>
+    <Servertime>2022-06-02T22:26:03.09</Servertime>
+    <Traincode>D937 </Traincode>
+    <Stationfullname>Maynooth</Stationfullname>
+    <Stationcode>MYNTH</Stationcode>
+    <Querytime>22:26:03</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Dublin Pearse</Origin>
+    <Destination>Maynooth</Destination>
+    <Origintime>22:08</Origintime>
+    <Destinationtime>22:59</Destinationtime>
+    <Status>En Route</Status>
+    <Lastlocation>Departed Broombridge</Lastlocation>
+    <Duein>33</Duein>
+    <Late>0</Late>
+    <Exparrival>22:59</Exparrival>
+    <Expdepart>00:00</Expdepart>
+    <Scharrival>22:59</Scharrival>
+    <Schdepart>00:00</Schdepart>
+    <Direction>Northbound</Direction>
+    <Traintype>Train</Traintype>
+    <Locationtype>D</Locationtype>
+  </objStationData>
+  <objStationData>
+    <Servertime>2022-06-02T22:26:03.09</Servertime>
+    <Traincode>P766 </Traincode>
+    <Stationfullname>Maynooth</Stationfullname>
+    <Stationcode>MYNTH</Stationcode>
+    <Querytime>22:26:03</Querytime>
+    <Traindate>02 Jun 2022</Traindate>
+    <Origin>Maynooth</Origin>
+    <Destination>Dublin Connolly</Destination>
+    <Origintime>23:10</Origintime>
+    <Destinationtime>23:59</Destinationtime>
+    <Status>No Information</Status>
+    <Lastlocation />
+    <Duein>44</Duein>
+    <Late>0</Late>
+    <Exparrival>00:00</Exparrival>
+    <Expdepart>23:10</Expdepart>
+    <Scharrival>00:00</Scharrival>
+    <Schdepart>23:10</Schdepart>
+    <Direction>Southbound</Direction>
+    <Traintype>Train</Traintype>
+    <Locationtype>O</Locationtype>
+  </objStationData>
+</ArrayOfObjStationData>
