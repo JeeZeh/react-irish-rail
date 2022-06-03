@@ -1,19 +1,10 @@
-import React from "react"
+import React from "react";
 import styled from "styled-components";
 import { IMovement, ITrain } from "../api/IrishRailApi";
 import "moment/locale/en-ie";
 import { useWindowSize } from "../hooks/useWindowSize";
 import moment from "moment";
 moment.locale("en-ie");
-
-interface JourneyStopProps {
-  station: IMovement;
-  stopNumber: number;
-  trainPosition: number;
-  journeyLength: number;
-  train: ITrain;
-  forceShowTime?: boolean;
-}
 
 export const Dot = styled.div<{ isPortable?: boolean }>`
   height: 10px;
@@ -145,99 +136,136 @@ export const smallify = (name: string, lite?: boolean): string => {
   return name;
 };
 
-export const JourneyStop = (props: JourneyStopProps) => {
-  const {
-    station,
+/**
+ * Retrieve the time to be displayed with the station on the journey map, formatted HH:MM.
+ * Time returned depenends on the status of the train, i.e. if arrived show scheduled departure, etc.
+ */
+const getTime = ({
+  movement,
+  stopNumber,
+  trainPosition,
+}: Pick<
+  JourneyStopProps,
+  "movement" | "stopNumber" | "trainPosition"
+>): string => {
+  if (!movement.ExpectedArrival) {
+    console.log(movement.LocationFullName, movement);
+  }
+
+  // Train left
+  if (movement.Departure) {
+    return movement.Departure.format("HH:mm");
+  }
+
+  // Train arrived at the station. If it's the destination, return the arrival time... it's not going anywhere
+  if (movement.Arrival && movement.LocationType === "D") {
+    return movement.Arrival.format("HH:mm");
+  }
+
+  // If we're stopped at a station, or if it's the origin (O or index 1) station, show the expected departure
+  if (
+    stopNumber === trainPosition ||
+    movement.LocationType === "O" ||
+    movement.LocationOrder == 1
+  ) {
+    return movement.ExpectedDeparture.format("HH:mm");
+  }
+
+  // Otherwise we haven't yet arrived at this station, return the expected arrival time
+  if (movement.ExpectedArrival) {
+    return movement.ExpectedArrival.format("HH:mm");
+  }
+
+  // Base case if all else fails
+  return "??:??";
+};
+
+/**
+ * Generates the classes needed to style a the current JourneyStop on the train map.
+ */
+const getStationStyleClasses = (
+  {
+    movement,
     stopNumber,
     journeyLength,
     trainPosition,
     forceShowTime,
     train,
-  } = props;
+  }: JourneyStopProps,
+  time: string
+) => {
+  const classNames =
+    [
+      0,
+      journeyLength - 1,
+      trainPosition - 1,
+      trainPosition + 1,
+      trainPosition,
+    ].includes(stopNumber) || forceShowTime
+      ? ["show-time"]
+      : [];
 
+  if (stopNumber < trainPosition) {
+    classNames.push("departed");
+  } else if (stopNumber == trainPosition) {
+    classNames.push(movement.Arrival ? "arrived" : "approaching");
+  } else {
+    classNames.push("future");
+  }
+
+  if (
+    !movement.Arrival &&
+    movement.LocationFullName == train.Stationfullname &&
+    movement.ScheduledArrival &&
+    movement.ExpectedArrival
+  ) {
+    classNames.push("relevant");
+    classNames.push("show-time");
+    const diff = movement.ExpectedArrival.diff(
+      movement.ScheduledArrival,
+      "minutes"
+    );
+
+    let unaccountedDelay = 0;
+
+    // Only check the unaccounted delay if it's the next station
+    if (trainPosition !== -1 && trainPosition + 1 == movement.LocationOrder) {
+      unaccountedDelay = moment(train.Querytime, "HH:mm:SS").diff(
+        movement.ExpectedArrival,
+        "minutes"
+      );
+    }
+
+    if (movement.ScheduledArrival && (diff > 2 || unaccountedDelay > 2)) {
+      classNames.push("delayed");
+      time = `${time} (${movement.ScheduledArrival.format("HH:mm")})`;
+    } else if (diff < -2) {
+      classNames.push("early");
+      time = `${time} (${movement.ScheduledArrival.format("HH:mm")})`;
+    }
+  }
+
+  return classNames.join(" ");
+};
+
+interface JourneyStopProps {
+  movement: IMovement;
+  stopNumber: number;
+  trainPosition: number;
+  journeyLength: number;
+  train: ITrain;
+  forceShowTime?: boolean;
+}
+
+export const JourneyStop = (props: JourneyStopProps) => {
+  const { movement } = props;
   const isPortable = useWindowSize().width <= 1000;
 
   let time: string | React.ReactElement = "";
   let classes = "";
 
-  const getTime = (): string => {
-    if (station.Departure) {
-      return station.Departure.format("HH:mm");
-    }
-    if (station.Arrival) {
-      if (station.LocationType === "D") {
-        return station.Arrival.format("HH:mm");
-      } else if (stopNumber === trainPosition) {
-        return station.ExpectedDeparture.format("HH:mm");
-      }
-    }
-
-    if (station.LocationType === "O") {
-      return station.ExpectedDeparture.format("HH:mm");
-    }
-
-    return station.ExpectedArrival.format("HH:mm");
-  };
-
-  const getClasses = () => {
-    const classNames =
-      [
-        0,
-        journeyLength - 1,
-        trainPosition - 1,
-        trainPosition + 1,
-        trainPosition,
-      ].includes(stopNumber) || forceShowTime
-        ? ["show-time"]
-        : [];
-
-    if (stopNumber < trainPosition) {
-      classNames.push("departed");
-    } else if (stopNumber == trainPosition) {
-      classNames.push(station.Arrival ? "arrived" : "approaching");
-    } else {
-      classNames.push("future");
-    }
-
-    if (
-      !station.Arrival &&
-      station.LocationFullName == train.Stationfullname &&
-      station.ScheduledArrival &&
-      station.ExpectedArrival
-    ) {
-      classNames.push("relevant");
-      classNames.push("show-time");
-      const diff = station.ExpectedArrival.diff(
-        station.ScheduledArrival,
-        "minutes"
-      );
-
-      let unaccountedDelay = 0;
-
-      // Only check the unaccounted delay if it's the next station
-      if (trainPosition !== -1 && trainPosition + 1 == station.LocationOrder) {
-        unaccountedDelay = moment(train.Querytime, "HH:mm:SS").diff(
-          station.ExpectedArrival,
-          "minutes"
-        );
-      }
-
-      if (station.ScheduledArrival && (diff > 2 || unaccountedDelay > 2)) {
-        classNames.push("delayed");
-        time = `${time} (${station.ScheduledArrival.format("HH:mm")})`;
-      } else if (diff < -2) {
-        classNames.push("early");
-        time = `${time} (${station.ScheduledArrival.format("HH:mm")})`;
-      }
-    }
-
-    return classNames.join(" ");
-  };
-
-  time = getTime();
-  classes = getClasses();
-
-  console.log(station);
+  time = getTime(props);
+  classes = getStationStyleClasses(props, time);
 
   return (
     <StationDiv className={classes} isPortable={isPortable}>
@@ -245,7 +273,7 @@ export const JourneyStop = (props: JourneyStopProps) => {
         {classes.includes("early") || classes.includes("delayed") ? "!" : null}
       </Dot>
       <Name className={classes} isPortable={isPortable}>
-        {smallify(station.LocationFullName)}
+        {smallify(movement.LocationFullName)}
       </Name>
       <Time className={classes} isPortable={isPortable}>
         {time}

@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import moment from "moment";
@@ -180,7 +180,7 @@ export const JourneyMap = (props: JoruneyMapProps) => {
   const renderStops = (journey: IJourney) => {
     return journey.stops.map((stop, i) => (
       <JourneyStop
-        station={stop}
+        movement={stop}
         stopNumber={i}
         trainPosition={journey.trainPosition}
         journeyLength={journey.stops.length}
