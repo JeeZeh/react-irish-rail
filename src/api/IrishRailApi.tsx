@@ -41,10 +41,17 @@ export default class IrishRailApi {
     const parsedXml = parser.parse(xml, IrishRailApi.XML_OPTIONS);
     if (!parsedXml || !parsedXml.ArrayOfObjStationData) return [];
 
-    if (Array.isArray(parsedXml.ArrayOfObjStationData)) {
-      return parsedXml.ArrayOfObjStationData[0].objStationData;
+    let arrayOfObjStationData = parsedXml.ArrayOfObjStationData;
+
+    let objStationData = Array.isArray(arrayOfObjStationData)
+      ? arrayOfObjStationData[0].objStationData
+      : arrayOfObjStationData.objStationData;
+
+    // If the parsed response has one entry, it is not parsed as an array so we must wrap it.
+    if (Array.isArray(objStationData)) {
+      return objStationData;
     }
-    return parsedXml.ArrayOfObjStationData.objStationData;
+    return [objStationData];
   }
 
   private static parseXmlAllStations(xml: string): IStation[] {
@@ -64,7 +71,8 @@ export default class IrishRailApi {
     const parsedXml = parser.parse(xml, IrishRailApi.XML_OPTIONS);
 
     if (Array.isArray(parsedXml.ArrayOfObjTrainMovements.objTrainMovements)) {
-      let movements: IMovement[] = parsedXml.ArrayOfObjTrainMovements.objTrainMovements;
+      let movements: IMovement[] =
+        parsedXml.ArrayOfObjTrainMovements.objTrainMovements;
 
       movements = movements
         .filter((loc) => loc.LocationType !== "T")
@@ -175,7 +183,9 @@ export default class IrishRailApi {
   public static getRouteInfo(train: ITrain): Promise<IRoute> {
     if (!train && !train.Traincode) return null;
     return new Promise(async (resolve, reject) => {
-      const localRouteCacheEntry = IrishRailApi.localRouteCache.get(train.Traincode);
+      const localRouteCacheEntry = IrishRailApi.localRouteCache.get(
+        train.Traincode
+      );
 
       if (localRouteCacheEntry) {
         resolve(localRouteCacheEntry);
