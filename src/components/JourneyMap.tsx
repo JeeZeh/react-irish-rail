@@ -33,7 +33,6 @@ export const Fade = styled.div<{
   display: block;
   width: ${(p) => (p.side === "bottom" || p.side === "top" ? "100%" : p.size)};
   height: ${(p) => (p.side === "bottom" || p.side === "top" ? p.size : "100%")};
-  z-index: 1;
   pointer-events: none;
   overflow: hidden;
   background-image: linear-gradient(
@@ -203,12 +202,6 @@ export const JourneyMap = (props: JoruneyMapProps) => {
               <JourneyInfo journey={journey} train={train} />
             </InfoWrapper>
           )}
-          <Fade
-            side={isPortable ? "top" : "left"}
-            size={`${itemSize / 3}px`}
-            offset={isPortable ? `${scrollerMargin}px` : "0px"}
-            backgroundColor={backgroundColor}
-          />
           <Map
             isPortable={isPortable}
             center={journey.stops.length < 10 && isPortable}
@@ -218,6 +211,12 @@ export const JourneyMap = (props: JoruneyMapProps) => {
           >
             {renderStops(journey)}
           </Map>
+          <Fade
+            side={isPortable ? "top" : "left"}
+            size={`${itemSize / 3}px`}
+            offset={isPortable ? `${scrollerMargin}px` : "0px"}
+            backgroundColor={backgroundColor}
+          />
           <Fade
             side={isPortable ? "bottom" : "right"}
             size={`${itemSize / 3}px`}
