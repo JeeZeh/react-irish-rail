@@ -80,7 +80,7 @@
     "he": "^1.2.0",
     "http-proxy-middleware": "^2.0.6",
     "memory-cache": "^0.2.0",
-    "moment": "^2.29.3",
+    "moment": "^2.29.4",
     "moment-locales-webpack-plugin": "^1.2.0",
     "newrelic": "^8.10.0",
     "react-collapsible": "^2.8.4",
