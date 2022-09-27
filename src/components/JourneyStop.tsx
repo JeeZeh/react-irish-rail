@@ -164,9 +164,10 @@ const getTime = ({
 
   // If we're stopped at a station, or if it's the origin (O or index 1) station, show the expected departure
   if (
-    stopNumber === trainPosition ||
-    movement.LocationType === "O" ||
-    movement.LocationOrder == 1
+    movement.ExpectedDeparture &&
+    (stopNumber === trainPosition ||
+      movement.LocationType === "O" ||
+      movement.LocationOrder == 1)
   ) {
     return movement.ExpectedDeparture.format("HH:mm");
   }
