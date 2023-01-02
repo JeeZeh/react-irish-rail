@@ -50,7 +50,7 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
     "file-loader": "^6.2.0",
-    "html-webpack-plugin": "^4.0.0",
+    "html-webpack-plugin": "^5.5.0",
     "image-webpack-loader": "^8.1.0",
     "jest": "^28.1.0",
     "prettier": "^2.6.2",
