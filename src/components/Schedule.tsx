@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { useRef, useContext, useState, useEffect } from "react";
 import { ITrain, IStation, IRoute } from "../api/IrishRailApi";
 import styled, { ThemeContext } from "styled-components";
@@ -114,6 +114,14 @@ const Error = styled.h2`
   user-select: none;
 `;
 
+const Message = styled.h3`
+  font-weight: 500;
+  text-align: center;
+  margin: 100px;
+  color: ${(p) => p.theme.lightEmphasis};
+  user-select: none;
+`;
+
 export const CardBody = styled.div`
   grid-area: body;
 `;
@@ -136,6 +144,7 @@ export const Schedule = (props: TrainScheduleProps) => {
   const [stationToTrainMap, setStationToTrainMap] = useState(
     new Map<string, Set<string>>()
   );
+  const [pinnedTrains, setPinnedTrains] = useState<ITrain[]>([]);
 
   const generateStationTrainMap = (stationConnections: IRoute[]) => {
     const connectionMap = new Map<string, Set<string>>();
@@ -172,6 +181,16 @@ export const Schedule = (props: TrainScheduleProps) => {
     if (!station) return;
     setTitle(smallify(station.StationDesc, !isPortable));
   }, [stationTrains]);
+
+  const pinTrain = (train: ITrain) => {
+    setPinnedTrains([...pinnedTrains, train]);
+  };
+
+  const unpinTrain = (train: ITrain) => {
+    setPinnedTrains(
+      pinnedTrains.filter((t: ITrain) => t.Traincode !== train.Traincode)
+    );
+  };
 
   return (
     <>
@@ -217,13 +236,28 @@ export const Schedule = (props: TrainScheduleProps) => {
               </Error>
             ) : (
               <ScheduleTable
-                stationTrains={
+                trains={
                   trainFilter?.length > 0
                     ? stationTrains.filter((t) =>
                         trainFilter.includes(t.Traincode)
                       )
                     : stationTrains
                 }
+                pinTrain={pinTrain}
+                unpinTrain={unpinTrain}
+              />
+            )}
+
+            {pinnedTrains.length === 0 ? (
+              <Message>
+                Pinned trains will appear here. To pin a train, click on the 📌
+                for a given train.
+              </Message>
+            ) : (
+              <ScheduleTable
+                trains={pinnedTrains}
+                pinTrain={pinTrain}
+                unpinTrain={unpinTrain}
               />
             )}
           </CardBody>

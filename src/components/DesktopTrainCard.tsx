@@ -6,6 +6,8 @@ import { IJourney, ITrain } from "../api/IrishRailApi";
 import Collapsible from "react-collapsible";
 import { JourneyMap } from "./JourneyMap";
 import moment from "moment";
+import { Button, JourneyButton } from "./MobileTrainCard";
+import { ItemButton } from "./CollapsibleItemList";
 
 moment.locale("en-ie");
 
@@ -44,6 +46,9 @@ export const DesktopTrainCard = (props: {
             onClick={() => setOpen(!open)}
             data-traincode={train.Traincode}
           >
+            <div>
+              <Button>📌</Button>
+            </div>
             {scheduleColumns.map((c) => (
               <div key={c.propName}>
                 {moment.isMoment(train[c.propName])

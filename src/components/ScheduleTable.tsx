@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { useState, useEffect } from "react";
 import IrishRailApi, { ITrain, IJourney } from "../api/IrishRailApi";
 import styled from "styled-components";
@@ -22,8 +22,8 @@ const Table = styled.div`
 
 export const DesktopTrainRow = styled.div<{ header?: boolean }>`
   display: grid;
-  grid-template-areas: "due dep from to term last";
-  grid-template-columns: 1fr 1.5fr 2.5fr 2.5fr 1fr 2.5fr;
+  grid-template-areas: "pin due dep from to term last";
+  grid-template-columns: 0.5fr 1fr 1.5fr 2.5fr 2.5fr 1fr 2.5fr;
 
   &:not(.header):hover {
     opacity: 0.8;
@@ -58,9 +58,15 @@ interface JourneyCache {
   time: number;
 }
 
-const ScheduleTable = (props: { stationTrains: ITrain[] }) => {
+interface ScheduleTableProps {
+  trains: ITrain[];
+  pinTrain: (train: ITrain) => void;
+  unpinTrain: (train: ITrain) => void;
+}
+
+const ScheduleTable = (props: ScheduleTableProps) => {
   const isPortable = useWindowSize().width <= 1000;
-  const { stationTrains } = props;
+  const { trains } = props;
   const defaultSort = "Exparrival";
   const [sort, setSort] = useState({ col: defaultSort, dir: 1 }); // 1 = Ascending, -1 Descending
   const [journeyCache, setJourneyCache] = useState(
@@ -72,17 +78,17 @@ const ScheduleTable = (props: { stationTrains: ITrain[] }) => {
   useEffect(() => {
     const { col, dir } = sort;
     if (col && dir !== 0) {
-      const before = stationTrains;
-      const after = [...stationTrains].sort((a, b) => {
+      const before = trains;
+      const after = [...trains].sort((a, b) => {
         const [t1, t2] = [a[col], b[col]];
         const order = (t1.valueOf() >= t2.valueOf() ? 1 : -1) * dir;
         return order;
       });
       setSortedTrainData(after);
     } else {
-      setSortedTrainData([...stationTrains]);
+      setSortedTrainData([...trains]);
     }
-  }, [sort, stationTrains]);
+  }, [sort, trains]);
 
   // Updates the sorting direction based on the selected heading
   const handleSort = (e) => {
@@ -114,16 +120,10 @@ const ScheduleTable = (props: { stationTrains: ITrain[] }) => {
   };
 
   const renderTrain = (train: ITrain) => {
-    const code = train.Traincode;
-
     if (isPortable)
-      return (
-        <MobileTrainCard train={train} getJourney={getJourney} key={code} />
-      );
+      return <MobileTrainCard train={train} getJourney={getJourney} />;
 
-    return (
-      <DesktopTrainCard train={train} getJourney={getJourney} key={code} />
-    );
+    return <DesktopTrainCard train={train} getJourney={getJourney} />;
   };
 
   const renderHeader = () => {

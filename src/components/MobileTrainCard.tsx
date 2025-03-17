@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { useState, useRef, useContext } from "react";
 import { ArrowRight, Map, X, ChevronUp } from "react-feather";
 import styled, { ThemeContext } from "styled-components";
@@ -109,7 +109,7 @@ const TimeEntry = styled.div`
   }
 `;
 
-export const JourneyButton = styled.button`
+export const Button = styled.button`
   grid-area: button;
   background-color: ${(p) => p.theme.bg};
   outline: none;
@@ -120,10 +120,7 @@ export const JourneyButton = styled.button`
   color: ${(p) => p.theme.primaryText};
   padding: 6px 10px;
   justify-content: space-between;
-  justify-self: flex-end;
-  margin-right: 5px;
   align-items: center;
-  align-self: center;
   cursor: pointer;
   box-shadow: 0 2px 0 ${(p) => p.theme.button};
 
@@ -142,6 +139,12 @@ export const JourneyButton = styled.button`
   @media only screen and (max-width: 320px) {
     font-size: 0.85em;
   }
+`;
+
+export const JourneyButton = styled(Button)`
+  justify-self: flex-end;
+  margin-right: 5px;
+  align-self: center;
 `;
 
 const renderHeader = (train: ITrain) => {
