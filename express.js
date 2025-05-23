@@ -18,10 +18,8 @@ const isDev = process.env.NODE_ENV === "dev";
 const whitelist = [
   "http://localhost:8080",
   "https://localhost:8080",
-  "http://react-rail.herokuapp.com/",
-  "https://react-rail.herokuapp.com/",
-  "http://www.reactrail.live",
-  "https://www.reactrail.live",
+  "http://www.reactrail.com",
+  "https://www.reactrail.com",
 ];
 
 const corsOptions = {
