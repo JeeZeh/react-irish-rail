@@ -9,3 +9,4 @@ tests/**/*.jsx
 *.log
 data
 .env
+.npm/
